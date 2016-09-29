@@ -1,0 +1,6 @@
+*.pyc
+.settings
+.project
+.pydevproject
+git_hook_config.db
+nohup.out

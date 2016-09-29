@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>git hooks</title>
+    <link rel="stylesheet" type="text/css" href="/static/res/css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/res/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/static/res/css/jquery.dialogbox.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/res/favicon.ico"/>
+    <link rel="bookmark" href="/static/res/favicon.ico"/>
+    <style type="text/css">
+    	#new_port {width: 70px;}
+    	#new_host, #new_password, #new_email {width: 110px;}
+    </style>
+</head>
+<body id="body_content">
+    <div id="wrapper">
+        <p class="breadcrumb">
+            <a href="/"><HEAD></HEAD>Home</a> &gt; git hooks
+        </p>
+        <div class="bdsharebuttonbox" style="float:right;">
+            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+            <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+            <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+            <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+            <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+            <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+            <a class="bds_count" data-cmd="count"></a>
+        </div>
+        <h1>git hooks </h1>
+        <form class="pure-form">
+        	<fieldset>
+			    <label for="new_githook_sh"> git hook shell
+			        <textarea placeholder="#!/bin/bash" id="githook_sh" style="width: 500px;height:120px" placeholder="#!/bin/bash">#!/bin/bash
+cd /home/hustcc/git_code/git_hooks
+git remote update -p
+git checkout -f origin/master
+git submodule update --init</textarea>
+				</label>
+		    </fieldset>
+		    <fieldset>
+		    	<label for="new_githook_sh"> git hook repos 
+		        	<input type="text" id="repo_name" placeholder="repo NAME">
+		        </label>
+		        <button type="button" onclick="add_update_githook();" class="pure-button pure-button-primary">Add / Update</button>
+		        <a href="/set_pwd" class="pure-button pure-button-danger">Reset Password</a>
+		    </fieldset>
+		</form>
+        <table id="githooks_table" width="100%" class="pure-table pure-table-bordered">
+            <thead>
+                <tr>
+                    <th width="15%">repo NAME</th>
+                    <th width="35%">hook shell</th>
+                    <th width="40%">git hook url</th>
+                    <th width="10%">Operate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hook in githooks %}
+                <tr>
+                    <td style="font-weight: bold;"><a target="_blank" href="/history/{{hook.md5}}">{{hook.repo_name}}</a></td>
+                    <td><pre>{{hook.hook_sh}}</pre></td>
+                    <td><a href="{{url_root}}api/hook/{{hook.md5}}" target="_blank">{{url_root}}api/hook/{{hook.md5}}</a></td>
+                    <td><input type="button" class="del_btn" md5="{{hook.md5}}" value="Delete"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="footer">
+            <a href="/">git hooks</a> &gt; Author By aTool.org
+        </p>
+    </div>
+    <script type="text/javascript" src="/static/res/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/res/lib/jquery.dialogbox.js"></script>
+    <script type="text/javascript" src="/static/res/lib/md5.js"></script>
+    <script type="text/javascript" src="/static/res/js/index.js"></script>
+    <script type="text/javascript">
+    window._bd_share_config={"common":{"bdSnsKey":{"tsina":"2337303479","tqq":"801368329"},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</body>
+</html>

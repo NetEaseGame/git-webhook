@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>git hook histories - {{githook.repo_name or ''}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/res/css/pure-min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/res/css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/res/favicon.ico"/>
+    <link rel="bookmark" href="/static/res/favicon.ico"/>
+    <style type="text/css">
+    	.success {
+    		color:green;
+    	}
+    	.fail {
+    		color:red;
+    	}
+    </style>
+</head>
+<body id="body_content">
+    <div id="wrapper">
+        <p class="breadcrumb">
+            <a href="/"><HEAD></HEAD>Home</a> &gt; {{githook.repo_name or ''}}
+        </p>
+        <div class="bdsharebuttonbox" style="float:right;">
+            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+            <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+            <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+            <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+            <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+            <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+            <a class="bds_count" data-cmd="count"></a>
+        </div>
+        <h1>git hook histories - [ {{githook.repo_name or ''}} ]</h1>
+        <table id="githooks_table" width="100%" class="pure-table pure-table-bordered">
+            <thead>
+                <tr>
+                    <th width="15%">notice</th>
+                    <th width="20%">output</th>
+                    <th width="30%">pusher</th>
+                    <th width="8%">status</th>
+                    <th width="15%">time</th>
+                    <th width="12%">git data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hook in githook_histories %}
+                <tr>
+                    <td style="font-weight: bold;">{{hook.notice}}</td>
+                    <td><pre>{{hook.output}}</pre></td>
+                    <td>{{hook.push_name or 'nobody'}} / {{hook.push_email or 'no email'}}</td>
+                    <td class="{% if hook.success == '1' %} success {% else %} fail {% endif %}">{% if hook.success == '1' %} success {% else %} fail {% endif %}</td>
+                    <td>{{hook.add_time}}</td>
+                    <td><a href="/data/{{hook.rowid}}.html">See Data</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="footer">
+            <a href="/">git hooks</a> &gt; Author By aTool.org
+        </p>
+    </div>
+    <script type="text/javascript">
+    window._bd_share_config={"common":{"bdSnsKey":{"tsina":"2337303479","tqq":"801368329"},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+</body>
+</html>

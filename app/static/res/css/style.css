@@ -1,0 +1,122 @@
+body {
+	font-family: "Courier New", "Microsoft YaHei", monospace, Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco;
+	font-size: 14px;
+	text-align:left;
+	background-color:#EBEBEB;
+	margin:0px;
+}
+
+a {
+    font-size: .95em;
+    text-decoration: none;
+    color: #435275
+}
+
+a:hover {
+    color: #f77b6f;
+    text-decoration:underline;
+}
+
+td {
+	word-wrap:break-word;
+	word-break:break-all;
+}
+#wrapper{
+	margin:auto;
+	max-width:1280px;
+	background-color:#FFF;
+	padding:1em;
+	width: 90%;
+	webkit-box-shadow: #666 0px 0px 10px;
+  	-moz-box-shadow: #666 0px 0px 10px;
+  	box-shadow: #666 0px 0px 10px;
+  	min-width: 960px;
+}
+
+h1 {
+	margin:20px 10px;
+	font-size:20px;
+	line-height:1.4em;
+	margin-bottom:1em;
+	word-wrap:break-word;
+}
+
+h2 {
+	margin:40px 0 0 20px;
+	font-size:16px;
+	line-height:1.4em;
+	word-wrap:break-word;
+}
+
+.breadcrumb {
+	color:#999999;
+	font-size:11px;
+	margin-top:10px;
+	margin-bottom:20px;
+	margin-left: 10px;
+	padding:0px;
+	letter-spacing:1px;
+	line-height:1.6em;
+}
+
+.footer {
+	color:#999999;
+	font-size:11px;
+	margin: 10px auto;
+	padding:0px;
+	letter-spacing:1px;
+	line-height:1.6em;
+	text-align: center;
+}
+
+.breadcrumb a:link, .breadcrumb a:visited {
+	color:#999999;
+}
+.breadcrumb a:hover {
+	color:#333333;
+}
+
+
+ul{
+	display:inline-block;
+	vertical-align:top;
+	
+	margin:0px;
+	margin-top:1em;
+	padding:0px;
+	
+	list-style:none;
+}
+
+li{
+	margin:0px;
+	padding:0px;
+	margin-top:20px;
+	margin-right:7px;
+	display:inline-block;
+}
+
+li a:link{
+	line-height:1.5em;
+	text-decoration:none;
+	background-color:#DDEEFF;
+	margin:0px;
+	padding:5px;
+	padding-left:10px;
+	padding-right:10px;
+	border-radius:4px;
+}
+
+li a:hover{
+	background-color:#09C;
+	color:#FFF;
+}
+
+.chart_div {
+	width: 100%;
+	height: 300px;
+}
+
+.role_master, .role_slave {
+	display: none;
+}
