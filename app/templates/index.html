@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Git WebHook Platform</title>
+  <link href="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/res/css/common.css" />
+  <link rel="shortcut icon" href="/static/res/img/logo.png"/>
+  <link rel="bookmark" href="/static/res/img/logo.png"/>
+</head>
+<body>
+	<div id="wrapper">
+		
+	</div>
+	
+  <script type="text/javascript">
+    // global var
+    // the login USER
+    var loginUser = JSON.parse({{ loginUser | tojson | safe }});
+  </script>
+  
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/semantic-ui/2.2.4/semantic.min.js"></script>
+  <script type="text/javascript" src="/static/dist/webhook.bundle.js"></script>
+  <script type="text/javascript" left="90%" bottom="20%" src="/static/res/js/x-return-top.min.js"></script>
+  <div style="display:none"><script src="http://s11.cnzz.com/stat.php?id=1254772054&web_id=1254772054" language="JavaScript"></script></div>
+</body>
+</html>

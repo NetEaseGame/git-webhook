@@ -1,0 +1,306 @@
+* {
+  font-family: 'Lato', 'Helvetica Neue', 'Microsoft Yahei', Arial, Helvetica, sans-serif;
+}
+
+html, body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+}
+
+body {
+  scrollbar-face-color: #3f3f3f; /*ie立体滚动条的颜色*/
+  scrollbar-track-color: #ccc; /*图7,立体滚动条背景颜色*/
+}
+/*webkit滚动条滚动条整体部分*/
+::-webkit-scrollbar{
+  width: 8px;
+  background: #ccc;
+}
+/*webkit滚动条里面可以拖动的那部分*/
+::-webkit-scrollbar-thumb  {
+  background:#3f3f3f;
+}
+.main-content {
+  /*background-image: url(/static/res/img/bg3.jpg);*/
+  background-size: cover;
+  background-attachment: fixed;
+}
+.intro{
+  color: #666;
+}
+.home-nav-bar{
+  margin-bottom: 4em;
+}
+.home-nav-bar .ui.secondary.menu .header.item{
+  font-size: 1.2em;
+  font-weight: 400;
+}
+.home-nav-bar .ui.blue.buttons .button, 
+.home-nav-bar .ui.blue.button {
+  background-color: #2185D0;
+  color: #FFFFFF;
+  text-shadow: none;
+  background-image: none;
+}
+.home-nav-bar .ui.blue.buttons .button:hover, 
+.home-nav-bar .ui.blue.button:hover {
+  background-color: #1678c2 !important;
+  color: #FFFFFF !important;
+  text-shadow: none;
+}
+.home-nav-bar .ui.blue.buttons .button:focus,
+.home-nav-bar .ui.blue.button:focus {
+  background-color: #0d71bb !important;
+  color: #FFFFFF !important;
+  text-shadow: none;
+}
+.intro .very.huge.header{
+  font-size: 2.8em;
+  font-weight: 300;
+  font-family: 'Helvetica Neue', Helvetica, 'YouYuan', Arial, sans-serif !important;
+}
+.intro .ui.huge.header .sub.header {
+  font-family: 'Helvetica Neue', Helvetica, 'Microsoft Yahei', Arial, sans-serif;
+}
+.intro .ui.button{
+  font-weight: 300;
+}
+.intro h2.header{
+  margin-top: 1.5em !important;
+  font-weight: 300;
+  font-size: 2.4em;
+}
+.feature{
+  height: 120px;
+  margin-bottom: 1.2em;
+}
+.feature > .description{
+  font-size: 16px;
+  color: #666;
+}
+#wrapper {
+  min-height:100%;
+  height: inherit;
+  position: relative;
+  clear: both;
+}
+#wrapper > .main {
+  min-height:100%;
+  position: relative;
+  margin: 0 !important;
+  clear: both;
+}
+.content.container {
+	padding-top: 5em !important;
+  padding-bottom: 5em !important;
+  clear: both;
+}
+.footer {
+  position: absolute !important;
+  bottom: 0;
+  left: 0;
+  width: 100% !important;
+}
+
+.operateBtn i {
+  width: 30px;
+  font-size: 18px;
+  color: #2185D0; 
+}
+
+.operateBtn:hover i {
+  font-size: 22px;
+  color: #F2711C; 
+}
+
+#custom_alert {
+  position: fixed;
+  top: 60px;
+  right: 60px;
+  z-index: 9999999;
+}
+
+.ui.toggle.checkbox.green input:checked ~ .box:before, .ui.toggle.checkbox.green input:checked ~ label:before{
+  background-color: #5bbd72 !important;
+}
+
+.ui.toggle.checkbox.red input:checked ~ .box:before, .ui.toggle.checkbox.red input:checked ~ label:before{
+  background-color: #DB2828 !important;
+}
+
+select {
+  min-width: 100px;
+}
+select > option {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+#commit_result td.negative {
+  background: #fff!important;
+}
+#commit_result td.positive {
+  background: #fff!important;
+}
+
+.single_line {
+  -o-text-overflow: ellipsis!important;/*兼容opera*/
+  text-overflow: ellipsis!important;/*这就是省略号喽*/     
+  overflow: hidden!important;/*设置超过的隐藏*/
+  white-space: nowrap!important;/*设置不折行*/
+  width:260px;/*设置宽度*/
+}
+
+.line-break{
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
+.red {
+  color: red;
+}
+.black {
+  color: black;
+}
+
+.green {
+  color: green;
+}
+
+.blue {
+  color: blue;
+}
+
+.ui.fullscreen.modal.customModals{
+  width: 40%!important;
+  left: 30%!important;
+  top: 10%!important;
+  height: 80%!important;
+}
+
+.customModals .content{
+  height: 85%!important;
+  overflow-y: scroll; 
+}
+.tip_title{
+  font-weight: bold;
+  min-width: 60px;
+}
+.option_input{
+  width: 74%!important;
+  margin-right: 10px!important;
+}
+
+#main_content .ui.container.grid > *{
+  padding-left: 0!important;
+}
+@media only screen and (max-width: 767px) {
+  .ui.stackable.grid > .row > .wide.column, .ui.stackable.grid > .wide.column, .ui.stackable.grid > .column.grid > .column, .ui.stackable.grid > .column.row > .column, .ui.stackable.grid > .row > .column, .ui.stackable.grid > .column:not(.row), .ui.grid > .stackable.stackable.row > .column{
+    padding-right: 0!important;
+  }
+}
+/*--------------
+  Float
+----------------*/
+.ui.right.floated{
+  float: right;
+}
+/*--------------
+    Clearing
+---------------*/
+
+.ui.clearing {
+  clear: both;
+}
+
+/*******************************
+            Accordion
+*******************************/
+/* Title */
+
+.ui.accordion .title > .ui.floated,
+.ui.accordion .accordion .title > .ui.floated{
+  margin-bottom: 0;
+  margin-right: 0;
+  margin-left: 0;
+}
+/*******************************
+            Header
+*******************************/
+/* input */
+.ui.header.form {
+  font-size: 1em;
+} 
+
+.ui.popup {
+  white-space: pre-wrap!important;
+  text-align: left!important;
+}
+/*******************************
+            Table
+*******************************/
+/* td */
+.repo-item > td > .tools-group{
+  visibility: hidden;
+}
+.repo-item > td > .tools-group > i{
+  color: #2185D0;
+  cursor: pointer;
+}
+.repo-item > td > .tools-group > i:hover{
+  color: #F2711C;
+}
+.repo-item:hover > td > .tools-group{
+  visibility: visible;
+}
+.repo-item .ui.button{
+  font-size: 0.65em;
+  padding: 0.55em .9em 0.55em;
+  margin-top: 6px;
+}
+.repo-item .ui.form input{
+  font-size: 0.9em;
+  padding: 0.5em 0.8em;
+}
+.repo-item .ui.form .inline.fields {
+  margin: 0em 0em 0.5em;
+}
+.author > span, .text-overflow, .text-overflow > * {
+  white-space:nowrap; 
+  overflow:hidden; 
+  text-overflow:ellipsis;
+}
+
+.disabledColor .disabled.field{
+    opacity: 0.8!important;
+}
+/*****Grouped Inline Form*****/
+.ui.form .grouped.fields .field, .ui.form .grouped.inline.fields .field {
+    display: inline-block;
+    margin: 0.5em 0em;
+    padding: 0em;
+}
+
+.ui.comments {
+  width: 100%!important;
+  max-width:100%!important;
+}
+
+.ui.comments .comment {
+  margin-top: 10px;
+}
+
+.right_timeago {
+  float: right;
+}
+
+.open_test, .open_test a {
+  color: grey;
+}
+
+.cursor-pointer {
+  cursor:pointer;
+}

@@ -1,36 +1,39 @@
-#coding=utf-8
+# -*- coding: utf-8 -*-
 '''
-Created on 2015年8月21日
+Created on 2015-8-21
 
 @author: hustcc
 '''
 
-#获得参数，post或者get
-def get_parameter(request, key, default = None):
+from flask.globals import request, session
+
+# get / post data
+def get_parameter(key, default=None):
     '''
     info:获得请求参数，包括get和post，其他类型的访问不管
     '''
-    #post参数
+    # post参数
     if request.method == 'POST':
         param = request.form.get(key, default)
-    #get
+    # get
     elif request.method == 'GET':
         param = request.args.get(key, default)
     else:
         return default
-    
+
     return param
 
-#用户IP
-def get_request_ip(request):
-    return request.remote_addr
 
-#获得用户访问方式
-def get_request_method(request):
-    return request.method
+# login user from session
+def get_login_user():
+    return session.get('u_id', '')
 
-def get_request_ua(request):
-    return request.headers.get('User-Agent', '')
 
-def get_request_accept_lang(request):
-    request.environ.get('HTTP_ACCEPT_LANGUAGE', '')
+# set user login
+def login_user(user):
+    session['u_id'] = user
+
+
+# logou user, session pop
+def logout():
+    session.pop('u_id')

@@ -1,0 +1,56 @@
+{
+  "name": "git-webhook",
+  "version": "1.0.0",
+  "scripts": {
+    "lint:js": "eslint app/static/src",
+    "lint:py": "sh tests/lint_py.sh",
+    "test": "npm run lint:js && npm run lint:py",
+    "js": "webpack --config webpack.config.product.js",
+
+    "dev_js": "webpack --config webpack.config.js --watch",
+    "dev_py": "python run_automation.py",
+    "clean:celery": "rimraf celerybeat*",
+    "celery": "celery -A app.celeryInstance worker --loglevel=info",
+    
+    "db": "python scripts.py rebuild_db"
+  },
+  "keywords": [],
+  "author": "hustcc",
+  "license": "MIT",
+  "homepage": "http://hook.hust.cc",
+  "devDependencies": {
+    "babel-cli": "^6.6.0",
+    "babel-core": "^6.3.15",
+    "babel-eslint": "^5.0.0-beta4",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-react-hmre": "^1.0.0",
+    "eslint": "^1.10.3",
+    "eslint-plugin-babel": "^3.0.0",
+    "eslint-plugin-react": "^3.11.3",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.10.1",
+    "css-loader": "~0.16.0",
+    "jsx-loader": "~0.13.2",
+    "style-loader": "~0.12.3",
+    "file-loader": "~0.8.4",
+    "cross-env": "^1.0.8",
+    "echarts": "^3.1.1",
+    "element-resize-event": "^2.0.5",
+    "react-router": "^2.0.0",
+    "babel-plugin-transform-es3-property-literals": "*",
+    "babel-plugin-transform-es3-member-expression-literals": "*"
+  },
+  "dependencies": {
+    "onfire.js": ">=1.0.6",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "timeago-react": ">=1.0.6",
+    "timeago.js": ">=2.0.2",
+    "xhr.js": ">=1.0.2",
+    "pys": ">=1.0.3"
+  }
+}

@@ -2,5 +2,7 @@
 .settings
 .project
 .pydevproject
-git_hook_config.db
+git_webhook.db
 nohup.out
+app/config.py
+node_modules
