@@ -60,21 +60,17 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _webHook = __webpack_require__(230);
+	var _webHook = __webpack_require__(229);
 
 	var _webHook2 = _interopRequireDefault(_webHook);
 
-	var _server = __webpack_require__(231);
+	var _server = __webpack_require__(273);
 
 	var _server2 = _interopRequireDefault(_server);
 
-	var _historyList = __webpack_require__(232);
+	var _historyList = __webpack_require__(274);
 
 	var _historyList2 = _interopRequireDefault(_historyList);
-
-	var _history = __webpack_require__(233);
-
-	var _history2 = _interopRequireDefault(_history);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -84,10 +80,9 @@
 	  _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: _main2.default },
-	    _react2.default.createElement(_reactRouter.Route, { path: '/webhook', component: _webHook2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/server', component: _server2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/history/:webhook_id', component: _historyList2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/detail/:history_id', component: _history2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/history/:webhook_id/:page', component: _historyList2.default })
 	  )
 	), document.querySelector('#wrapper'));
 
@@ -25463,40 +25458,36 @@
 
 	var _alert2 = _interopRequireDefault(_alert);
 
-	var _index = __webpack_require__(229);
+	var _webHook = __webpack_require__(229);
 
-	var _index2 = _interopRequireDefault(_index);
+	var _webHook2 = _interopRequireDefault(_webHook);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var MainComponent = _react2.default.createClass({
 	  displayName: 'MainComponent',
 
+	  // random bg
 	  getBgImgUrl: function getBgImgUrl() {
 	    return 'url(/static/res/img/bg' + new Date().getHours() % 5 + '.jpg)';
 	  },
 	  render: function render() {
-	    var children = this.props.children; // 首页做好之后，去掉 || 之后的东西即可
-	    // 首页和内页风格大有不同
-	    if (children) {
-	      return _react2.default.createElement(
+	    var children = this.props.children || _react2.default.createElement(_webHook2.default, null);
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'ui main main-content', id: 'main_content', style: { backgroundImage: this.getBgImgUrl() } },
+	      _react2.default.createElement(_header2.default, null),
+	      _react2.default.createElement(
 	        'div',
-	        { className: 'ui main main-content', id: 'main_content', style: { backgroundImage: this.getBgImgUrl() } },
-	        _react2.default.createElement(_header2.default, null),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'ui container content' },
-	          children
-	        ),
-	        _react2.default.createElement(_footer2.default, null),
-	        _react2.default.createElement(_alert2.default, null)
-	      );
-	    } else {
-	      return _react2.default.createElement(_index2.default, null);
-	    }
+	        { className: 'ui container content' },
+	        children
+	      ),
+	      _react2.default.createElement(_footer2.default, null),
+	      _react2.default.createElement(_alert2.default, null)
+	    );
 	  }
 	});
-	// 首页
+
 	exports.default = MainComponent;
 
 /***/ },
@@ -25544,13 +25535,7 @@
 	          { className: 'menu' },
 	          _react2.default.createElement(
 	            'a',
-	            { href: 'http://avatar.163-inc.com', target: '_blank', className: 'item' },
-	            _react2.default.createElement('i', { className: 'user icon' }),
-	            '\u4FEE\u6539\u5934\u50CF'
-	          ),
-	          _react2.default.createElement(
-	            'a',
-	            { href: '/logout.html', className: 'item' },
+	            { href: '/logout', className: 'item' },
 	            _react2.default.createElement('i', { className: 'sign out icon' }),
 	            'Log out'
 	          )
@@ -25559,7 +25544,7 @@
 	    }
 	    return _react2.default.createElement(
 	      'a',
-	      { href: '/login.html', className: 'item' },
+	      { href: '/login', className: 'item' },
 	      '\u767B\u5F55'
 	    );
 	  },
@@ -25578,17 +25563,12 @@
 	        _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: '/', className: 'header item' },
-	          'MTL Automation'
+	          'Git WebHook'
 	        ),
 	        _react2.default.createElement(
 	          _reactRouter.Link,
-	          { to: '/status', className: 'header item' },
-	          '\u7CFB\u7EDF\u72B6\u6001'
-	        ),
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/document', className: 'header item' },
-	          '\u6587\u6863'
+	          { to: '/server', className: 'header item' },
+	          '\u670D\u52A1\u5668'
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -25596,7 +25576,7 @@
 	          _react2.default.createElement(
 	            'a',
 	            { href: '#', className: 'item' },
-	            _stringUtils2.default.avatarImg(loginUser.id, 32)
+	            _react2.default.createElement('img', { className: 'logo', width: '32', height: '32', src: loginUser.avatar })
 	          ),
 	          this.renderUserActionComp()
 	        )
@@ -25617,8 +25597,6 @@
 	  value: true
 	});
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -25626,35 +25604,26 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var StringUtils = {
-	  isEmpty: function isEmpty(input) {
-	    if (input == null || input == undefined) return true;
-
-	    var type = typeof input === 'undefined' ? 'undefined' : _typeof(input);
-	    if (type === 'string' && input == '') return true;
-	    if (type === 'object') {
-	      for (var key in input) {
-	        // 只要有一个元素，就不是空
-	        return false;
-	      }
-	      return true;
+	  statusToTag: function statusToTag(status) {
+	    var text = void 0,
+	        className = void 0;
+	    if (status == 1) {
+	      text = '执行';
+	      className = 'compact ui mini yellow tag label';
+	    } else if (status == 2) {
+	      text = '失败';
+	      className = 'compact ui mini red tag label';
+	    } else if (status == 3) {
+	      text = '成功';
+	      className = 'compact ui mini green tag label';
+	    } else if (status == 4) {
+	      text = '异常';
+	      className = 'compact ui mini red tag label';
+	    } else {
+	      text = '未知';
+	      className = 'compact ui mini grey tag label';
 	    }
-	    return false;
-	  },
-	  // 字符串为null
-	  isNone: function isNone(str) {
-	    if (str == null || str == undefined) {
-	      return true;
-	    }
-	    return false;
-	  },
-	  startWith: function startWith(str, needle) {
-	    if (isNone(str) || isNone(needle)) {
-	      return false;
-	    }
-	    if (str.indexOf(needle) === 0) {
-	      return true;
-	    }
-	    return false;
+	    return [text, className];
 	  }
 	};
 
@@ -25679,7 +25648,6 @@
 	var Footer = _react2.default.createClass({
 	  displayName: "Footer",
 
-	  propTypes: {},
 	  render: function render() {
 	    return _react2.default.createElement(
 	      "div",
@@ -25693,13 +25661,13 @@
 	          _react2.default.createElement(
 	            "span",
 	            null,
-	            "\xA9 2016 \u7F51\u6613\u516C\u53F8\u7248\u6743\u6240\u6709 \u2665 POPO\u7FA4\uFF1A",
+	            "\xA9 2016 \u2665",
 	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "xxxxxx"
+	              "a",
+	              { target: "_blank", href: "https://github.com/hustcc" },
+	              " Hustcc "
 	            ),
-	            " \u2665"
+	            "\u2665 \u7248\u6743\u6240\u6709"
 	          )
 	        )
 	      )
@@ -25870,138 +25838,304 @@
 
 	var _reactRouter = __webpack_require__(159);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _timeagoReact = __webpack_require__(230);
 
-	var IndexComponent = _react2.default.createClass({
-	  displayName: 'IndexComponent',
+	var _timeagoReact2 = _interopRequireDefault(_timeagoReact);
 
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'ui tall stacked segment' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'ui medium header' },
-	        'MTL Automation'
-	      ),
-	      _react2.default.createElement(
-	        'ol',
-	        { className: 'ui list' },
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/' },
-	              'Index'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/dashboard' },
-	              'DashBoard'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/doc' },
-	              'Documents'
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
+	var _onFireMixin = __webpack_require__(227);
 
-	exports.default = IndexComponent;
+	var _onFireMixin2 = _interopRequireDefault(_onFireMixin);
 
-/***/ },
-/* 230 */
-/***/ function(module, exports, __webpack_require__) {
+	var _tipShowMixin = __webpack_require__(270);
 
-	'use strict';
+	var _tipShowMixin2 = _interopRequireDefault(_tipShowMixin);
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var _xhrRequestsMixin = __webpack_require__(271);
 
-	var _react = __webpack_require__(1);
+	var _xhrRequestsMixin2 = _interopRequireDefault(_xhrRequestsMixin);
 
-	var _react2 = _interopRequireDefault(_react);
+	var _stringUtils = __webpack_require__(224);
 
-	var _reactRouter = __webpack_require__(159);
+	var _stringUtils2 = _interopRequireDefault(_stringUtils);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var WebHook = _react2.default.createClass({
 	  displayName: 'WebHook',
 
+	  __ONFIRE__: 'WebHook',
+	  mixins: [_xhrRequestsMixin2.default, _onFireMixin2.default, _tipShowMixin2.default], // 引入 mixin
+	  getInitialState: function getInitialState() {
+	    return {
+	      showAddForm: false,
+	      webhooks: [],
+	      servers: []
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    new Clipboard('.copy_btn'); // set copy button
+
+	    // load webhook
+	    this.get('/api/webhook/list', {}, function (r) {
+	      r = r.json();
+	      if (r.success) this.setState({ webhooks: r.data });else this.showError('加载数据失败！');
+	    }.bind(this));
+
+	    // load server
+	    this.get('/api/server/list', {}, function (r) {
+	      r = r.json();
+	      if (r.success) this.setState({ servers: r.data });else this.showError('加载数据失败！');
+	    }.bind(this));
+	  },
+	  clickNewBtn: function clickNewBtn(save) {
+	    if (save) {
+	      this.post('/api/webhook/new', {
+	        repo: this.refs.repo.value,
+	        branch: this.refs.branch.value,
+	        shell: this.refs.shell.value,
+	        server_id: this.refs.server_id.value
+	      }, function (r) {
+	        r = r.json();
+	        if (r.success) {
+	          this.refs.addForm.reset();
+
+	          var webhooks = this.state.webhooks;
+	          webhooks.push(r.data);
+	          this.setState({ webhooks: webhooks, showAddForm: false });
+	        } else this.showError(r.data);
+	      }.bind(this));
+	    } else {
+	      this.setState({ showAddForm: true });
+	    }
+	  },
+	  editWebHook: function editWebHook(webhook, index) {
+	    console.log(webhook, 'TODO');
+	  },
+	  deleteWebHook: function deleteWebHook(webhook_id, index) {
+	    this.post('/api/webhook/delete', {
+	      webhook_id: webhook_id
+	    }, function (r) {
+	      r = r.json();
+	      if (r.success) {
+	        var webhooks = this.state.webhooks;
+	        webhooks.splice(index, 1);
+	        this.setState({ webhooks: webhooks, showAddForm: false });
+	      } else this.showError(r.data);
+	    }.bind(this));
+	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'ui tall stacked segment' },
 	      _react2.default.createElement(
-	        'div',
-	        { className: 'ui medium header' },
-	        'MTL Automation'
+	        'h3',
+	        { className: 'ui dividing header right aligned' },
+	        'Git WebHook List'
 	      ),
 	      _react2.default.createElement(
-	        'ol',
-	        { className: 'ui list' },
+	        'table',
+	        { className: 'ui very basic table' },
 	        _react2.default.createElement(
-	          'li',
+	          'thead',
 	          null,
 	          _react2.default.createElement(
-	            'strong',
+	            'tr',
 	            null,
 	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/' },
-	              'Index'
+	              'th',
+	              { width: '10%' },
+	              '#'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '15%' },
+	              'Repo'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '25%' },
+	              'Shell'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '10%' },
+	              'Server'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '10%' },
+	              'AddTime'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '15%' },
+	              'Status'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '15%' },
+	              'Operate'
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'li',
+	          'tbody',
 	          null,
+	          this.state.webhooks.map(function (webhook, i) {
+	            var status = _stringUtils2.default.statusToTag(webhook.status);
+	            return _react2.default.createElement(
+	              'tr',
+	              { key: i },
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                webhook.id
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouter.Link,
+	                  { to: '/history/' + webhook.id },
+	                  ' ',
+	                  webhook.repo + '@' + webhook.branch,
+	                  ' '
+	                )
+	              ),
+	              _react2.default.createElement('td', { dangerouslySetInnerHTML: { __html: "<pre>" + webhook.shell + "</pre>" } }),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                webhook.server.ip
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                { title: webhook.add_time },
+	                _react2.default.createElement(_timeagoReact2.default, { locale: 'zh_CN', datetime: webhook.add_time })
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: status[1] },
+	                  status[0]
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'mini ui icon button copy_btn', 'data-clipboard-text': location.protocol + '//' + location.host + '/api/git-webhook/' + webhook.key },
+	                  _react2.default.createElement('i', { className: 'ui icon copy' })
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'mini ui icon button', onClick: this.editWebHook.bind(this, webhook, i) },
+	                  _react2.default.createElement('i', { className: 'ui icon edit' })
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'mini ui icon button', onClick: this.deleteWebHook.bind(this, webhook.id, i) },
+	                  _react2.default.createElement('i', { className: 'ui icon delete' })
+	                )
+	              )
+	            );
+	          }.bind(this))
+	        )
+	      ),
+	      this.state.showAddForm && _react2.default.createElement(
+	        'form',
+	        { className: 'ui form', ref: 'addForm' },
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'ui dividing header left aligned' },
+	          'New WebHook'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'three fields' },
 	          _react2.default.createElement(
-	            'strong',
-	            null,
+	            'div',
+	            { className: 'field' },
 	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/dashboard' },
-	              'DashBoard'
+	              'label',
+	              null,
+	              'Git Repository'
+	            ),
+	            _react2.default.createElement('input', { ref: 'repo', type: 'text', placeholder: 'Repository Name' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'field' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Branch'
+	            ),
+	            _react2.default.createElement('input', { ref: 'branch', type: 'text', placeholder: 'Repository Branch' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'field' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Which Server ',
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/server' },
+	                _react2.default.createElement('i', { className: 'ui icon add square' })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'select',
+	              { ref: 'server_id' },
+	              _react2.default.createElement(
+	                'option',
+	                { value: '' },
+	                'Select Server'
+	              ),
+	              this.state.servers.map(function (server, i) {
+	                return _react2.default.createElement(
+	                  'option',
+	                  { key: i, value: server.id },
+	                  server.name + '@' + server.ip
+	                );
+	              })
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'li',
-	          null,
+	          'div',
+	          { className: 'field' },
 	          _react2.default.createElement(
-	            'strong',
+	            'label',
 	            null,
+	            'Callback Shell Script'
+	          ),
+	          _react2.default.createElement('textarea', { ref: 'shell', rows: '4' })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'ui center aligned basic segment' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'ui center aligned basic segment' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'ui teal animated fade button mini', onClick: this.clickNewBtn.bind(this, this.state.showAddForm) },
 	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/doc' },
-	              'Documents'
+	              'div',
+	              { className: 'visible content' },
+	              '\u6DFB\u52A0\u65B0\u7684 Git WebHook'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'hidden content' },
+	              '\u6DFB\u52A0\u65B0\u7684 Git WebHook'
 	            )
 	          )
 	        )
@@ -26013,7 +26147,1298 @@
 	exports.default = WebHook;
 
 /***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _timeago = __webpack_require__(231);
+
+	var _timeago2 = _interopRequireDefault(_timeago);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var TimeAgo = _react2['default'].createClass({
+	  displayName: 'TimeAgo',
+
+	  timeagoInstance: null,
+	  propTypes: {
+	    datetime: _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.instanceOf(Date), _react2['default'].PropTypes.number]).isRequired, // date to be formated
+	    live: _react2['default'].PropTypes.bool, // real time render.
+	    locale: _react2['default'].PropTypes.string, // locale lang
+	    className: _react2['default'].PropTypes.string //  class name
+	  },
+	  getDefaultProps: function getDefaultProps() {
+	    return { live: true, locale: 'en' };
+	  },
+
+	  // first add
+	  componentDidMount: function componentDidMount() {
+	    if (this.props.locale !== 'en' && this.props.locale !== 'zh_CN') _timeago2['default'].register(this.props.locale, __webpack_require__(232)("./" + this.props.locale));
+
+	    this.renderTimeAgo();
+	  },
+
+	  // init instance
+	  componentWillMount: function componentWillMount() {
+	    if (this.timeagoInstance === null) this.timeagoInstance = (0, _timeago2['default'])();
+	  },
+
+	  // update
+	  componentDidUpdate: function componentDidUpdate() {
+	    this.renderTimeAgo();
+	  },
+	  renderTimeAgo: function renderTimeAgo() {
+	    // cancel all the interval
+	    this.timeagoInstance.cancel();
+	    // if is live
+	    if (this.props.live !== false) {
+	      // live render
+	      if (this.props.datetime instanceof Date) this.refs.timeagoDom.setAttribute('datetime', this.props.datetime.getTime());else this.refs.timeagoDom.setAttribute('datetime', this.props.datetime);
+	      this.timeagoInstance.render(this.refs.timeagoDom, this.props.locale);
+	    }
+	  },
+
+	  // remove
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.timeagoInstance.cancel();
+	    this.timeagoInstance = null;
+	  },
+	  render: function render() {
+	    // for render
+	    return _react2['default'].createElement(
+	      'time',
+	      {
+	        ref: 'timeagoDom',
+	        className: this.props.className || '' },
+	      this.timeagoInstance.format(this.props.datetime, this.props.locale)
+	    );
+	  }
+	});
+	module.exports = TimeAgo;
+
+/***/ },
 /* 231 */
+/***/ function(module, exports) {
+
+	!function(t,e){"object"==typeof module&&module.exports?module.exports=e(t):t.timeago=e(t)}("undefined"!=typeof window?window:this,function(){function t(t){return t instanceof Date?t:isNaN(t)?/^\d+$/.test(t)?new Date(e(t,10)):(t=(t||"").trim().replace(/\.\d+/,"").replace(/-/,"/").replace(/-/,"/").replace(/T/," ").replace(/Z/," UTC").replace(/([\+\-]\d\d)\:?(\d\d)/," $1$2"),new Date(t)):new Date(e(t))}function e(t){return parseInt(t)}function n(t,n,r){n=d[n]?n:d[r]?r:"en";var i=0,o=t<0?1:0;for(t=Math.abs(t);t>=l[i]&&i<p;i++)t/=l[i];return t=e(t),i*=2,t>(0===i?9:1)&&(i+=1),d[n](t,i)[o].replace("%s",t)}function r(e,n){return n=n?t(n):new Date,(n-t(e))/1e3}function i(t){for(var e=1,n=0,r=Math.abs(t);t>=l[n]&&n<p;n++)t/=l[n],e*=l[n];return r%=e,r=r?e-r:e,Math.ceil(r)}function o(t){return t.getAttribute?t.getAttribute(h):t.attr?t.attr(h):void 0}function u(t,e){function u(o,c,f,s){var d=r(c,t);o.innerHTML=n(d,f,e),a["k"+s]=setTimeout(function(){u(o,c,f,s)},1e3*i(d))}var a={};return e||(e="en"),this.format=function(i,o){return n(r(i,t),o,e)},this.render=function(t,e){void 0===t.length&&(t=[t]);for(var n=0;n<t.length;n++)u(t[n],o(t[n]),e,++c)},this.cancel=function(){for(var t in a)clearTimeout(a[t]);a={}},this.setLocale=function(t){e=t},this}function a(t,e){return new u(t,e)}var c=0,f="second_minute_hour_day_week_month_year".split("_"),s="秒_分钟_小时_天_周_月_年".split("_"),d={en:function(t,e){if(0===e)return["just now","right now"];var n=f[parseInt(e/2)];return t>1&&(n+="s"),[t+" "+n+" ago","in "+t+" "+n]},zh_CN:function(t,e){if(0===e)return["刚刚","片刻后"];var n=s[parseInt(e/2)];return[t+n+"前",t+n+"后"]}},l=[60,60,24,7,365/7/12,12],p=6,h="datetime";return a.register=function(t,e){d[t]=e},a});
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./ar": 233,
+		"./ar.js": 233,
+		"./be": 234,
+		"./be.js": 234,
+		"./bg": 235,
+		"./bg.js": 235,
+		"./ca": 236,
+		"./ca.js": 236,
+		"./da": 237,
+		"./da.js": 237,
+		"./de": 238,
+		"./de.js": 238,
+		"./el": 239,
+		"./el.js": 239,
+		"./en": 240,
+		"./en.js": 240,
+		"./en_short": 241,
+		"./en_short.js": 241,
+		"./es": 242,
+		"./es.js": 242,
+		"./eu": 243,
+		"./eu.js": 243,
+		"./fi": 244,
+		"./fi.js": 244,
+		"./fr": 245,
+		"./fr.js": 245,
+		"./he": 246,
+		"./he.js": 246,
+		"./hu": 247,
+		"./hu.js": 247,
+		"./in_BG": 248,
+		"./in_BG.js": 248,
+		"./in_HI": 249,
+		"./in_HI.js": 249,
+		"./in_ID": 250,
+		"./in_ID.js": 250,
+		"./it": 251,
+		"./it.js": 251,
+		"./ja": 252,
+		"./ja.js": 252,
+		"./ko": 253,
+		"./ko.js": 253,
+		"./locales": 254,
+		"./locales.js": 254,
+		"./ml": 255,
+		"./ml.js": 255,
+		"./nb_NO": 256,
+		"./nb_NO.js": 256,
+		"./nl": 257,
+		"./nl.js": 257,
+		"./nn_NO": 258,
+		"./nn_NO.js": 258,
+		"./pl": 259,
+		"./pl.js": 259,
+		"./pt_BR": 260,
+		"./pt_BR.js": 260,
+		"./ru": 261,
+		"./ru.js": 261,
+		"./sv": 262,
+		"./sv.js": 262,
+		"./ta": 263,
+		"./ta.js": 263,
+		"./th": 264,
+		"./th.js": 264,
+		"./tr": 265,
+		"./tr.js": 265,
+		"./uk": 266,
+		"./uk.js": 266,
+		"./vi": 267,
+		"./vi.js": 267,
+		"./zh_CN": 268,
+		"./zh_CN.js": 268,
+		"./zh_TW": 269,
+		"./zh_TW.js": 269
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 232;
+
+
+/***/ },
+/* 233 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	    if (index === 0) {
+	        return [ 'منذ لحظات', 'بعد لحظات' ];
+	    }
+
+	    var timeType;
+	    switch (index) {
+	        case 1: timeType = 0; break;
+	        case 2:
+	        case 3: timeType = 1; break;
+	        case 4:
+	        case 5: timeType = 2; break;
+	        case 6:
+	        case 7: timeType = 3; break;
+	        case 8:
+	        case 9: timeType = 4; break;
+	        case 10:
+	        case 11: timeType = 5; break;
+	        case 12:
+	        case 13: timeType = 6; break;
+	    }
+
+	    var timeStr = formatTime(timeType, number);
+	    return ['منذ' + ' ' + timeStr, 'بعد' + ' ' + timeStr];
+	}
+
+	var timeTypes = [
+	    [ 'ثانية', 'ثانيتين', '%s ثوان', '%s ثانية' ],    // Seconds
+	    [ 'دقيقة', 'دقيقتين', '%s دقائق', '%s دقيقة' ],   // Minutes
+	    [ 'ساعة', 'ساعتين', '%s ساعات', '%s ساعة' ],      // Hours
+	    [ 'يوم', 'يومين', '%s أيام', '%s يوماً' ],         // Days
+	    [ 'أسبوع', 'أسبوعين', '%s أسابيع', '%s أسبوعاً' ], // Weeks
+	    [ 'شهر', 'شهرين', '%s أشهر', '%s شهراً' ],         // Months
+	    [ 'عام', 'عامين', '%s أعوام', '%s عاماً' ]         // Years
+	];
+
+	function formatTime(type, n) {
+	    if (n === 1)
+	        return timeTypes[type][0];
+	    else if (n == 2)
+	        return timeTypes[type][1];
+	    else if (n >= 3 && n <= 10)
+	        return timeTypes[type][2];
+	    else
+	        return timeTypes[type][3];
+	}
+
+/***/ },
+/* 234 */
+/***/ function(module, exports) {
+
+	var seconds = formatNum.bind(null, 'секунду', '%s секунду', '%s секунды', '%s секунд'),
+	  minutes = formatNum.bind(null, 'хвіліну', '%s хвіліну', '%s хвіліны', '%s хвілін'),
+	  hours = formatNum.bind(null, 'гадзіну', '%s гадзіну', '%s гадзіны', '%s гадзін'),
+	  days = formatNum.bind(null, 'дзень', '%s дзень', '%s дні', '%s дзён'),
+	  weeks = formatNum.bind(null, 'тыдзень', '%s тыдзень', '%s тыдні', '%s тыдняў'),
+	  months = formatNum.bind(null, 'месяц', '%s месяц', '%s месяцы', '%s месяцаў'),
+	  years = formatNum.bind(null, 'год', '%s год', '%s гады', '%s гадоў');
+
+	module.exports = function(number, index) {
+	  switch(index) {
+	    case 0: return ['толькі што', 'праз некалькі секунд'];
+	    case 1: return [seconds(number) + ' таму', 'праз ' + seconds(number)];
+	    case 2:
+	    case 3: return [minutes(number) + ' таму', 'праз ' + minutes(number)];
+	    case 4:
+	    case 5: return [hours(number) + ' таму', 'праз ' + hours(number)];
+	    case 6: 
+	    case 7: return [days(number) + ' таму', 'праз ' + days(number)];
+	    case 8:
+	    case 9: return [weeks(number) + ' таму', 'праз ' + weeks(number)];
+	    case 10:
+	    case 11: return [months(number) + ' таму', 'праз ' + months(number)];
+	    case 12:
+	    case 13: return [years(number) + ' таму', 'праз ' + years(number)];
+	    default: return ['', '']
+	  }
+	};
+
+	/**
+	 *
+	 * @param f1 - 1
+	 * @param f - 21, 31, ...
+	 * @param s - 2-4, 22-24, 32-34 ...
+	 * @param t - 5-20, 25-30, ...
+	 * @param n
+	 * @returns {string}
+	 */
+	function formatNum(f1, f, s, t, n) {
+	  var n10 = n % 10,
+	    str = t;
+
+	  if (n === 1) {
+	    str = f1;
+	  } else if (n10 === 1 && n > 20) {
+	    str = f;
+	  } else if (n10 > 1 && n10 < 5 && (n > 20 || n < 10)) {
+	    str = s;
+	  }
+
+	  return str;
+	}
+
+
+/***/ },
+/* 235 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['току що', 'съвсем скоро'],
+	    ['преди %s секунди', 'след %s секунди'],
+	    ['преди 1 минута', 'след 1 минута'],
+	    ['преди %s минути', 'след %s минути'],
+	    ['преди 1 час', 'след 1 час'],
+	    ['преди %s часа', 'след %s часа'],
+	    ['преди 1 ден', 'след 1 ден'],
+	    ['преди %s дни', 'след %s дни'],
+	    ['преди 1 седмица', 'след 1 седмица'],
+	    ['преди %s седмици', 'след %s седмици'],
+	    ['преди 1 месец', 'след 1 месец'],
+	    ['преди %s месеца', 'след %s месеца'],
+	    ['преди 1 година', 'след 1 година'],
+	    ['преди %s години', 'след %s години']
+	  ][index];
+	}
+
+
+/***/ },
+/* 236 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['fa un moment', 'd\'aquí un moment'],
+	    ['fa %s segons', 'd\'aquí %s segons'],
+	    ['fa 1 minut', 'd\'aquí 1 minut'],
+	    ['fa %s minuts', 'd\'aquí %s minuts'],
+	    ['fa 1 hora', 'd\'aquí 1 hora'],
+	    ['fa %s hores', 'd\'aquí %s hores'],
+	    ['fa 1 dia', 'd\'aquí 1 dia'],
+	    ['fa %s dies', 'd\'aquí %s dies'],
+	    ['fa 1 setmana', 'd\'aquí 1 setmana'],
+	    ['fa %s setmanes', 'd\'aquí %s setmanes'],
+	    ['fa 1 mes', 'd\'aquí 1 mes'],
+	    ['fa %s mesos', 'd\'aquí %s mesos'],
+	    ['fa 1 any', 'd\'aquí 1 any'],
+	    ['fa %s anys', 'd\'aquí %s anys']
+	  ][index];
+	}
+
+
+/***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['for et øjeblik siden', 'om et øjeblik'],
+	    ['for %s sekunder siden', 'om %s sekunder'],
+	    ['for 1 minut siden', 'om 1 minut'],
+	    ['for %s minutter siden', 'om %s minutter'],
+	    ['for 1 time siden', 'om 1 time'],
+	    ['for %s timer siden', 'om %s timer'],
+	    ['for 1 dag siden', 'om 1 dag'],
+	    ['for %s dage siden', 'om %s dage'],
+	    ['for 1 uge siden', 'om 1 uge'],
+	    ['for %s uger siden', 'om %s uger'],
+	    ['for 1 måned siden', 'om 1 måned'],
+	    ['for %s måneder siden', 'om %s måneder'],
+	    ['for 1 år siden', 'om 1 år'],
+	    ['for %s år siden', 'om %s år']
+	  ][index];
+	}
+
+
+/***/ },
+/* 238 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['gerade eben', 'vor einer Weile'],
+	    ['vor %s Sekunden', 'in %s Sekunden'],
+	    ['vor 1 Minute', 'in 1 Minute'],
+	    ['vor %s Minuten', 'in %s Minuten'],
+	    ['vor 1 Stunde', 'in 1 Stunde'],
+	    ['vor %s Stunden', 'in %s Stunden'],
+	    ['vor 1 Tag', 'in 1 Tag'],
+	    ['vor %s Tagen', 'in %s Tagen'],
+	    ['vor 1 Woche', 'in 1 Woche'],
+	    ['vor %s Wochen', 'in %s Wochen'],
+	    ['vor 1 Monat', 'in 1 Monat'],
+	    ['vor %s Monaten', 'in %s Monaten'],
+	    ['vor 1 Jahr', 'in 1 Jahr'],
+	    ['vor %s Jahren', 'in %s Jahren']
+	  ][index];
+	}
+
+
+/***/ },
+/* 239 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['μόλις τώρα', 'σε λίγο'],
+	    ['%s δευτερόλεπτα πριν', 'σε %s δευτερόλεπτα'],
+	    ['1 λεπτό πριν', 'σε 1 λεπτό'],
+	    ['%s λεπτά πριν', 'σε %s λεπτά'],
+	    ['1 ώρα πριν', 'σε 1 ώρα'],
+	    ['%s ώρες πριν', 'σε %s ώρες'],
+	    ['1 μέρα πριν', 'σε 1 μέρα'],
+	    ['%s μέρες πριν', 'σε %s μέρες'],
+	    ['1 εβδομάδα πριν', 'σε 1 εβδομάδα'],
+	    ['%s εβδομάδες πριν', 'σε %s εβδομάδες'],
+	    ['1 μήνα πριν', 'σε 1 μήνα'],
+	    ['%s μήνες πριν', 'σε %s μήνες'],
+	    ['1 χρόνο πριν', 'σε 1 χρόνο'],
+	    ['%s χρόνια πριν', 'σε %s χρόνια']
+	  ][index];
+	}
+
+
+/***/ },
+/* 240 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['just now', 'right now'],
+	    ['%s seconds ago', 'in %s seconds'],
+	    ['1 minute ago', 'in 1 minute'],
+	    ['%s minutes ago', 'in %s minutes'],
+	    ['1 hour ago', 'in 1 hour'],
+	    ['%s hours ago', 'in %s hours'],
+	    ['1 day ago', 'in 1 day'],
+	    ['%s days ago', 'in %s days'],
+	    ['1 week ago', 'in 1 week'],
+	    ['%s weeks ago', 'in %s weeks'],
+	    ['1 month ago', 'in 1 month'],
+	    ['%s months ago', 'in %s months'],
+	    ['1 year ago', 'in 1 year'],
+	    ['%s years ago', 'in %s years']
+	  ][index];
+	}
+
+
+/***/ },
+/* 241 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['just now', 'right now'],
+	    ['%ss ago', 'in %ss'],
+	    ['1m ago', 'in 1m'],
+	    ['%sm ago', 'in %sm'],
+	    ['1h ago', 'in 1h'],
+	    ['%sh ago', 'in %sh'],
+	    ['1d ago', 'in 1d'],
+	    ['%sd ago', 'in %sd'],
+	    ['1w ago', 'in 1w'],
+	    ['%sw ago', 'in %sw'],
+	    ['1mo ago', 'in 1mo'],
+	    ['%smo ago', 'in %smo'],
+	    ['1yr ago', 'in 1yr'],
+	    ['%syr ago', 'in %syr']
+	  ][index];
+	}
+
+/***/ },
+/* 242 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['justo ahora', 'en un rato'],
+	    ['hace %s segundos', 'en %s segundos'],
+	    ['hace 1 minuto', 'en 1 minuto'],
+	    ['hace %s minutos', 'en %s minutos'],
+	    ['hace 1 hora', 'en 1 hora'],
+	    ['hace %s horas', 'en %s horas'],
+	    ['hace 1 día', 'en 1 día'],
+	    ['hace %s días', 'en %s días'],
+	    ['hace 1 semana', 'en 1 semana'],
+	    ['hace %s semanas', 'en %s semanas'],
+	    ['hace 1 mes', 'en 1 mes'],
+	    ['hace %s meses', 'en %s meses'],
+	    ['hace 1 año', 'en 1 año'],
+	    ['hace %s años', 'en %s años']
+	  ][index];
+	};
+
+/***/ },
+/* 243 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['orain', 'denbora bat barru'],
+	    ['duela %s segundu', '%s segundu barru'],
+	    ['duela minutu 1', 'minutu 1 barru'],
+	    ['duela %s minutu', '%s minutu barru'],
+	    ['duela ordu 1', 'ordu 1 barru'],
+	    ['duela %s ordu', '%s ordu barru'],
+	    ['duela egun 1', 'egun 1 barru'],
+	    ['duela %s egun', '%s egun barru'],
+	    ['duela aste 1', 'aste 1 barru'],
+	    ['duela %s aste', '%s aste barru'],
+	    ['duela hillabete 1', 'hillabete 1 barru'],
+	    ['duela %s hillabete', '%s hillabete barru'],
+	    ['duela urte 1', 'urte 1 barru'],
+	    ['duela %s urte', '%s urte barru']
+	  ][index];
+	}
+
+
+/***/ },
+/* 244 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['juuri äsken', 'juuri nyt'],
+	    ['%s sekuntia sitten', '%s sekunnin päästä'],
+	    ['minuutti sitten', 'minuutin päästä'],
+	    ['%s minuuttia sitten', '%s minuutin päästä'],
+	    ['tunti sitten', 'tunnin päästä'],
+	    ['%s tuntia sitten', '%s tunnin päästä'],
+	    ['päivä sitten', 'päivän päästä'],
+	    ['%s päivää sitten', '%s päivän päästä'],
+	    ['viikko sitten', 'viikon päästä'],
+	    ['%s viikkoa sitten', '%s viikon päästä'],
+	    ['kuukausi sitten', 'kuukauden päästä'],
+	    ['%s kuukautta sitten', '%s kuukauden päästä'],
+	    ['vuosi sitten', 'vuoden päästä'],
+	    ['%s vuotta sitten', '%s vuoden päästä']
+	  ][index];
+	}
+
+
+/***/ },
+/* 245 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['à l\'instant', 'dans un instant'],
+	    ['il y a %s secondes', 'dans %s secondes'],
+	    ['il y a 1 minute', 'dans 1 minute'],
+	    ['il y a %s minutes', 'dans %s minutes'],
+	    ['il y a 1 heure', 'dans 1 heure'],
+	    ['il y a %s heures', 'dans %s heures'],
+	    ['il y a 1 jour', 'dans 1 jour'],
+	    ['il y a %s jours', 'dans %s jours'],
+	    ['il y a 1 semaine', 'dans 1 semaine'],
+	    ['il y a %s semaines', 'dans %s semaines'],
+	    ['il y a 1 mois', 'dans 1 mois'],
+	    ['il y a %s mois', 'dans %s mois'],
+	    ['il y a 1 an', 'dans 1 an'],
+	    ['il y a %s ans', 'dans %s ans']
+	  ][index];
+	}
+
+/***/ },
+/* 246 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	    return [
+	        ['זה עתה', 'עכשיו'],
+	        ['לפני %s שניות', 'בעוד %s שניות'],
+	        ['לפני דקה', 'בעוד דקה'],
+	        ['לפני %s דקות', 'בעוד %s דקות'],
+	        ['לפני שעה', 'בעוד שעה'],
+	        ['לפני %s שעות', 'בעוד %s שעות'],
+	        ['אתמול', 'מחר'],
+	        ['לפני %s ימים', 'בעוד %s ימים'],
+	        ['לפני שבוע', 'בעוד שבוע'],
+	        ['לפני %s שבועות', 'בעוד %s שבועות'],
+	        ['לפני חודש', 'בעוד חודש'],
+	        ['לפני %s חודשים', 'בעוד %s חודשים'],
+	        ['לפני שנה', 'בעוד שנה'],
+	        ['לפני %s שנים', 'בעוד %s שנים']
+	    ][index];
+	}
+
+
+/***/ },
+/* 247 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['éppen most', 'éppen most'],
+	    ['%s másodperce', '%s másodpercen belül'],
+	    ['1 perce', '1 percen belül'],
+	    ['%s perce', '%s percen belül'],
+	    ['1 órája', '1 órán belül'],
+	    ['%s órája', '%s órán belül'],
+	    ['1 napja', '1 napon belül'],
+	    ['%s napja', '%s napon belül'],
+	    ['1 hete', '1 héten belül'],
+	    ['%s hete', '%s héten belül'],
+	    ['1 hónapja', '1 hónapon belül'],
+	    ['%s hónapja', '%s hónapon belül'],
+	    ['1 éve', '1 éven belül'],
+	    ['%s éve', '%s éven belül']
+	  ][index];
+	}
+
+
+/***/ },
+/* 248 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [  
+	  [ 'এইমাত্র' , 'একটা সময়'] ,
+	  [ '%s সেকেন্ড আগে', '%s এর সেকেন্ডের মধ্যে'] ,
+	  [ '1 মিনিট আগে', '1 মিনিটে'] ,
+	  [ '%s এর মিনিট আগে', '%s এর মিনিটের মধ্যে'] ,
+	  [ '1 ঘন্টা আগে', '1 ঘন্টা'] ,
+	  [ '%s ঘণ্টা আগে', '%s এর ঘন্টার মধ্যে'] ,
+	  [ '1 দিন আগে', '1 দিনের মধ্যে'] ,
+	  [ '%s এর দিন আগে', '%s এর দিন'] ,
+	  [ '1 সপ্তাহ আগে', '1 সপ্তাহের মধ্যে'] ,
+	  [ '%s এর সপ্তাহ আগে', '%s সপ্তাহের মধ্যে'] ,
+	  [ '1 মাস আগে', '1 মাসে'] ,
+	  [ '%s মাস আগে', '%s মাসে'] ,
+	  [ '1 বছর আগে', '1 বছরের মধ্যে'] ,
+	  [ '%s বছর আগে', '%s বছরে']
+	  ][index];
+	}
+
+
+/***/ },
+/* 249 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['अभी', 'कुछ समय'],
+	    ['%s सेकंड पहले', '%s सेकंड में'],
+	    ['1 मिनट पहले', '1 मिनट में'],
+	    ['%s मिनट पहले', '%s मिनट में'] ,
+	    ['1 घंटे पहले', '1 घंटे में'] ,
+	    ['%s घंटे पहले', '%s घंटे में'] ,
+	    ['1 दिन पहले', '1 दिन में'] ,
+	    ['%s दिन पहले', '%s दिनों में'] ,
+	    ['1 सप्ताह पहले', '1 सप्ताह में'] ,
+	    ['%s हफ्ते पहले', '%s हफ्तों में'] ,
+	    ['1 महीने पहले', '1 महीने में'] ,
+	    ['%s महीने पहले', '%s महीनों में'] ,
+	    ['1 साल पहले', '1 साल में'] ,
+	    ['%s साल पहले','%s साल में']
+	  ][index];
+	}
+
+
+/***/ },
+/* 250 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['baru saja', 'sebentar'],
+	    ['%s detik yang lalu', 'dalam %s detik'],
+	    ['1 menit yang lalu', 'dalam 1 menit'],
+	    ['%s menit yang lalu', 'dalam %s menit'],
+	    ['1 jam yang lalu', 'dalam 1 jam'],
+	    ['%s jam yang lalu', 'dalam %s jam'],
+	    ['1 hari yang lalu', 'dalam 1 hari'],
+	    ['%s hari yang lalu', 'dalam %s hari'],
+	    ['1 minggu yang lalu', 'dalam 1 minggu'],
+	    ['%s minggu yang lalu', 'dalam %s minggu'],
+	    ['1 bulan yang lalu', 'dalam 1 bulan'],
+	    ['%s bulan yang lalu', 'dalam %s bulan'],
+	    ['1 tahun yang lalu', 'dalam 1 tahun'],
+	    ['%s tahun yang lalu', 'dalam %s tahun']
+	  ][index];
+	}
+
+
+/***/ },
+/* 251 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['poco fa', 'tra poco'],
+	    ['%s secondi fa', '%s secondi da ora'],
+	    ['un minuto fa', 'un minuto da ora'],
+	    ['%s minuti fa', '%s minuti da ora'],
+	    ['un\'ora fa', 'un\'ora da ora'],
+	    ['%s ore fa', '%s ore da ora'],
+	    ['un giorno fa', 'un giorno da ora'],
+	    ['%s giorni fa', '%s giorni da ora'],
+	    ['una settimana fa', 'una settimana da ora'],
+	    ['%s settimane fa', '%s settimane da ora'],
+	    ['un mese fa', 'un mese da ora'],
+	    ['%s mesi fa', '%s mesi da ora'],
+	    ['un anno fa', 'un anno da ora'],
+	    ['%s anni fa', '%s anni da ora']
+	  ][index];
+	}
+
+
+/***/ },
+/* 252 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['すこし前', 'すぐに'],
+	    ['%s秒前', '%s秒以内'],
+	    ['1分前', '1分以内'],
+	    ['%s分前', '%s分以内'],
+	    ['1時間前', '1時間以内'],
+	    ['%s時間前', '%s時間以内'],
+	    ['1日前', '1日以内'],
+	    ['%s日前', '%s日以内'],
+	    ['1週間前', '1週間以内'],
+	    ['%s週間前', '%s週間以内'],
+	    ['1ヶ月前', '1ヶ月以内'],
+	    ['%sヶ月前', '%sヶ月以内'],
+	    ['1年前', '1年以内'],
+	    ['%s年前', '%s年以内']
+	  ][index];
+	}
+
+
+/***/ },
+/* 253 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['방금', '곧'],
+	    ['%s초 전', '%s초 후'],
+	    ['1분 전', '1분 후'],
+	    ['%s분 전', '%s분 후'],
+	    ['1시간 전', '1시간 후'],
+	    ['%s시간 전', '%s시간 후'],
+	    ['1일 전', '1일 후'],
+	    ['%s일 전', '%s일 후'],
+	    ['1주일 전', '1주일 후'],
+	    ['%s주일 전', '%s주일 후'],
+	    ['1개월 전', '1개월 후'],
+	    ['%s개월 전', '%s개월 후'],
+	    ['1년 전', '1년 후'],
+	    ['%s년 전', '%s년 후']
+	  ][index];
+	}
+
+/***/ },
+/* 254 */
+/***/ function(module, exports) {
+
+	/** locales table.
+	 * You can add the missing locale code
+	 * 1. please sort by dictionary.
+	 * 2. please ensure the accuracy.
+	 */
+	module.exports = [ 'ar', 'be', 'bg', 'ca', 'da', 'de', 'el', 'en', 'en_short', 'es', 'eu', 'fi', 'fr', 'he', 'hu', 'in_BG', 'in_HI', 'in_ID', 'it', 'ja', 'ko', 'ml', 'nb_NO', 'nl', 'nn_NO', 'pl', 'pt_BR', 'ru', 'sv', 'ta', 'th', 'tr', 'uk', 'vi', 'zh_CN', 'zh_TW' ];
+
+
+/***/ },
+/* 255 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['ഇപ്പോള്‍', 'കുറച്ചു മുന്‍പ്'],
+	    ['%s സെക്കന്റ്‌കള്‍ക്ക് മുന്‍പ്', '%s സെക്കന്റില്‍'],
+	    ['1 മിനിറ്റിനു മുന്‍പ്', '1 മിനിറ്റില്‍'],
+	    ['%s മിനിറ്റുകള്‍ക്ക് മുന്‍പ', '%s മിനിറ്റില്‍'],
+	    ['1 മണിക്കൂറിനു മുന്‍പ്', '1 മണിക്കൂറില്‍'],
+	    ['%s മണിക്കൂറുകള്‍ക്കു മുന്‍പ്', '%s മണിക്കൂറില്‍'],
+	    ['1 ഒരു ദിവസം മുന്‍പ്', '1 ദിവസത്തില്‍'],
+	    ['%s ദിവസങ്ങള്‍ക് മുന്‍പ്', '%s ദിവസങ്ങള്‍ക്കുള്ളില്‍'],
+	    ['1 ആഴ്ച മുന്‍പ്', '1 ആഴ്ചയില്‍'],
+	    ['%s ആഴ്ചകള്‍ക്ക് മുന്‍പ്', '%s ആഴ്ചകള്‍ക്കുള്ളില്‍'],
+	    ['1 മാസത്തിനു മുന്‍പ്', '1 മാസത്തിനുള്ളില്‍'],
+	    ['%s മാസങ്ങള്‍ക്ക് മുന്‍പ്', '%s മാസങ്ങള്‍ക്കുള്ളില്‍'],
+	    ['1 വര്‍ഷത്തിനു  മുന്‍പ്', '1 വര്‍ഷത്തിനുള്ളില്‍'],
+	    ['%s വര്‍ഷങ്ങള്‍ക്കു മുന്‍പ്', '%s വര്‍ഷങ്ങള്‍ക്കുല്ല്ളില്‍']
+	  ][index];
+	}
+
+
+/***/ },
+/* 256 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['akkurat nå', 'om litt'],
+	    ['%s sekunder siden', 'om %s sekunder'],
+	    ['1 minutt siden', 'om 1 minutt'],
+	    ['%s minutter siden', 'om %s minutter'],
+	    ['1 time siden', 'om 1 time'],
+	    ['%s timer siden', 'om %s timer'],
+	    ['1 dag siden', 'om 1 dag'],
+	    ['%s dager siden', 'om %s dager'],
+	    ['1 uke siden', 'om 1 uke'],
+	    ['%s uker siden', 'om %s uker'],
+	    ['1 måned siden', 'om 1 måned'],
+	    ['%s måneder siden', 'om %s måneder'],
+	    ['1 år siden', 'om 1 år'],
+	    ['%s år siden', 'om %s år']
+	  ][index];
+	}
+
+
+/***/ },
+/* 257 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['recent', 'binnenkort'],
+	    ['%s seconden geleden', 'binnen %s seconden'],
+	    ['1 minuut geleden', 'binnen 1 minuut'],
+	    ['%s minuten geleden', 'binnen %s minuten'],
+	    ['1 uur geleden', 'binnen 1 uur'],
+	    ['%s uren geleden', 'binnen %s uren'],
+	    ['1 dag geleden', 'binnen 1 dag'],
+	    ['%s dagen geleden', 'binnen %s dagen'],
+	    ['1 week geleden', 'binnen 1 week'],
+	    ['%s weken geleden', 'binnen %s weken'],
+	    ['1 maand geleden', 'binnen 1 maand'],
+	    ['%s maanden geleden', 'binnen %s maanden'],
+	    ['1 jaar geleden', 'binnen 1 jaar'],
+	    ['%s jaren geleden', 'binnen %s jaren']
+	  ][index];
+	}
+
+
+/***/ },
+/* 258 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['nett no', 'om litt'],
+	    ['%s sekund sidan', 'om %s sekund'],
+	    ['1 minutt sidan', 'om 1 minutt'],
+	    ['%s minutt sidan', 'om %s minutt'],
+	    ['1 time sidan', 'om 1 time'],
+	    ['%s timar sidan', 'om %s timar'],
+	    ['1 dag sidan', 'om 1 dag'],
+	    ['%s dagar sidan', 'om %s dagar'],
+	    ['1 veke sidan', 'om 1 veke'],
+	    ['%s veker sidan', 'om %s veker'],
+	    ['1 månad sidan', 'om 1 månad'],
+	    ['%s månadar sidan', 'om %s månadar'],
+	    ['1 år sidan', 'om 1 år'],
+	    ['%s år sidan', 'om %s år']
+	  ][index];
+	}
+
+
+/***/ },
+/* 259 */
+/***/ function(module, exports) {
+
+	
+	module.exports = function(number, index) {
+	  var locale = [
+	    ['w tej chwili', 'za chwilę'],
+	    ['%s sekund temu', 'za %s sekund'],
+	    ['1 minutę temu', 'za 1 minutę'],
+	    ['%s minut temu', 'za %s minut'],
+	    ['1 godzina temu', 'za 1 godzinę'],
+	    ['%s godzin temu', 'za %s godzin'],
+	    ['1 dzień temu', 'za 1 dzień'],
+	    ['%s dni temu', 'za %s dni'],
+	    ['1 tydzień temu', 'za 1 tydzień'],
+	    ['%s tygodni temu', 'za %s tygodni'],
+	    ['1 miesiąc temu', 'za 1 miesiąc'],
+	    ['%s miesiące temu', 'za %s miesiące'],
+	    ['1 rok temu', 'za 1 rok'],
+	    ['%s lata temu', 'za %s lata']
+	  ];
+	  var str = number.toString();
+	  if (index == 1 && ((str.length == 2 && str[0] == "1" && str[1] != '0') || [2,3,4].indexOf(number % 10) != -1 || [2,3,4].indexOf(number) != -1)) {
+	    return ['%s sekundy temu', 'za %s sekundy'];
+	  } else if (index == 3 && ([2,3,4].indexOf(number % 10) != -1 || [2,3,4].indexOf(number) != -1)) {
+	    return ['%s minuty temu', 'za %s minuty'];
+	  } else if (index == 5 && ([2,3,4].indexOf(number % 10) != -1 || [2,3,4].indexOf(number) != -1)) {
+	    return ['%s godziny temu', 'za %s godziny'];
+	  } else if (index == 9 && [2,3,4].indexOf(number) != -1) {
+	    return ['%s tygodnie temu', 'za %s tygodnie'];
+	  } else if (index == 11 && (number % 10 == 0 || (str.length == 2 && str[0] == "1") || [1,5,6,7,8,9].indexOf(number % 10) != -1)) {
+	    return ['%s miesięcy temu', 'za %s miesięcy'];
+	  } else if (index == 13 && (number % 10 == 0 || (str.length == 2 && str[0] == "1") || [1,5,6,7,8,9].indexOf(number % 10) != -1)) {
+	    return ['%s lat temu', 'za %s lat'];
+	  } else {
+	    return locale[index];
+	  }
+	};
+
+
+/***/ },
+/* 260 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['agora mesmo', 'daqui um pouco'],
+	    ['há %s segundos', 'em %s segundos'],
+	    ['há um minuto', 'em um minuto'],
+	    ['há %s minutos', 'em %s minutos'],
+	    ['há uma hora', 'em uma hora'],
+	    ['há %s horas', 'em %s horas'],
+	    ['há um dia', 'em um dia'],
+	    ['há %s dias', 'em %s dias'],
+	    ['há uma semana', 'em uma semana'],
+	    ['há %s semanas', 'em %s semanas'],
+	    ['há um mês', 'em um mês'],
+	    ['há %s meses', 'em %s meses'],
+	    ['há um ano', 'em um ano'],
+	    ['há %s anos', 'em %s anos']
+	  ][index];
+	}
+
+
+/***/ },
+/* 261 */
+/***/ function(module, exports) {
+
+	var seconds = formatNum.bind(null, 'секунду', '%s секунду', '%s секунды', '%s секунд'),
+	  minutes = formatNum.bind(null, 'минуту', '%s минуту', '%s минуты', '%s минут'),
+	  hours = formatNum.bind(null, 'час', '%s час', '%s часа', '%s часов'),
+	  days = formatNum.bind(null, 'день', '%s день', '%s дня', '%s дней'),
+	  weeks = formatNum.bind(null, 'неделю', '%s неделю', '%s недели', '%s недель'),
+	  months = formatNum.bind(null, 'месяц', '%s месяц', '%s месяца', '%s месяцев'),
+	  years = formatNum.bind(null, 'год', '%s год', '%s года', '%s лет');
+
+	module.exports = function(number, index) {
+	  switch(index) {
+	    case 0: return ['только что', 'через несколько секунд'];
+	    case 1: return [seconds(number) + ' назад', 'через ' + seconds(number)];
+	    case 2: // ['минуту назад', 'через минуту'];
+	    case 3: return [minutes(number) + ' назад', 'через ' + minutes(number)];
+	    case 4: // ['час назад', 'через час'];
+	    case 5: return [hours(number) + ' назад', 'через ' + hours(number)];
+	    case 6: return ['вчера', 'завтра'];
+	    case 7: return [days(number) + ' назад', 'через ' + days(number)];
+	    case 8: // ['неделю назад', 'через неделю'];
+	    case 9: return [weeks(number) + ' назад', 'через ' + weeks(number)];
+	    case 10: // ['месяц назад', 'через месяц'];
+	    case 11: return [months(number) + ' назад', 'через ' + months(number)];
+	    case 12: // ['год назад', 'через год'];
+	    case 13: return [years(number) + ' назад', 'через ' + years(number)];
+	    default: return ['', '']
+	  }
+	};
+
+	/**
+	 *
+	 * @param f1 - 1
+	 * @param f - 21, 31, ...
+	 * @param s - 2-4, 22-24, 32-34 ...
+	 * @param t - 5-20, 25-30, ...
+	 * @param n
+	 * @returns {string}
+	 */
+	function formatNum(f1, f, s, t, n) {
+	  var n10 = n % 10,
+	    str = t;
+
+	  if (n === 1) {
+	    str = f1;
+	  } else if (n10 === 1 && n > 20) {
+	    str = f;
+	  } else if (n10 > 1 && n10 < 5 && (n > 20 || n < 10)) {
+	    str = s;
+	  }
+	  
+	  return str;
+	}
+
+
+/***/ },
+/* 262 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['just nu', 'om en stund'],
+	    ['%s sekunder sedan', 'om %s seconder'],
+	    ['1 minut sedan', 'om 1 minut'],
+	    ['%s minuter sedan', 'om %s minuter'],
+	    ['1 timme sedan', 'om 1 timme'],
+	    ['%s timmar sedan', 'om %s timmar'],
+	    ['1 dag sedan', 'om 1 day'],
+	    ['%s dagar sedan', 'om %s days'],
+	    ['1 vecka sedan', 'om 1 vecka'],
+	    ['%s veckor sedan', 'om %s veckor'],
+	    ['1 månad sedan', 'om 1 månad'],
+	    ['%s månader sedan', 'om %s månader'],
+	    ['1 år sedan', 'om 1 år'],
+	    ['%s år sedan', 'om %s år']
+	  ][index];
+	}
+
+
+/***/ },
+/* 263 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['இப்போது', 'சற்று நேரம் முன்பு'],
+	    ['%s நொடிக்கு முன்', '%s நொடிகளில்'],
+	    ['1 நிமிடத்திற்க்கு முன்', '1 நிமிடத்தில்'],
+	    ['%s நிமிடத்திற்க்கு முன்', '%s நிமிடங்களில்'],
+	    ['1 மணி நேரத்திற்கு முன்', '1 மணி நேரத்திற்குள்'],
+	    ['%s மணி நேரத்திற்கு முன்', '%s மணி நேரத்திற்குள்'],
+	    ['1 நாளுக்கு முன்', '1 நாளில்'],
+	    ['%s நாட்களுக்கு முன்', '%s நாட்களில்'],
+	    ['1 வாரத்திற்கு முன்', '1 வாரத்தில்'],
+	    ['%s வாரங்களுக்கு முன்', '%s வாரங்களில்'],
+	    ['1 மாதத்திற்கு முன்', '1 மாதத்தில்'],
+	    ['%s மாதங்களுக்கு முன்', '%s மாதங்களில்'],
+	    ['1 வருடத்திற்கு முன்', '1 வருடத்தில்'],
+	    ['%s வருடங்களுக்கு முன்', '%s வருடங்களில்']
+	  ][index];
+	}
+
+/***/ },
+/* 264 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['เมื่อสักครู่นี้', 'อีกสักครู่'],
+	    ['%s วินาทีที่แล้ว', 'ใน %s วินาที'],
+	    ['1 นาทีที่แล้ว', 'ใน 1 นาที'],
+	    ['%s นาทีที่แล้ว', 'ใน %s นาที'],
+	    ['1 ชั่วโมงที่แล้ว', 'ใน 1 ชั่วโมง'],
+	    ['%s ชั่วโมงที่แล้ว', 'ใน %s ชั่วโมง'],
+	    ['1 วันที่แล้ว', 'ใน 1 วัน'],
+	    ['%s วันที่แล้ว', 'ใน %s วัน'],
+	    ['1 อาทิตย์ที่แล้ว', 'ใน 1 อาทิตย์'],
+	    ['%s อาทิตย์ที่แล้ว', 'ใน %s อาทิตย์'],
+	    ['1 เดือนที่แล้ว', 'ใน 1 เดือน'],
+	    ['%s เดือนที่แล้ว', 'ใน %s เดือน'],
+	    ['1 ปีที่แล้ว', 'ใน 1 ปี'],
+	    ['%s ปีที่แล้ว', 'ใน %s ปี']
+	  ][index];
+	}
+
+
+/***/ },
+/* 265 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['az önce', 'şimdi'],
+	    ['%s saniye önce', '%s saniye içinde'],
+	    ['1 dakika önce', '1 dakika içinde'],
+	    ['%s dakika önce', '%s dakika içinde'],
+	    ['1 saat önce', '1 saat içinde'],
+	    ['%s saat önce', '%s saat içinde'],
+	    ['1 gün önce', '1 gün içinde'],
+	    ['%s gün önce', '%s gün içinde'],
+	    ['1 hafta önce', '1 hafta içinde'],
+	    ['%s hafta önce', '%s hafta içinde'],
+	    ['1 ay önce', '1 ay içinde'],
+	    ['%s ay önce', '%s ay içinde'],
+	    ['1 yıl önce', '1 yıl içinde'],
+	    ['%s yıl önce', '%s yıl içinde']
+	  ][index];
+	}
+
+
+/***/ },
+/* 266 */
+/***/ function(module, exports) {
+
+	var seconds = formatNum.bind(null, 'секунду', '%s секунду', '%s секунди', '%s секунд'),
+	  minutes = formatNum.bind(null, 'хвилину', '%s хвилину', '%s хвилини', '%s хвилин'),
+	  hours = formatNum.bind(null, 'годину', '%s годину', '%s години', '%s годин'),
+	  days = formatNum.bind(null, 'день', '%s день', '%s дні', '%s днів'),
+	  weeks = formatNum.bind(null, 'тиждень', '%s тиждень', '%s тиждні', '%s тижднів'),
+	  months = formatNum.bind(null, 'місяць', '%s місяць', '%s місяці', '%s місяців'),
+	  years = formatNum.bind(null, 'рік', '%s рік', '%s роки', '%s років')
+
+	module.exports = function (number, index) {
+	  switch (index) {
+	    case 0: return ['щойно', 'через декілька секунд']
+	    case 1: return [seconds(number) + ' тому', 'через ' + seconds(number)]
+	    case 2:
+	    case 3: return [minutes(number) + ' тому', 'через ' + minutes(number)]
+	    case 4:
+	    case 5: return [hours(number) + ' тому', 'через ' + hours(number)]
+	    case 6:
+	    case 7: return [days(number) + ' тому', 'через ' + days(number)]
+	    case 8:
+	    case 9: return [weeks(number) + ' тому', 'через ' + weeks(number)]
+	    case 10:
+	    case 11: return [months(number) + ' тому', 'через ' + months(number)]
+	    case 12:
+	    case 13: return [years(number) + ' тому', 'через ' + years(number)]
+	    default: return ['', '']
+	  }
+	}
+
+	function formatNum(f1, f, s, t, n) {
+	  var n10 = n % 10,
+	      str = t
+
+	  if (n === 1) {
+	    str = f1
+	  } else if (n10 === 1 && n > 20) {
+	    str = f
+	  } else if (n10 > 1 && n10 < 5 && (n > 20 || n < 10)) {
+	    str = s
+	  }
+	  return str
+	}
+
+/***/ },
+/* 267 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['vừa xong', 'một lúc'],
+	    ['%s giây trước', 'trong %s giây'],
+	    ['1 phút trước', 'trong 1 phút'],
+	    ['%s phút trước', 'trong %s phút'],
+	    ['1 giờ trước', 'trong 1 giờ'],
+	    ['%s giờ trước', 'trong %s giờ'],
+	    ['1 ngày trước', 'trong 1 ngày'],
+	    ['%s ngày trước', 'trong %s ngày'],
+	    ['1 tuần trước', 'trong 1 tuần'],
+	    ['%s tuần trước', 'trong %s tuần'],
+	    ['1 tháng trước', 'trong 1 tháng'],
+	    ['%s tháng trước', 'trong %s tháng'],
+	    ['1 năm trước', 'trong 1 năm'],
+	    ['%s năm trước', 'trong %s năm']
+	  ][index];
+	}
+
+
+/***/ },
+/* 268 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['刚刚', '片刻后'],
+	    ['%s秒前', '%s秒后'],
+	    ['1分钟前', '1分钟后'],
+	    ['%s分钟前', '%s分钟后'],
+	    ['1小时前', '1小时后'],
+	    ['%s小时前', '%s小时后'],
+	    ['1天前', '1天后'],
+	    ['%s天前', '%s天后'],
+	    ['1周前', '1周后'],
+	    ['%s周前', '%s周后'],
+	    ['1月前', '1月后'],
+	    ['%s月前', '%s月后'],
+	    ['1年前', '1年后'],
+	    ['%s年前', '%s年后']
+	  ][index];
+	}
+
+/***/ },
+/* 269 */
+/***/ function(module, exports) {
+
+	module.exports = function(number, index) {
+	  return [
+	    ['剛剛', '片刻後'],
+	    ['%s秒前', '%s秒後'],
+	    ['1分鐘前', '1分鐘後'],
+	    ['%s分鐘前', '%s分鐘後'],
+	    ['1小時前', '1小時後'],
+	    ['%s小時前', '%s小時後'],
+	    ['1天前', '1天後'],
+	    ['%s天前', '%s天後'],
+	    ['1周前', '1周後'],
+	    ['%s周前', '%s周後'],
+	    ['1月前', '1月後'],
+	    ['%s月前', '%s月後'],
+	    ['1年前', '1年後'],
+	    ['%s年前', '%s年後']
+	  ][index];
+	}
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _stringUtils = __webpack_require__(224);
+
+	var _stringUtils2 = _interopRequireDefault(_stringUtils);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/*
+	一个用于提示的Mixin，如何使用？
+	1. 在component中引入本文件，得到 TipShowMixin 的变量
+	2. 在组件中添加： mixins: [TipShowMixin],
+	3. 在需要提示信息的地方加上ref="tip*",即使用以tip开头的任意字符串作为dom的ref
+	4. 同时设置这个ref的data-content="需要提示的字符串"
+	*/
+	var TipShowMixin = {
+	  renderTip: function renderTip() {
+	    for (var key in this.refs) {
+	      if (key.indexOf('tip') === 0 && !_stringUtils2.default.isEmpty(this.refs[key].getAttribute('data-content'))) {
+	        // 以tip开头的dom组件，并且有data-content属性，全部都是需要提示的
+	        var position = this.refs[key].getAttribute('data-position');
+	        if (position != null && position != '') {
+	          $(this.refs[key]).popup({ inline: true, hoverable: true, position: position });
+	        } else {
+	          $(this.refs[key]).popup({ inline: true, hoverable: true, position: 'bottom left' });
+	        }
+	      }
+	    }
+	  },
+	  // 显示一些提示框
+	  componentDidMount: function componentDidMount() {
+	    this.renderTip();
+	  },
+
+	  showWarning: function showWarning(msg) {
+	    this.fire('show_alert', { tip: msg, type: 'warning' });
+	  },
+	  showError: function showError(msg) {
+	    this.fire('show_alert', { tip: msg, type: 'error' });
+	  },
+	  showSuccess: function showSuccess(msg) {
+	    this.fire('show_alert', { tip: msg, type: 'success' });
+	  },
+	  showInfo: function showInfo(msg) {
+	    this.fire('show_alert', { tip: msg, type: 'info' });
+	  }
+	};
+	exports.default = TipShowMixin;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _xhr = __webpack_require__(272);
+
+	var _xhr2 = _interopRequireDefault(_xhr);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var RequestsMixin = {
+	  xhrs: Array(),
+	  // get method
+	  get: function get(url, params, success, failed) {
+	    var xhr = (0, _xhr2.default)();
+	    xhr.on('error', failed);
+	    xhr.on('fail', failed);
+
+	    this.xhrs.push(xhr);
+
+	    xhr.get(url, params, success);
+	  },
+	  // post method
+	  post: function post(url, params, success, failed) {
+	    var xhr = (0, _xhr2.default)();
+	    xhr.on('error', failed);
+	    xhr.on('fail', failed);
+
+	    this.xhrs.push(xhr);
+
+	    xhr.post(url, params, success);
+	  },
+
+	  componentDidMount: function componentDidMount() {},
+	  // when unmont, abort all the request.
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.xhrs.map(function (xhr) {
+	      xhr.abort();
+	      xhr = null;
+	    });
+	    this.xhrs = Array();
+	  }
+	};
+
+	exports.default = RequestsMixin;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports) {
+
+	!function(e,t){"object"==typeof module&&module.exports?module.exports=t(e):e.XHR=t(e)}("undefined"!=typeof window?window:this,function(){var e=function(e){var t=function(e){var t=e.responseText,n=e.status,r=e.statusText,o=e.responseType,u=e.getAllResponseHeaders(),s=function(){try{return JSON.parse(t)}catch(e){return null}},c=e.responseXML,i=function(){return c},f=null,a=function(){if(null===f&&(f={},u))for(var e=u.split("\n"),t="",n=0;n<e.length;n++)t=e[n].split(": "),t&&2===t.length&&t[0]&&(f[t[0]]=t[1]);return f};return{text:t,status_code:n,status_text:r,response_type:o,header_text:u,json:s,xml:i,headers:a}},n=function(){},r=function(){return{ready:n,error:n,success:n,fail:n}},o="",u="",s={},c="",i=e!==!1,f=r(),a=new XMLHttpRequest,p=function(e,t){"ready"!==e&&"error"!==e&&"success"!==e&&"fail"!==e||"function"==typeof t&&(f[e]=t)},l=function(){var e=t(a);4===a.readyState?(f.ready(e,g),200===a.status?f.success(e,g):f.fail(e,g)):f.error(e,g)},d=function(e,t){s[e]=t},y=function(e){i=e},x=function(e){if(e&&"object"==typeof e){var t=encodeURIComponent,n=[];for(var r in e)n.push(t(r)+"="+t(e[r]));return n.join("&")}return""},h=function(e,t,n,r,s){return o=e,u=t,c=n,p("success",r),p("fail",s),T()},v=function(e,t,n,r){return t=x(t),t&&(e=e+"?"+t),h("GET",e,"",n,r)},w=function(e,t,n,r){return d("Content-Type","application/json"),"object"==typeof t&&(t=x(t),d("Content-Type","application/x-www-form-urlencoded")),h("POST",e,t,n,r)},T=function(){a.open(o,u,i);for(var e in s)a.setRequestHeader(e,s[e]);return a.onreadystatechange=l,a.send(c),g},b=function(){a&&a.abort()},j=function(){return u},m=function(){return c},R=function(){i=!0,u="",c="",o="",s={},f=r()},g={url:j,body:m,on:p,setRequestHeader:d,setAsync:y,request:h,get:v,post:w,abort:b,reset:R};return g};return e});
+
+/***/ },
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26028,59 +27453,284 @@
 
 	var _reactRouter = __webpack_require__(159);
 
+	var _timeagoReact = __webpack_require__(230);
+
+	var _timeagoReact2 = _interopRequireDefault(_timeagoReact);
+
+	var _onFireMixin = __webpack_require__(227);
+
+	var _onFireMixin2 = _interopRequireDefault(_onFireMixin);
+
+	var _tipShowMixin = __webpack_require__(270);
+
+	var _tipShowMixin2 = _interopRequireDefault(_tipShowMixin);
+
+	var _xhrRequestsMixin = __webpack_require__(271);
+
+	var _xhrRequestsMixin2 = _interopRequireDefault(_xhrRequestsMixin);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Server = _react2.default.createClass({
 	  displayName: 'Server',
 
+	  __ONFIRE__: 'Server',
+	  mixins: [_xhrRequestsMixin2.default, _onFireMixin2.default, _tipShowMixin2.default], // 引入 mixin
+	  getInitialState: function getInitialState() {
+	    return {
+	      showAddForm: false,
+	      servers: []
+	    };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.get('/api/server/list', {}, function (r) {
+	      r = r.json();
+	      if (r.success) this.setState({ servers: r.data });else this.showError('加载数据失败！');
+	    }.bind(this));
+	  },
+	  clickNewBtn: function clickNewBtn(save) {
+	    if (save) {
+	      this.post('/api/server/new', {
+	        name: this.refs.name.value,
+	        ip: this.refs.ip.value,
+	        port: this.refs.port.value,
+	        account: this.refs.account.value,
+	        pkey: this.refs.pkey.value
+	      }, function (r) {
+	        r = r.json();
+	        if (r.success) {
+	          this.refs.addForm.reset();
+
+	          var servers = this.state.servers;
+	          servers.push(r.data);
+	          this.setState({ servers: servers, showAddForm: false });
+	        } else this.showError(r.data);
+	      }.bind(this));
+	    } else {
+	      this.setState({ showAddForm: true });
+	    }
+	  },
+	  editServer: function editServer(server, index) {
+	    console.log(server, 'TODO');
+	  },
+	  deleteServer: function deleteServer(server_id, index) {
+	    this.post('/api/server/delete', {
+	      server_id: server_id
+	    }, function (r) {
+	      r = r.json();
+	      if (r.success) {
+	        var servers = this.state.servers;
+	        servers.splice(index, 1);
+	        this.setState({ servers: servers, showAddForm: false });
+	      } else this.showError(r.data);
+	    }.bind(this));
+	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'ui tall stacked segment' },
 	      _react2.default.createElement(
-	        'div',
-	        { className: 'ui medium header' },
-	        'MTL Automation'
+	        'h3',
+	        { className: 'ui dividing header right aligned' },
+	        'Server List'
 	      ),
 	      _react2.default.createElement(
-	        'ol',
-	        { className: 'ui list' },
+	        'table',
+	        { className: 'ui very basic table' },
 	        _react2.default.createElement(
-	          'li',
+	          'thead',
 	          null,
 	          _react2.default.createElement(
-	            'strong',
+	            'tr',
 	            null,
 	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/' },
-	              'Index'
+	              'th',
+	              { width: '5%' },
+	              '#'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '15%' },
+	              'Name'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '20%' },
+	              'IP'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '8%' },
+	              'Port'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '17%' },
+	              'Account'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '10%' },
+	              'PKey'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '15%' },
+	              'Time'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              { width: '10%' },
+	              'Operate'
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'li',
+	          'tbody',
 	          null,
+	          this.state.servers.map(function (server, i) {
+	            return _react2.default.createElement(
+	              'tr',
+	              { key: i },
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                server.id
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                server.name
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                server.ip
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                server.port
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                server.account
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                '****'
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                { title: server.add_time },
+	                _react2.default.createElement(_timeagoReact2.default, { locale: 'zh_CN', datetime: server.add_time })
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'mini ui icon button', onClick: this.editServer.bind(this, server, i) },
+	                  _react2.default.createElement('i', { className: 'ui icon edit' })
+	                ),
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'mini ui icon button', onClick: this.deleteServer.bind(this, server.id, i) },
+	                  _react2.default.createElement('i', { className: 'ui icon delete' })
+	                )
+	              )
+	            );
+	          }.bind(this))
+	        )
+	      ),
+	      this.state.showAddForm && _react2.default.createElement(
+	        'form',
+	        { className: 'ui form', ref: 'addForm' },
+	        _react2.default.createElement(
+	          'h3',
+	          { className: 'ui dividing header left aligned' },
+	          'New Server'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'four fields' },
 	          _react2.default.createElement(
-	            'strong',
-	            null,
+	            'div',
+	            { className: 'field' },
 	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/dashboard' },
-	              'DashBoard'
-	            )
+	              'label',
+	              null,
+	              'CName'
+	            ),
+	            _react2.default.createElement('input', { ref: 'name', type: 'text', placeholder: 'Server Name' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'field' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Server IP'
+	            ),
+	            _react2.default.createElement('input', { ref: 'ip', type: 'text', placeholder: 'Server IP' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'field' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Server Port'
+	            ),
+	            _react2.default.createElement('input', { ref: 'port', type: 'number', placeholder: 'Server Port' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'field' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Server Account'
+	            ),
+	            _react2.default.createElement('input', { ref: 'account', type: 'text', placeholder: 'Server Account' })
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'li',
-	          null,
+	          'div',
+	          { className: 'field' },
 	          _react2.default.createElement(
-	            'strong',
+	            'label',
 	            null,
+	            'Private Key ',
 	            _react2.default.createElement(
 	              _reactRouter.Link,
 	              { to: '/doc' },
-	              'Documents'
+	              _react2.default.createElement('i', { className: 'ui icon help' })
+	            )
+	          ),
+	          _react2.default.createElement('textarea', { ref: 'pkey', rows: '6' })
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'ui center aligned basic segment' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'ui center aligned basic segment' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'ui teal animated fade button mini', onClick: this.clickNewBtn.bind(this, this.state.showAddForm) },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'visible content' },
+	              '\u6DFB\u52A0\u65B0\u7684 Server'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'hidden content' },
+	              '\u6DFB\u52A0\u65B0\u7684 Server'
 	            )
 	          )
 	        )
@@ -26092,7 +27742,7 @@
 	exports.default = Server;
 
 /***/ },
-/* 232 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26119,135 +27769,13 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'ui medium header' },
-	        'MTL Automation'
-	      ),
-	      _react2.default.createElement(
-	        'ol',
-	        { className: 'ui list' },
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/' },
-	              'Index'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/dashboard' },
-	              'DashBoard'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/doc' },
-	              'Documents'
-	            )
-	          )
-	        )
+	        'HistoryList'
 	      )
 	    );
 	  }
 	});
 
 	exports.default = HistoryList;
-
-/***/ },
-/* 233 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(159);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var History = _react2.default.createClass({
-	  displayName: 'History',
-
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'ui tall stacked segment' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'ui medium header' },
-	        'MTL Automation'
-	      ),
-	      _react2.default.createElement(
-	        'ol',
-	        { className: 'ui list' },
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/' },
-	              'Index'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/dashboard' },
-	              'DashBoard'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'li',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '/doc' },
-	              'Documents'
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-
-	exports.default = History;
 
 /***/ }
 /******/ ]);

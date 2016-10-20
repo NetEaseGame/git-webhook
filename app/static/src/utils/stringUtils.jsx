@@ -1,35 +1,29 @@
 import React from 'react';
 
 let StringUtils = {
-  isEmpty: function(input) {
-    if (input == null || input == undefined) return true;
-
-    let type = typeof input;
-    if (type === 'string' && input == '') return true;
-    if (type === 'object') {
-      for (let key in input) {
-        // 只要有一个元素，就不是空
-        return false;
-      }
-      return true;
+  statusToTag: function(status) {
+    let text, className;
+    if (status == 1) {
+      text = '执行';
+      className = 'compact ui mini yellow tag label';
     }
-    return false;
-  },
-  // 字符串为null
-  isNone: function(str) {
-    if (str == null || str == undefined) {
-      return true;
+    else if (status == 2) {
+      text = '失败';
+      className = 'compact ui mini red tag label';
     }
-    return false;
-  },
-  startWith: function(str, needle) {
-    if (isNone(str) || isNone(needle)) {
-      return false;
+    else if (status == 3) {
+      text = '成功';
+      className = 'compact ui mini green tag label';
     }
-    if (str.indexOf(needle) === 0) {
-      return true;
+    else if (status == 4) {
+      text = '异常';
+      className = 'compact ui mini red tag label';
     }
-    return false;
+    else {
+      text = '未知';
+      className = 'compact ui mini grey tag label';
+    }
+    return [text, className];
   }
 }
 

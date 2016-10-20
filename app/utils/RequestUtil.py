@@ -36,4 +36,4 @@ def login_user(user):
 
 # logou user, session pop
 def logout():
-    session.pop('u_id')
+    session.pop('u_id', '')

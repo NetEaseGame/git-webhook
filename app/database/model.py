@@ -48,6 +48,7 @@ class Server(db.Model, BaseMethod):
     
     add_time = db.Column(db.DateTime, default=datetime.datetime.now)
     
+    deleted = db.Column(db.Boolean, default=False)
     def dict(self, with_pkey=False):
         rst = {}
         rst['id'] = self.id
@@ -78,16 +79,20 @@ class WebHook(db.Model, BaseMethod):
     
     key = db.Column(db.String(32), unique=True) # 用于webhook，保证私密，直接用 md5 salt
     
-    def dict(self):
+    status = db.Column(db.String(1)) # 1: ing, 2:error, 3: success
+    
+    def dict(self, with_key=False):
         rst = {}
         rst['id'] = self.id
-        rst['repo'] = self.name
-        rst['branch'] = self.ip
-        rst['shell'] = self.port
-        rst['user_id'] = self.account
-        rst['server_id'] = with_pkey and self.pkey or ''
+        rst['repo'] = self.repo
+        rst['branch'] = self.branch
+        rst['shell'] = self.shell
+        rst['user_id'] = self.user_id
+        rst['server_id'] = self.server_id
         rst['server'] = self.server and self.server.dict() or {}
         rst['add_time'] = self.add_time
+        rst['key'] = with_key and self.key or ''
+        rst['status'] = self.status
         return rst
     
 

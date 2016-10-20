@@ -24,7 +24,6 @@ body {
   background:#3f3f3f;
 }
 .main-content {
-  /*background-image: url(/static/res/img/bg3.jpg);*/
   background-size: cover;
   background-attachment: fixed;
 }

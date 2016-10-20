@@ -14,14 +14,13 @@ const Header = React.createClass({
           <span className="text">{loginUser.name}</span>
           <i className="dropdown icon"></i>
           <div className="menu">
-            <a href="http://avatar.163-inc.com" target="_blank" className="item"><i className="user icon"></i>修改头像</a>
-            <a href="/logout.html" className="item"><i className="sign out icon"></i>Log out</a>
+            <a href="/logout" className="item"><i className="sign out icon"></i>Log out</a>
           </div>
         </div>
       )
     } 
     return (
-      <a href="/login.html" className="item">登录</a>
+      <a href="/login" className="item">登录</a>
     )
   },
   render: function() {
@@ -31,12 +30,12 @@ const Header = React.createClass({
           <Link to="/" className="header item">
             <img className="logo" width="32" height="32" src="static/res/img/logo.png" />
           </Link>
-          <Link to="/" className="header item">MTL Automation</Link>
-          <Link to="/status" className="header item">系统状态</Link>
-          <Link to="/document" className="header item">文档</Link>
+          <Link to="/" className="header item">Git WebHook</Link>
+          <Link to="/server" className="header item">服务器</Link>
+          
           <div className="right menu">
             <a href="#" className="item">
-              {StringUtils.avatarImg(loginUser.id, 32)}
+              <img className="logo" width="32" height="32" src={loginUser.avatar} />
             </a>
             {this.renderUserActionComp()}
           </div>

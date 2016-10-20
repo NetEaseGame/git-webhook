@@ -18,7 +18,7 @@ def ssh_log_success(log, fail_regex='.*(fail|error|0)$'):
 
 
 # ssh to exec cmd
-def do_ssh_cmd(ip, port, accout, pkey, shell, push_data='', timeout=300):
+def do_ssh_cmd(ip, port, account, pkey, shell, push_data='', timeout=300):
     try:
         port = int(port)
     except:
@@ -34,10 +34,11 @@ def do_ssh_cmd(ip, port, accout, pkey, shell, push_data='', timeout=300):
     s.load_system_host_keys()
     s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     
-    s.connect(ip, port, accout, pkey=private_key)
-    
-    cmd = cmd + (" '%s'" % push_data)
-    stdin, stdout, stderr = s.exec_command(cmd, timeout=timeout)
+    s.connect(ip, port, account, pkey=private_key)
+    if push_data:
+        shell = shell + (" '%s'" % push_data)
+    print shell
+    stdin, stdout, stderr = s.exec_command(shell, timeout=timeout)
     
     out = stdout.read()
     err = stderr.read()
