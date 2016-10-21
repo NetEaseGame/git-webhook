@@ -35,16 +35,19 @@ def do_ssh_cmd(ip, port, account, pkey, shell, push_data='', timeout=300):
     s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     
     s.connect(ip, port, account, pkey=private_key)
-    if push_data:
-        shell = shell + (" '%s'" % push_data)
-
+#     if push_data:
+#     shell = shell + (" '%s'" % push_data)
+    shell = shell.split('\n')
+    shell = [sh for sh in shell if sh.strip()]
+    shell = ' && '.join(shell)
+    
     stdin, stdout, stderr = s.exec_command(shell, timeout=timeout)
     
     out = stdout.read()
     err = stderr.read()
-    
-    log = out or err  # log
-    success = StringUtil.is_empty(err)  # 是否成功失败
+
+    log = '%s%s' % (out, err)  # log
+    success = True
 
     s.close()
     pkey_file.close()
