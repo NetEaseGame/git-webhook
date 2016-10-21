@@ -90,6 +90,7 @@ WebHook列表
  - Celery 进程情况显示（当 Celery 进程没有执行的时候，在页面上提示，类似于 Sentry）；
  - 系统状态和统计（任务队列实时情况，WebHook 执行的统计图表）；
  - **发布为 pip 包，使得安装部署更加容易**；
+ - Document 使用文档 & 帮助文档；
 
 
 ## LICENSE
