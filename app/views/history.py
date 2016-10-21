@@ -39,4 +39,4 @@ def api_history_list():
         'page': paginations.page
     }
     
-    return ResponseUtil.standard_response(1, histories)
+    return ResponseUtil.standard_response(1, data)

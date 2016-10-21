@@ -63,6 +63,10 @@ WebHook列表
 
 ![server.png](app/static/res/img/server.png)
 
+WebHook 历史记录
+
+![history.png](app/static/res/img/history.png)
+
 
 ## 四、部署
 
@@ -86,7 +90,6 @@ WebHook列表
 
 
  - 首页页面（介绍项目，以及 GitHub 登陆链接）；
- - WebHook 执行的历史情况页面（每次 push 的数据，WebHook 执行结果等信息展示）；
  - Celery 进程情况显示（当 Celery 进程没有执行的时候，在页面上提示，类似于 Sentry）；
  - 系统状态和统计（任务队列实时情况，WebHook 执行的统计图表）；
  - **发布为 pip 包，使得安装部署更加容易**；
