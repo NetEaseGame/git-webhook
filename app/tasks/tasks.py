@@ -29,12 +29,12 @@ def do_webhook_shell(webhook_id, histroy_id, data):
     webhook.updateStatus(status)
     try:
         success, log = SshUtil.do_ssh_cmd(ip, port, account, pkey, shell, JsonUtil.object_2_json(data))
-        status = '3' # error
+        status = '3'  # error
         if success:
-            status = '4' # success
+            status = '4'  # success
     except Exception, e:
         success, log = False, 'Server SSH error: ' + str(e)
-        status = '5' # except
+        status = '5'  # except
 
     history.status = status
     history.push_user = '%s <%s>' % (HookDataParse.get_push_name(data), HookDataParse.get_push_email(data))

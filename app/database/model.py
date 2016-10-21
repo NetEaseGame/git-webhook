@@ -49,6 +49,7 @@ class Server(db.Model, BaseMethod):
     add_time = db.Column(db.DateTime, default=datetime.datetime.now)
     
     deleted = db.Column(db.Boolean, default=False)
+
     def dict(self, with_pkey=False):
         rst = {}
         rst['id'] = self.id
@@ -65,9 +66,9 @@ class Server(db.Model, BaseMethod):
 class WebHook(db.Model, BaseMethod):
     '''webhook'''
     id = db.Column(db.Integer, primary_key=True)
-    repo = db.Column(db.String(32)) # repo name
-    branch = db.Column(db.String(32)) # repo branch
-    shell = db.Column(db.Text) # do what
+    repo = db.Column(db.String(32))  # repo name
+    branch = db.Column(db.String(32))  # repo branch
+    shell = db.Column(db.Text)  # do what
     
     user_id = db.Column(db.String(32), db.ForeignKey(User.id))
     user = db.relationship(User)
@@ -77,10 +78,10 @@ class WebHook(db.Model, BaseMethod):
     
     add_time = db.Column(db.DateTime, default=datetime.datetime.now)
     
-    key = db.Column(db.String(32), unique=True) # 用于webhook，保证私密，直接用 md5 salt
+    key = db.Column(db.String(32), unique=True)  # 用于webhook，保证私密，直接用 md5 salt
     
-    status = db.Column(db.String(1)) # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
-    lastUpdate = db.Column(db.DateTime, default=datetime.datetime.now) # 最新执行时间
+    status = db.Column(db.String(1))  # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
+    lastUpdate = db.Column(db.DateTime, default=datetime.datetime.now)  # 最新执行时间
     
     def dict(self, with_key=False):
         rst = {}
@@ -106,14 +107,14 @@ class WebHook(db.Model, BaseMethod):
 
 class History(db.Model, BaseMethod):
     '''push history'''
-    #md5, notice, output, push_name, push_email, success, add_time
+    # md5, notice, output, push_name, push_email, success, add_time
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(1)) # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
-    shell_log = db.Column(db.Text) # hook shell log
+    status = db.Column(db.String(1))  # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
+    shell_log = db.Column(db.Text)  # hook shell log
     
-    data = db.Column(db.Text) # git push data
-    push_user = db.Column(db.String(64)) # git push user(name<email>)
-    add_time = db.Column(db.DateTime, default=datetime.datetime.now) # git push time
+    data = db.Column(db.Text)  # git push data
+    push_user = db.Column(db.String(64))  # git push user(name<email>)
+    add_time = db.Column(db.DateTime, default=datetime.datetime.now)  # git push time
     
     webhook_id = db.Column(db.Integer, db.ForeignKey(WebHook.id))
     webhook = db.relationship(WebHook)
@@ -123,7 +124,7 @@ class History(db.Model, BaseMethod):
         rst['id'] = self.id
         rst['status'] = self.status
         rst['shell_log'] = self.shell_log
-        rst['data'] = self.data # json
+        rst['data'] = self.data  # json
         rst['push_user'] = self.push_user
         rst['add_time'] = self.add_time
         
