@@ -6,7 +6,6 @@ before_install:
   - pip install codecov
 # command to install dependencies
 install:
-  - pip install .
   - pip install requirements.txt
 before_script:
   - chmod 777 ./tests/lint_py.sh
