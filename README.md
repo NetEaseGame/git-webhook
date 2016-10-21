@@ -2,7 +2,7 @@
 
 > 一个使用 Python Flask + SQLAchemy + Celery + Redis + React 开发的用于迅速搭建并使用  WebHook 进行自动化部署和运维系统，支持：**Github / GitLab / GitOsc**。
 
-![GitHub](http://shields.hust.cc/Supported-GitHub-brightgreen.svg) ![GitLab](http://shields.hust.cc/Supported-GitLab-green.svg) ![GitOsc](http://shields.hust.cc/Supported-GitOsc-blue.svg)
+[![Build Status](https://travis-ci.org/NetEaseGame/git-webhook.svg?branch=master)](https://travis-ci.org/NetEaseGame/git-webhook) ![GitHub](http://shields.hust.cc/Supported-GitHub-brightgreen.svg) ![GitLab](http://shields.hust.cc/Supported-GitLab-green.svg) ![GitOsc](http://shields.hust.cc/Supported-GitOsc-blue.svg)
 
  - 技术栈简单，**部署**容易；
  - 代码简洁易懂，**二次开发**毫无压力；
