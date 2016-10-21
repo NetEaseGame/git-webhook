@@ -26,7 +26,7 @@ def api_history_list():
         page = 1
 
     page_size = 25
-    paginations = History.query.order_by(History.id.desc()).paginate(page, page_size, error_out=False)
+    paginations = History.query.filter_by(webhook_id=webhook_id).order_by(History.id.desc()).paginate(page, page_size, error_out=False)
     
     histories = paginations.items
     histories = [history.dict() for history in histories]
