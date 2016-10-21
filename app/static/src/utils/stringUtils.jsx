@@ -4,18 +4,22 @@ let StringUtils = {
   statusToTag: function(status) {
     let text, className;
     if (status == 1) {
+      text = '等待';
+      className = 'compact ui mini blue tag label';
+    }
+    else if (status == 2) {
       text = '执行';
       className = 'compact ui mini yellow tag label';
     }
-    else if (status == 2) {
+    else if (status == 3) {
       text = '失败';
       className = 'compact ui mini red tag label';
     }
-    else if (status == 3) {
+    else if (status == 4) {
       text = '成功';
       className = 'compact ui mini green tag label';
     }
-    else if (status == 4) {
+    else if (status == 5) {
       text = '异常';
       className = 'compact ui mini red tag label';
     }
