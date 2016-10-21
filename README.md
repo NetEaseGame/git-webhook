@@ -23,7 +23,7 @@ Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用
 2. 安装 Python 依赖
 
 	```sh
-	pip install requirements.txt
+	pip install -r requirements.txt
 	```
 
 3. 配置 `config.py`
