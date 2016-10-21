@@ -86,7 +86,7 @@ const WebHook = React.createClass({
               <th width="15%">Repo</th>
               <th width="25%">Shell</th>
               <th width="15%">Server</th>
-              <th width="10%">AddTime</th>
+              <th width="10%">LastHook</th>
               <th width="15%">Status</th>
               <th width="15%">Operate</th>
             </tr>
@@ -101,10 +101,10 @@ const WebHook = React.createClass({
                   <td><Link to={'/history/' + webhook.id}> {webhook.repo + '@' + webhook.branch} </Link></td>
                   <td dangerouslySetInnerHTML={{__html: "<pre>" + webhook.shell + "</pre>"}}></td>
                   <td>{webhook.server.name}</td>
-                  <td title={webhook.add_time}><TimeAgo locale='zh_CN' datetime={webhook.add_time} /></td>
+                  <td title={webhook.lastUpdate}><TimeAgo locale='zh_CN' datetime={webhook.lastUpdate} /></td>
                   <td><span className={status[1]}>{status[0]}</span></td>
                   <td>
-                    <button className="mini ui icon button copy_btn" data-clipboard-text={location.protocol + '//' + location.host + '/api/git-webhook/' + webhook.key}><i className="ui icon copy"></i></button>
+                    <button className="mini ui icon button copy_btn" title="Copy WebHook to clipboard!" data-clipboard-text={location.protocol + '//' + location.host + '/api/git-webhook/' + webhook.key}><i className="ui icon copy"></i></button>
                     <button className="mini ui icon button" onClick={this.editWebHook.bind(this, webhook, i)}><i className="ui icon edit"></i></button>
                     <button className="mini ui icon button" onClick={this.deleteWebHook.bind(this, webhook.id, i)}><i className="ui icon delete"></i></button>
                   </td>

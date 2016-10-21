@@ -80,6 +80,7 @@ class WebHook(db.Model, BaseMethod):
     key = db.Column(db.String(32), unique=True) # 用于webhook，保证私密，直接用 md5 salt
     
     status = db.Column(db.String(1)) # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
+    lastUpdate = db.Column(db.DateTime, default=datetime.datetime.now) # 最新执行时间
     
     def dict(self, with_key=False):
         rst = {}
@@ -93,10 +94,13 @@ class WebHook(db.Model, BaseMethod):
         rst['add_time'] = self.add_time
         rst['key'] = with_key and self.key or ''
         rst['status'] = self.status
+        rst['lastUpdate'] = self.lastUpdate
         return rst
     
     def updateStatus(self, status):
         self.status = status
+        self.lastUpdate = datetime.datetime.now()
+        
         self.save()
     
 
