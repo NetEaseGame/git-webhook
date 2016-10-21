@@ -82,10 +82,10 @@ const WebHook = React.createClass({
         <table className="ui very basic table">
           <thead>
             <tr>
-              <th width="10%">#</th>
+              <th width="5%">#</th>
               <th width="15%">Repo</th>
               <th width="25%">Shell</th>
-              <th width="10%">Server</th>
+              <th width="15%">Server</th>
               <th width="10%">AddTime</th>
               <th width="15%">Status</th>
               <th width="15%">Operate</th>
@@ -100,7 +100,7 @@ const WebHook = React.createClass({
                   <td>{webhook.id}</td>
                   <td><Link to={'/history/' + webhook.id}> {webhook.repo + '@' + webhook.branch} </Link></td>
                   <td dangerouslySetInnerHTML={{__html: "<pre>" + webhook.shell + "</pre>"}}></td>
-                  <td>{webhook.server.ip}</td>
+                  <td>{webhook.server.name}</td>
                   <td title={webhook.add_time}><TimeAgo locale='zh_CN' datetime={webhook.add_time} /></td>
                   <td><span className={status[1]}>{status[0]}</span></td>
                   <td>

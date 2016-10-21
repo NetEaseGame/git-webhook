@@ -33,7 +33,7 @@ module.exports = {
     }]
   },
   plugins: [
-    // uglifyJsPlugin, 
-    // definePlugin
+     uglifyJsPlugin, 
+     definePlugin
   ]
 };

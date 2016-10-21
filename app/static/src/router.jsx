@@ -12,6 +12,7 @@ import HistoryList from './historyList.jsx';
 ReactDOM.render((
   <Router history={hashHistory}>
     <Route path="/" component={MainComponent}>
+      <Route path="/webhook" component={WebHook} />
       <Route path="/server" component={Server} />
       <Route path="/history/:webhook_id" component={HistoryList} />
       <Route path="/history/:webhook_id/:page" component={HistoryList} />

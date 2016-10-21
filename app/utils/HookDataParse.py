@@ -14,7 +14,7 @@ def get_repo_name(hook_data):
 def get_repo_branch(hook_data):
     branch = hook_data.get('ref', '') # github, gitlib
     if branch:
-        return branch[branch.rfind("/"):]
+        return branch[branch.rfind("/") + 1:]
     return hook_data.get('push_data', {}).get('ref', '') # gitosc
 
 

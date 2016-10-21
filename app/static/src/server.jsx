@@ -117,16 +117,16 @@ const Server = React.createClass({
                 <input ref="ip" type="text" placeholder="Server IP" />
               </div>
               <div className="field">
-                <label>Server Port</label>
+                <label>Server SSH Port</label>
                 <input ref="port" type="number" placeholder="Server Port" />
               </div>
               <div className="field">
-                <label>Server Account</label>
+                <label>Server SSH Account</label>
                 <input ref="account" type="text" placeholder="Server Account" />
               </div>
             </div>
             <div className="field">
-              <label>Private Key <Link to="/doc"><i className="ui icon help"></i></Link></label>
+              <label>SSH Private Key <Link to="/doc/pkey"><i className="ui icon help"></i></Link></label>
               <textarea ref="pkey" rows="6"></textarea>
             </div>
           </form>

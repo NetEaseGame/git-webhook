@@ -1,65 +1,11 @@
-## gitlib hook data
+# -*- coding: utf-8 -*-
+'''
+Created on 2016年10月21日
 
-```javascript
-{
-    "object_kind": "push",
-    "before": "2883a17f7a69c35b2a591c63d9581e634d7c3d0e",
-    "after": "d5bb5e2fbafb75c37d201de8d0b7f50e2db6b04e",
-    "ref": "refs/heads/master",
-    "checkout_sha": "d5bb5e2fbafb75c37d201de8d0b7f50e2db6b04e",
-    "message": null,
-    "user_id": 41,
-    "user_name": "王志伟",
-    "user_email": "i@hust.cc",
-    "project_id": 10,
-    "repository": {
-        "name": "code-mess",
-        "url": "ssh://git@hust.cc:32200/i/code-mess.git",
-        "description": "一些杂碎简单的代码，自己写起来麻烦，搜索也能搜索到，收集起来，提高效率",
-        "homepage": "http://hust.cc/i/code-mess",
-        "git_http_url": "http://hust.cc/i/code-mess.git",
-        "git_ssh_url": "ssh://git@hust.cc:32200/i/code-mess.git",
-        "visibility_level": 20
-    },
-    "commits": [
-        {
-            "id": "d5bb5e2fbafb75c37d201de8d0b7f50e2db6b04e",
-            "message": "update md\n",
-            "timestamp": "2015-02-13T14:36:08+08:00",
-            "url": "http://hust.cc/i/code-mess/commit/d5bb5e2fbafb75c37d201de8d0b7f50e2db6b04e",
-            "author": {
-                "name": "hustcc",
-                "email": "i@hust.cc"
-            }
-        },
-        {
-            "id": "689ffb6dd35ed9035264ed4155fd4ba8340fcf4d",
-            "message": "增加之前做过微信易信公众号开发代码\n",
-            "timestamp": "2015-02-13T14:31:19+08:00",
-            "url": "http://hust.cc/i/code-mess/commit/689ffb6dd35ed9035264ed4155fd4ba8340fcf4d",
-            "author": {
-                "name": "hustcc",
-                "email": "i@hust.cc"
-            }
-        },
-        {
-            "id": "2883a17f7a69c35b2a591c63d9581e634d7c3d0e",
-            "message": "加了最近的一些代码，也许大家有用\n",
-            "timestamp": "2015-02-13T13:52:12+08:00",
-            "url": "http://hust.cc/i/code-mess/commit/2883a17f7a69c35b2a591c63d9581e634d7c3d0e",
-            "author": {
-                "name": "hustcc",
-                "email": "i@hust.cc"
-            }
-        }
-    ],
-    "total_commits_count": 3
-}
-```
+@author: hustcc
+'''
 
-## github hook data
-
-```javascript
+github = '''
 {
     "ref": "refs/heads/master",
     "before": "a505ee7559ff0a64480d0a73e36f8d3ce3dc117a",
@@ -117,7 +63,7 @@
     },
     "repository": {
         "id": 48161277,
-        "name": "placeholder.js",
+        "name": "git-webhook",
         "full_name": "hustcc/placeholder.js",
         "owner": {
             "name": "hustcc",
@@ -213,12 +159,66 @@
         "site_admin": false
     }
 }
-```
+'''
 
+gitlab = '''
+{
+    "object_kind": "push",
+    "before": "2883a17f7a69c35b2a591c63d9581e634d7c3d0e",
+    "after": "d5bb5e2fbafb75c37d201de8d0b7f50e2db6b04e",
+    "ref": "refs/heads/master",
+    "checkout_sha": "d5bb5e2fbafb75c37d201de8d0b7f50e2db6b04e",
+    "message": null,
+    "user_id": 41,
+    "user_name": "王志伟",
+    "user_email": "i@hust.cc",
+    "project_id": 10,
+    "repository": {
+        "name": "git-webhook",
+        "url": "ssh://git@hust.cc:32200/i/code-mess.git",
+        "description": "一些杂碎简单的代码，自己写起来麻烦，搜索也能搜索到，收集起来，提高效率",
+        "homepage": "http://hust.cc/i/code-mess",
+        "git_http_url": "http://hust.cc/i/code-mess.git",
+        "git_ssh_url": "ssh://git@hust.cc:32200/i/code-mess.git",
+        "visibility_level": 20
+    },
+    "commits": [
+        {
+            "id": "d5bb5e2fbafb75c37d201de8d0b7f50e2db6b04e",
+            "message": "update md",
+            "timestamp": "2015-02-13T14:36:08+08:00",
+            "url": "http://hust.cc/i/code-mess/commit/d5bb5e2fbafb75c37d201de8d0b7f50e2db6b04e",
+            "author": {
+                "name": "hustcc",
+                "email": "i@hust.cc"
+            }
+        },
+        {
+            "id": "689ffb6dd35ed9035264ed4155fd4ba8340fcf4d",
+            "message": "增加之前做过微信易信公众号开发代码",
+            "timestamp": "2015-02-13T14:31:19+08:00",
+            "url": "http://hust.cc/i/code-mess/commit/689ffb6dd35ed9035264ed4155fd4ba8340fcf4d",
+            "author": {
+                "name": "hustcc",
+                "email": "i@hust.cc"
+            }
+        },
+        {
+            "id": "2883a17f7a69c35b2a591c63d9581e634d7c3d0e",
+            "message": "加了最近的一些代码，也许大家有用",
+            "timestamp": "2015-02-13T13:52:12+08:00",
+            "url": "http://hust.cc/i/code-mess/commit/2883a17f7a69c35b2a591c63d9581e634d7c3d0e",
+            "author": {
+                "name": "hustcc",
+                "email": "i@hust.cc"
+            }
+        }
+    ],
+    "total_commits_count": 3
+}
+'''
 
-## osc
-
-```javascript
+gitosc = '''
 {
     "password": "",
     "hook_name": "push_hooks",
@@ -235,7 +235,7 @@
             "time": "2016-01-26T10:04:32+08:00"
         },
         "repository": {
-            "name": "git-test",
+            "name": "git-webhook",
             "url": "https://git.oschina.net/wzwahl36/git-test.git",
             "description": "test git.osc",
             "homepage": "http://git.oschina.net/wzwahl36/git-test"
@@ -257,4 +257,4 @@
         "commits_more_than_ten": 10
     }
 }
-```
+'''

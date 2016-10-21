@@ -79,7 +79,7 @@ class WebHook(db.Model, BaseMethod):
     
     key = db.Column(db.String(32), unique=True) # 用于webhook，保证私密，直接用 md5 salt
     
-    status = db.Column(db.String(1)) # 1: ing, 2:error, 3: success
+    status = db.Column(db.String(1)) # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
     
     def dict(self, with_key=False):
         rst = {}
@@ -95,12 +95,16 @@ class WebHook(db.Model, BaseMethod):
         rst['status'] = self.status
         return rst
     
+    def updateStatus(self, status):
+        self.status = status
+        self.save()
+    
 
 class History(db.Model, BaseMethod):
     '''push history'''
     #md5, notice, output, push_name, push_email, success, add_time
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(1)) # 1: ing, 2: error, 3: success
+    status = db.Column(db.String(1)) # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
     shell_log = db.Column(db.Text) # hook shell log
     
     data = db.Column(db.Text) # git push data
@@ -121,3 +125,7 @@ class History(db.Model, BaseMethod):
         
         rst['webhook_id'] = self.webhook_id
         return rst
+    
+    def updateStatus(self, status):
+        self.status = status
+        self.save()

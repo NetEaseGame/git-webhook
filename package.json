@@ -5,12 +5,12 @@
     "lint:js": "eslint app/static/src",
     "lint:py": "sh tests/lint_py.sh",
     "test": "npm run lint:js && npm run lint:py",
-    "js": "webpack --config webpack.config.product.js",
+    "js": "webpack --config webpack.config.js",
 
     "dev_js": "webpack --config webpack.config.js --watch",
-    "dev_py": "python run_automation.py",
+    "dev_py": "python run_webhook.py",
     "clean:celery": "rimraf celerybeat*",
-    "celery": "celery -A app.celeryInstance worker --loglevel=info",
+    "celery": "npm run clean:celery && celery -A app.celeryInstance worker --loglevel=info",
     
     "db": "python scripts.py rebuild_db"
   },
@@ -38,9 +38,8 @@
     "style-loader": "~0.12.3",
     "file-loader": "~0.8.4",
     "cross-env": "^1.0.8",
-    "echarts": "^3.1.1",
-    "element-resize-event": "^2.0.5",
     "react-router": "^2.0.0",
+    "rimraf": "^2.5.0",
     "babel-plugin-transform-es3-property-literals": "*",
     "babel-plugin-transform-es3-member-expression-literals": "*"
   },

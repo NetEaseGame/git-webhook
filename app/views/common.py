@@ -16,15 +16,11 @@ from app.database.model import User
 
 
 @app.route('/', methods=['GET'])
-# @app.route('/index', methods=['GET'])
-# @app.route('/index.html', methods=['GET'])
-@login_required('page')
 def index():
     return ResponseUtil.render_template('index.html')
 
 
 @app.route('/login', methods=['GET'])
-# @app.route('/login.html', methods=['GET'])
 def login():
     return github.authorize()
 
@@ -65,7 +61,6 @@ def github_authorized(oauth_token):
 
 
 @app.route('/logout', methods=['GET'])
-# @app.route('/logout.html', methods=['GET'])
 def logout():
     RequestUtil.logout()
     return redirect(url_for('index'))

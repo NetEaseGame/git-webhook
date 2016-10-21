@@ -37,7 +37,7 @@ def do_ssh_cmd(ip, port, account, pkey, shell, push_data='', timeout=300):
     s.connect(ip, port, account, pkey=private_key)
     if push_data:
         shell = shell + (" '%s'" % push_data)
-    print shell
+
     stdin, stdout, stderr = s.exec_command(shell, timeout=timeout)
     
     out = stdout.read()
