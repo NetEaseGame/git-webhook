@@ -7,6 +7,7 @@ Created on 2015-8-21
 
 from flask.globals import request, session
 
+
 # get / post data
 def get_parameter(key, default=None):
     '''

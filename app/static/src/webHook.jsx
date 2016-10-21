@@ -83,11 +83,11 @@ const WebHook = React.createClass({
           <thead>
             <tr>
               <th width="5%">#</th>
-              <th width="15%">Repo</th>
+              <th width="20%">Repo</th>
               <th width="25%">Shell</th>
               <th width="15%">Server</th>
               <th width="10%">LastHook</th>
-              <th width="15%">Status</th>
+              <th width="10%">Status</th>
               <th width="15%">Operate</th>
             </tr>
           </thead>

@@ -25,7 +25,7 @@ const Index = React.createClass({
               loginUser && loginUser.id &&
                 <Link to="/webhook" className="ui huge primary button">
                   <i className="dashboard icon"></i> 
-                  &nbsp;&nbsp; DashBoard &nbsp;&nbsp;
+                  DashBoard &nbsp;&nbsp;
                   <i className="dashboard icon"></i>
                 </Link>
               ||

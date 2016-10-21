@@ -30,6 +30,7 @@ const Header = React.createClass({
           <Link to="/" className="header item">
             <img className="logo" width="32" height="32" src="static/res/img/logo.png" />
           </Link>
+          <Link to="/" className="header item">Home</Link>
           <Link to="/webhook" className="header item">Git WebHook</Link>
           <Link to="/server" className="header item">服务器</Link>
           
