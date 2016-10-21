@@ -11,8 +11,8 @@ const Index = React.createClass({
           <div className="ui container">
             <div className="ui large secondary inverted pointing menu">
               <a className="active item">Home</a>
-              <a target="_blank" href="https://github.com/NetEaseGame/git-webhook" className="item">OpenSource</a>
-              <a target="_blank" href="https://github.com/hustcc" className="item">Author</a>
+              <a target="_blank" href="https://github.com/NetEaseGame/git-webhook" className="item">Source on GitHub</a>
+              <a target="_blank" href="https://github.com/hustcc" className="item">Me</a>
             </div>
           </div>
 
