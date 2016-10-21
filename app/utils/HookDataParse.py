@@ -13,9 +13,11 @@ def get_repo_name(hook_data):
 # repo branch
 def get_repo_branch(hook_data):
     branch = hook_data.get('ref', '') # github, gitlib
-    if branch:
+    if not branch:
+        branch = hook_data.get('push_data', {}).get('ref', '')
+    if '/' in branch:
         return branch[branch.rfind("/") + 1:]
-    return hook_data.get('push_data', {}).get('ref', '') # gitosc
+    return branch
 
 
 # push user name
