@@ -22,7 +22,10 @@ const HistoryList = React.createClass({
     };
   },
   loadHistories: function(page) {
-    this.get('/api/history/list', {page: page}, function(r) {
+    this.get('/api/history/list', {
+      page: page,
+      webhook_id: this.props.params.webhook_id
+    }, function(r) {
       r = r.json();
       if (r.success) {
         this.currentPage = r.data.page;
