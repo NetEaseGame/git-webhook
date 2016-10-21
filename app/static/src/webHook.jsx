@@ -94,7 +94,6 @@ const WebHook = React.createClass({
           <tbody>
           {
             this.state.webhooks.map(function(webhook, i) {
-              let status = StringUtils.statusToTag(webhook.status);
               return (
                 <tr key={i}>
                   <td>{webhook.id}</td>
@@ -102,7 +101,7 @@ const WebHook = React.createClass({
                   <td dangerouslySetInnerHTML={{__html: "<pre>" + webhook.shell + "</pre>"}}></td>
                   <td>{webhook.server.name}</td>
                   <td title={webhook.lastUpdate}><TimeAgo locale='zh_CN' datetime={webhook.lastUpdate} /></td>
-                  <td><span className={status[1]}>{status[0]}</span></td>
+                  <td>{StringUtils.statusToTag(webhook.status)}</td>
                   <td>
                     <button className="mini ui icon button copy_btn" title="Copy WebHook to clipboard!" data-clipboard-text={location.protocol + '//' + location.host + '/api/git-webhook/' + webhook.key}><i className="ui icon copy"></i></button>
                     <button className="mini ui icon button" onClick={this.editWebHook.bind(this, webhook, i)}><i className="ui icon edit"></i></button>

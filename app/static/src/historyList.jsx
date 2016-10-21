@@ -81,14 +81,13 @@ const HistoryList = React.createClass({
           <tbody>
           {
             this.state.histories.map(function(history, i) {
-              let status = StringUtils.statusToTag(history.status);
               return (
                 <tr key={i}>
                   <td>{history.id}</td>
                   <td>{history.push_user}</td>
                   <td>{history.shell_log}</td>
                   <td title={history.add_time}><TimeAgo locale='zh_CN' datetime={history.add_time} /></td>
-                  <td><span className={status[1]}>{status[0]}</span></td>
+                  <td>{StringUtils.statusToTag(history.status)}</td>
                   <td>
                     <button className="mini ui icon button copy_btn" 
                             title="Copy Push Data to clipboard!" 

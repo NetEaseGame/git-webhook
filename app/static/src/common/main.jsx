@@ -12,17 +12,19 @@ const MainComponent = React.createClass({
     return 'url(/static/res/img/bg' + new Date().getHours() % 5 + '.jpg)';
   },
   render: function() {
-    let children = this.props.children || <Index />; 
-    return (
-      <div className="ui main main-content" id="main_content" style={{backgroundImage: this.getBgImgUrl()}}>
-        <Header />
-        <div className="ui container content">
-          { children }
+    let children = this.props.children;
+    if (children) 
+      return (
+        <div className="ui main main-content" id="main_content" style={{backgroundImage: this.getBgImgUrl()}}>
+          <Header />
+          <div className="ui container content">
+            { children }
+          </div>
+          <Footer />
+          <Alert />
         </div>
-        <Footer />
-        <Alert />
-      </div>
-    );
+      );
+    return (<Index />);
   }
 });
 

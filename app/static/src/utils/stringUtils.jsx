@@ -2,6 +2,7 @@ import React from 'react';
 
 let StringUtils = {
   statusToTag: function(status) {
+    status = parseInt(status);
     let text, className;
     if (status == 1) {
       text = '等待';
@@ -27,7 +28,7 @@ let StringUtils = {
       text = '未知';
       className = 'compact ui mini grey tag label';
     }
-    return [text, className];
+    return (<span className={className}>{text}</span>);
   }
 }
 
