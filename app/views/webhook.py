@@ -46,7 +46,7 @@ def api_webhook_new():
     
     webhook.save()
     
-    return ResponseUtil.standard_response(1, webhook.dict())
+    return ResponseUtil.standard_response(1, webhook.dict(with_key=True))
 
 
 @app.route('/api/webhook/delete', methods=['POST'])
