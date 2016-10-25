@@ -33,6 +33,7 @@ const Header = React.createClass({
           <Link to="/" className="header item">Home</Link>
           <Link to="/webhook" className="header item">Git WebHook</Link>
           <Link to="/server" className="header item">服务器</Link>
+          <Link to="/doc" className="header item">Documents</Link>
           
           <div className="right menu">
             <a href="#" className="item">

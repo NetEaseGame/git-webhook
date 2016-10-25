@@ -42,7 +42,7 @@ const Index = React.createClass({
           <div className="ui equal width stackable internally celled grid">
             <div className="center aligned row">
               <div className="column">
-                <h3>"Git WebHook to auto-deploy"</h3>
+                <h3>"Git WebHook to auto-deploy."</h3>
                 <p>GitHub / GitLab / GitOsc are all supported.</p>
               </div>
               <div className="column">
