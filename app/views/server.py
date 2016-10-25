@@ -9,6 +9,7 @@ from app import app
 from app.utils import ResponseUtil, RequestUtil, SshUtil
 from app.database.model import Server
 
+
 # get server list
 @app.route('/api/server/list', methods=['GET'])
 @login_required()
@@ -41,17 +42,16 @@ def api_server_new():
     
     try:
         success, log = SshUtil.do_ssh_cmd(ip, port, account, pkey, 'ls -lh', timeout=5)
-        print success, log
         if success:
-            server = Server(ip=ip, port=port, account=account, pkey=pkey, 
-                          user_id=user_id, name=name)
-        
+            server = Server(ip=ip, port=port, account=account, pkey=pkey,
+                            user_id=user_id, name=name)
+
             server.save()
-        
+
             return ResponseUtil.standard_response(1, server.dict())
     except Exception, e:
         print e
-    return ResponseUtil.standard_response(0, 'Server SSH connect error!') 
+    return ResponseUtil.standard_response(0, 'Server SSH connect error!')
 
 
 @app.route('/api/server/delete', methods=['POST'])
@@ -60,12 +60,12 @@ def api_server_delete():
     # login user
     user_id = RequestUtil.get_login_user().get('id', '')
     server_id = RequestUtil.get_parameter('server_id', '')
-    
+
     server = Server.query.filter_by(user_id=user_id, id=server_id).first()
     if not server:
         return ResponseUtil.standard_response(0, 'Permition deny!')
-    
+
     server.deleted = True
     server.save()
-    
+
     return ResponseUtil.standard_response(1, 'Success')

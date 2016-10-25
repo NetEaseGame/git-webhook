@@ -96,7 +96,17 @@ body {
 	padding-top: 5em !important;
   padding-bottom: 5em !important;
   clear: both;
+
 }
+
+@media only screen and (max-width: 991px) {
+  .content.container {
+    width: 96%;
+    margin-left: auto!important;
+    margin-right: auto!important;
+  }
+}
+
 .footer {
   position: absolute !important;
   bottom: 0;
@@ -302,4 +312,12 @@ select > option {
 
 .cursor-pointer {
   cursor:pointer;
+}
+
+pre {
+  white-space: pre-wrap;      
+  white-space: -moz-pre-wrap; 
+  white-space: -pre-wrap;     
+  white-space: -o-pre-wrap;   
+  word-wrap: break-word; 
 }

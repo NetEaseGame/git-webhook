@@ -19,7 +19,7 @@ def api_for_webhook(key):
     '''
 #     try:
     data = RequestUtil.get_parameter('hook', None)
-    if data == None:
+    if data is None:
         data = request.data
 
 #     for test
@@ -47,7 +47,6 @@ def api_for_webhook(key):
     
             return "Not match the Repo and Branch."
         else:
-            # 
             return "The webhook is not exist."
     except Exception, e:
         return "Request is not valid Git webhook: " + str(e)
