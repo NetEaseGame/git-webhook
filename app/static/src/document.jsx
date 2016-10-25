@@ -14,7 +14,7 @@ const Document = React.createClass({
 'Your identification has been saved in id_rsa_forwebhook.\n' + 
 'Your public key has been saved in id_rsa_forwebhook.pub.\n' + 
 'The key fingerprint is:\n' + 
-'27:04:9f:0b:21:73:a7:2a:cd:4e:9e:43:2a:45:c2:29 aaa@onlinegame-14-121\n' + 
+'27:04:9f:0b:21:73:a7:2a:cd:4e:9e:43:2a:45:c2:29 hustcc@onlinegame-14-121\n' + 
 'The key\'s randomart image is:\n' + 
 '+--[ RSA 2048]----+\n' + 
 '|    o + .        |\n' + 
