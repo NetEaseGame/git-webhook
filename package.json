@@ -17,7 +17,11 @@
   "keywords": [],
   "author": "hustcc",
   "license": "MIT",
-  "homepage": "http://hook.hust.cc",
+  "homepage": "http://webhook.hust.cc",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NetEaseGame/git-webhook"
+  },
   "devDependencies": {
     "babel-cli": "^6.6.0",
     "babel-core": "^6.3.15",
