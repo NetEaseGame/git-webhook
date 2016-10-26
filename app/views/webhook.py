@@ -18,7 +18,7 @@ def api_webhook_list():
     # login user
     user_id = RequestUtil.get_login_user().get('id', '')
 
-    webhooks = WebHook.query.filter_by(user_id=user_id).all()
+    webhooks = WebHook.query.filter_by(user_id=user_id, deleted=False).all()
     webhooks = [webhook.dict(True) for webhook in webhooks]
 
     return ResponseUtil.standard_response(1, webhooks)
@@ -61,6 +61,7 @@ def api_webhook_delete():
     if not webhook:
         return ResponseUtil.standard_response(0, 'Permition deny!')
 
-    webhook.delete()
+    webhook.deleted = True
+    webhook.save()
 
     return ResponseUtil.standard_response(1, 'Success')

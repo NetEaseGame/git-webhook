@@ -78,6 +78,8 @@ class WebHook(db.Model, BaseMethod):
     
     add_time = db.Column(db.DateTime, default=datetime.datetime.now)
     
+    deleted = db.Column(db.Boolean, default=False)
+    
     key = db.Column(db.String(32), unique=True)  # 用于webhook，保证私密，直接用 md5 salt
     
     status = db.Column(db.String(1))  # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
