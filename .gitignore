@@ -63,3 +63,5 @@ celerybeat*
 
 config.py
 git_webhook.db
+
+app/static/dist/*

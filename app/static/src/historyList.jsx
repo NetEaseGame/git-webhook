@@ -8,7 +8,7 @@ import TimeAgo from 'timeago-react';
 import StringUtils from './utils/stringUtils.jsx';
 
 const HistoryList = React.createClass({
-  __ONFIRE__: 'Server',
+  __ONFIRE__: 'HistoryList',
   mixins: [RequestsMixin, OnFireMixin, TipShowMixin],  // 引入 mixin
   currentPage: 1,
   contextTypes: {
