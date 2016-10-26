@@ -43,10 +43,13 @@ Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用
 5. 运行应用
 
 	```sh
+	# 1. run python web
 	python run_webhook.py
+	# 2. run celery
+	celery -A app.celeryInstance worker --loglevel=info
 	```
 	
-	运行之后，打开 http://127.0.0.1:18340 即可访问。使用 GitHub 账号登陆。
+	运行之后，打开 http://127.0.0.1:18340 （一巴扇死你）即可访问。使用 GitHub 账号登陆。
 
 6. 添加WebHook
 
