@@ -98,7 +98,7 @@ const WebHook = React.createClass({
                 <tr key={i}>
                   <td>{webhook.id}</td>
                   <td><Link to={'/history/' + webhook.id}> {webhook.repo + '@' + webhook.branch} </Link></td>
-                  <td dangerouslySetInnerHTML={{__html: "<pre>" + webhook.shell + "</pre>"}}></td>
+                  <td><pre className="language-powershell" dangerouslySetInnerHTML={{__html: webhook.shell}} /></td>
                   <td>{webhook.server.name}</td>
                   <td title={webhook.lastUpdate}><TimeAgo locale='zh_CN' datetime={webhook.lastUpdate} /></td>
                   <td>{StringUtils.statusToTag(webhook.status)}</td>
