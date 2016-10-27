@@ -68,10 +68,10 @@ const Document = React.createClass({
           <p>第一步：<strong>本地部署本项目</strong>（如果是外网服务器，也可以使用我这边<a href="http://webhook.hust.cc" target="_blank">部署的服务</a> ），当然首选还是自己搭建部署，也是对自己服务器的安全着想。具体部署方式，参考项目 Readme 文件。</p>
 
           <p>第二步：<strong>添加服务器信息</strong>。当 Git 上项目有 PUSH 操作的时候，你需要在哪些机器人做操作，就需要那只哪些机器。具体需要配置，IP、PORT、用户名、Private Key（<Link to="/doc/pkey">如何生成？</Link>）这些信息，本项目使用 SSH 方式登录服务器执行相应的 Shell 命令。如下图所示：</p>
-          <img className="ui fluid image" src="https://github.com/NetEaseGame/git-webhook/raw/master/app/static/res/img/server.png" />
+          <img className="ui fluid image" src="/static/res/img/server.png" />
 
           <p>第三步：<strong>添加 Git WebHook</strong>。主要填写 Git 项目的名字、需要 Hook 的分支名字，然后发生 PUSH 之后，需要在哪台服务器（第二步中配置的服务器中选择）执行 Shell 指令。如下图所示：</p>
-          <img className="ui fluid image" src="https://github.com/NetEaseGame/git-webhook/raw/master/app/static/res/img/webhook.png" />
+          <img className="ui fluid image" src="/static/res/img/webhook.png" />
           <p className="green"><strong>最后一步：在 Git WebHook 右侧第一个按钮复制 WebHook Url 地址，并添加到 Git 项目中 Setting / WebHook 那一栏中即可生效。</strong>。</p>
         </div>
       );
