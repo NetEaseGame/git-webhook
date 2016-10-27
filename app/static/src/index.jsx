@@ -10,9 +10,10 @@ const Index = React.createClass({
         <div className="ui inverted vertical masthead center aligned segment">
           <div className="ui container">
             <div className="ui large secondary inverted pointing menu">
-              <a className="active item">Home</a>
-              <a target="_blank" href="https://github.com/NetEaseGame/git-webhook" className="item">Source on GitHub</a>
-              <a target="_blank" href="https://github.com/hustcc" className="item">Me</a>
+              <a className="active header item">Home</a>
+              <a target="_blank" href="https://github.com/NetEaseGame/git-webhook" className="header item">Source on GitHub</a>
+              <a target="_blank" href="https://github.com/hustcc" className="header item">Me</a>
+              <Link to="/doc" className="header item">Documents</Link>
             </div>
           </div>
 

@@ -59,6 +59,9 @@ Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用
 	在工具中添加 Git 项目，获得 WebHook URL，并填写到 Github / GitLab / OscGit 的 WebHook 配置中。
 
 
+**安装之后如何使用？**直接看你部署的 Web 应用文档吧，或者在[这里](http://webhook.hust.cc/#/doc/webhook)也可以看到。
+
+
 ## 三、效果预览
 
  - **首页**
