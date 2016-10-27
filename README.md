@@ -20,11 +20,10 @@ Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用
 	git clone git@github.com:NetEaseGame/git-webhook.git
 	```
 
-2. 安装 Python & Javascript 依赖
+2. 安装 Python 依赖
 
 	```sh
 	pip install -r requirements.txt
-	npm install
 	```
 
 3. 配置 `config.py`
@@ -44,11 +43,9 @@ Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用
 5. 运行应用
 
 	```sh
-	# 1. package static files
-	npm run js
-	# 2. run python web
+	# 1. run python web
 	python run_webhook.py
-	# 3. run celery
+	# 2. run celery
 	celery -A app.celeryInstance worker --loglevel=info
 	```
 	

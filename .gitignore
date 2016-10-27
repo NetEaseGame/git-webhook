@@ -10,7 +10,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -63,5 +62,3 @@ celerybeat*
 
 config.py
 git_webhook.db
-
-app/static/dist/*
