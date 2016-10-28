@@ -21,7 +21,7 @@ const Index = React.createClass({
             <h1 className="ui inverted header">
               Git WebHook
             </h1>
-            <h2>GitHub / GitLab / GitOsc are all supported.</h2>
+            <h2>GitHub / GitLab / Gogs / GitOsc are all supported.</h2>
             {
               loginUser && loginUser.id &&
                 <Link to="/webhook" className="ui huge primary button">
@@ -44,7 +44,7 @@ const Index = React.createClass({
             <div className="center aligned row">
               <div className="column">
                 <h3>"Git WebHook to auto-deploy."</h3>
-                <p>GitHub / GitLab / GitOsc are all supported.</p>
+                <p>GitHub / GitLab / Gogs / GitOsc are supported.</p>
               </div>
               <div className="column">
                 <h3>"Any hook has it's status."</h3>
