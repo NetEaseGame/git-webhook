@@ -14,9 +14,12 @@ const Server = React.createClass({
   getInitialState: function() {
     return {
       showAddForm: false, 
-      servers: []
+      servers: [],
+      btnText: '添加新的 Server',
+      editServer: {}
     };
   },
+  currentEditIndex: -1,
   componentDidMount: function() {
     this.get('/api/server/list', {}, function(r) {
       r = r.json();
@@ -26,7 +29,9 @@ const Server = React.createClass({
   },
   clickNewBtn: function(save) {
     if (save) {
+      let updateOrAdd = this.refs.id.value;
       this.post('/api/server/new', {
+        id: updateOrAdd,
         name: this.refs.name.value,
         ip: this.refs.ip.value,
         port: this.refs.port.value,
@@ -38,8 +43,11 @@ const Server = React.createClass({
           this.refs.addForm.reset();
 
           let servers = this.state.servers;
-          servers.push(r.data);
-          this.setState({servers: servers, showAddForm: false});
+          // update server
+          if (updateOrAdd) servers[this.currentEditIndex] = r.data;
+          // add server
+          else servers.push(r.data);
+          this.setState({servers: servers, editServer: {}, showAddForm: false, btnText: '添加新的 Server'});
         }
         else this.showError(r.data);
       }.bind(this));
@@ -48,8 +56,21 @@ const Server = React.createClass({
       this.setState({showAddForm: true});
     }
   },
+  clickCloseBtn: function() {
+    this.refs.addForm.reset();
+    this.setState({showAddForm: false, editServer:{}, btnText: '添加新的 Server'});
+  },
   editServer: function(server, index) {
-    console.log(server, 'TODO');
+    if (this.refs.addForm) {
+      this.refs.id.value = server.id;
+      this.refs.name.value = server.name;
+      this.refs.ip.value = server.ip;
+      this.refs.port.value = server.port;
+      this.refs.account.value = server.account;
+      this.refs.pkey.value = server.pkey;
+    }
+    this.setState({showAddForm: true, btnText: '确定保存 Server 信息', editServer: server});
+    this.currentEditIndex = index;
   },
   deleteServer: function(server_id, index) {
     this.post('/api/server/delete', {
@@ -107,36 +128,43 @@ const Server = React.createClass({
           this.state.showAddForm &&
           <form className="ui form" ref="addForm">
             <h3 className="ui dividing header left aligned">New Server</h3>
+            <input ref="id" type="hidden" defaultValue={this.state.editServer.id} />
             <div className="four fields">
               <div className="field">
                 <label>CName</label>
-                <input ref="name" type="text" placeholder="Server Name" />
+                <input ref="name" defaultValue={this.state.editServer.name} type="text" placeholder="Server Name" />
               </div>
               <div className="field">
                 <label>Server IP</label>
-                <input ref="ip" type="text" placeholder="Server IP" />
+                <input ref="ip" defaultValue={this.state.editServer.ip} type="text" placeholder="Server IP" />
               </div>
               <div className="field">
                 <label>Server SSH Port</label>
-                <input ref="port" type="number" placeholder="Server Port" />
+                <input ref="port" defaultValue={this.state.editServer.port} type="number" placeholder="Server Port" />
               </div>
               <div className="field">
                 <label>Server SSH Account</label>
-                <input ref="account" type="text" placeholder="Server Account" />
+                <input ref="account" defaultValue={this.state.editServer.account} type="text" placeholder="Server Account" />
               </div>
             </div>
             <div className="field">
               <label>SSH Private Key <Link to="/doc/pkey"><i className="ui icon help"></i></Link></label>
-              <textarea ref="pkey" rows="6"></textarea>
+              <textarea ref="pkey" defaultValue={this.state.editServer.pkey} rows="6"></textarea>
             </div>
           </form>
         }
         <div className="ui center aligned basic segment">
           <div className="ui center aligned basic segment">
             <div className="ui teal animated fade button mini" onClick={this.clickNewBtn.bind(this, this.state.showAddForm)}>
-              <div className="visible content">添加新的 Server</div>
-              <div className="hidden content">添加新的 Server</div>
+              <div className="visible content">{this.state.btnText}</div>
+              <div className="hidden content">{this.state.btnText}</div>
             </div>
+            { this.state.showAddForm &&
+              <div className="ui red animated fade button mini" onClick={this.clickCloseBtn}>
+                <div className="visible content">关闭表单</div>
+                <div className="hidden content">关闭表单</div>
+              </div>
+            }
           </div>
         </div>
       </div>
