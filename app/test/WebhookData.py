@@ -258,3 +258,70 @@ gitosc = '''
     }
 }
 '''
+
+gogs = '''
+{
+    "sender": {
+        "username": "hustcc",
+        "avatar_url": "https://secure.gravatar.com/avatar/89b00603405ed96c59206c65a4f2358e",
+        "id": 1,
+        "full_name": "",
+        "email": "wzwahl36@qq.com"
+    },
+    "repository": {
+        "fork": false,
+        "website": "",
+        "open_issues_count": 0,
+        "description": "test_webhook",
+        "default_branch": "master",
+        "created_at": "2016-10-28T15:11:35+08:00",
+        "forks_count": 0,
+        "html_url": "http://127.0.0.1:3000/hustcc/test_webhook",
+        "private": false,
+        "updated_at": "2016-10-28T15:11:36+08:00",
+        "stars_count": 0,
+        "clone_url": "http://127.0.0.1:3000/hustcc/test_webhook.git",
+        "watchers_count": 1,
+        "full_name": "hustcc/test_webhook",
+        "ssh_url": "hzwangzhiwei@127.0.0.1:hustcc/test_webhook.git",
+        "owner": {
+            "username": "hustcc",
+            "avatar_url": "https://secure.gravatar.com/avatar/89b00603405ed96c59206c65a4f2358e",
+            "id": 1,
+            "full_name": "",
+            "email": "wzwahl36@qq.com"
+        },
+        "id": 1,
+        "name": "test_webhook"
+    },
+    "pusher": {
+        "username": "hustcc",
+        "avatar_url": "https://secure.gravatar.com/avatar/89b00603405ed96c59206c65a4f2358e",
+        "id": 1,
+        "full_name": "",
+        "email": "wzwahl36@qq.com"
+    },
+    "commits": [
+        {
+            "committer": {
+                "username": "hustcc",
+                "name": "hustcc",
+                "email": "wzwahl36@qq.com"
+            },
+            "author": {
+                "username": "hustcc",
+                "name": "hustcc",
+                "email": "wzwahl36@qq.com"
+            },
+            "url": "http://127.0.0.1:3000/hustcc/test_webhook/commit/331293f63684868be6b27da0104e35e3564059ad",
+            "timestamp": "2016-10-28T15:15:21+08:00",
+            "message": "test.txt",
+            "id": "331293f63684868be6b27da0104e35e3564059ad"
+        }
+    ],
+    "after": "331293f63684868be6b27da0104e35e3564059ad",
+    "compare_url": "http://127.0.0.1:3000/hustcc/test_webhook/compare/b51fdb16830e2206a528aa00e778fb0163506c05...331293f63684868be6b27da0104e35e3564059ad",
+    "secret": "",
+    "ref": "refs/heads/master",
+    "before": "b51fdb16830e2206a528aa00e778fb0163506c05"
+}'''

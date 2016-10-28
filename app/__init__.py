@@ -24,6 +24,7 @@ from celery import Celery, platforms
 platforms.C_FORCE_ROOT = True
 app.config['CELERY_BROKER_URL'] = config.CELERY_BROKER_URL
 app.config['CELERY_RESULT_BACKEND'] = config.CELERY_RESULT_BACKEND
+app.config['CELERY_ACCEPT_CONTENT'] = ['pickle', 'json', 'msgpack', 'yaml']
 celeryInstance = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 celeryInstance.conf.update(app.config)
 

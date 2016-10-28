@@ -2,7 +2,7 @@
 
 > 一个使用 Python Flask + SQLAchemy + Celery + Redis + React 开发的用于迅速搭建并使用  WebHook 进行自动化部署和运维系统，支持：**Github / GitLab / GitOsc**。
 
-[![Build Status](https://travis-ci.org/NetEaseGame/git-webhook.svg?branch=master)](https://travis-ci.org/NetEaseGame/git-webhook) ![GitHub](http://shields.hust.cc/Supported-GitHub-brightgreen.svg) ![GitLab](http://shields.hust.cc/Supported-GitLab-green.svg) ![GitOsc](http://shields.hust.cc/Supported-GitOsc-blue.svg)
+[![Build Status](https://travis-ci.org/NetEaseGame/git-webhook.svg?branch=master)](https://travis-ci.org/NetEaseGame/git-webhook) ![GitHub](http://shields.hust.cc/Supported-GitHub-brightgreen.svg) ![GitLab](http://shields.hust.cc/Supported-GitLab-green.svg) ![GitOsc](http://shields.hust.cc/Supported-GitOsc-blue.svg) ![Gogs](http://shields.hust.cc/Supported-Gogs-yellowgreen.svg)
 
  - 技术栈简单，**部署**容易；
  - 代码简洁易懂，**二次开发**毫无压力；
@@ -98,11 +98,10 @@ Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用
 
 所以整体项目代码非常简单，大部分都能够修改和更新代码，并提交 Pull Request，目前系统 TODO 包括，我个人也将注意完善：
 
- - 数据的修改功能（包括 WebHook 的修改，Server 服务器信息的修改）；
  - Celery 进程情况显示（当 Celery 进程没有执行的时候，在页面上提示，类似于 Sentry）；
- - 系统状态和统计（任务队列实时情况，WebHook 执行的统计图表）；
+ - 系统状态和统计（任务队列实时情况，WebHook 执行的统计图表等）；
  - **发布为 pip 包，使得安装部署更加容易**；
- - Document 使用文档 & 帮助文档；
+ - Document 使用文档 & 帮助文档完善；
 
 
 ## LICENSE
