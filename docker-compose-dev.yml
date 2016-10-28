@@ -1,0 +1,19 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - .:/code
+      - ./data:/data
+    ports:
+      - "18340:80"
+  mysql:
+    extends:
+      file: docker-compose.yml
+      service: mysql
+  redis:
+    extends:
+      file: docker-compose.yml
+      service: redis
