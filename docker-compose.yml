@@ -1,8 +1,11 @@
 version: '2'
 services:
   app:
-    image: git-webhook
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
+      - .:/code
       - ./data/app:/data
     ports:
       - "18340:80"
