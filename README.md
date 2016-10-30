@@ -9,7 +9,7 @@
  - 支持 **Github / GitLab / Gogs / GitOsc**；
  - 使用 SSH 方式，支持**多服务**配置；
 
-Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用 gunicorn + gevent + ngxin 部署。
+Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用 gunicorn + gevent + nginx 部署。
 
 
 ## 一、如何使用 ？
