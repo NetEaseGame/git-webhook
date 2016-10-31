@@ -4,6 +4,10 @@ Created on 2016-10-20
 
 @author: hustcc
 '''
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 from app import celeryInstance
 from app.database.model import History, WebHook
 from app.utils import SshUtil, JsonUtil, HookDataParse
@@ -36,6 +40,9 @@ def do_webhook_shell(webhook_id, histroy_id, data):
     except Exception, e:
         success, log = False, 'Server SSH error: ' + str(e)
         status = '5'  # except
+
+    # ProgrammingError: You must not use 8-bit bytestrings unless you use a text_factory
+    log = unicode(log)
 
     history.status = status
     history.shell_log = log
