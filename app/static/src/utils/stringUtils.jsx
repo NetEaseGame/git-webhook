@@ -1,5 +1,4 @@
 import React from 'react';
-import pys from 'pys';
 
 let StringUtils = {
   statusToTag: function(status) {
