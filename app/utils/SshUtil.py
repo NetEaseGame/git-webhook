@@ -42,11 +42,12 @@ def do_ssh_cmd(ip, port, account, pkey, shell, push_data='', timeout=300):
     
     stdin, stdout, stderr = s.exec_command(shell, timeout=timeout)
     
-    out = stdout.read()
+    log = stdout.read()
     err = stderr.read()
-
-    log = '%s%s' % (out, err)  # log
+    
     success = True
+    if not log and err:
+        success = False
 
     s.close()
     pkey_file.close()
