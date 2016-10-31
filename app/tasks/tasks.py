@@ -25,6 +25,7 @@ def do_webhook_shell(webhook_id, histroy_id, data):
     
     # start to process, add history into database
     status = '2'
+    history.push_user = '%s <%s>' % (HookDataParse.get_push_name(data), HookDataParse.get_push_email(data))
     history.updateStatus(status)
     webhook.updateStatus(status)
     try:
@@ -37,7 +38,6 @@ def do_webhook_shell(webhook_id, histroy_id, data):
         status = '5'  # except
 
     history.status = status
-    history.push_user = '%s <%s>' % (HookDataParse.get_push_name(data), HookDataParse.get_push_email(data))
     history.shell_log = log
     history.save()
     
