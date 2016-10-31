@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import OnFireMixin from './mixins/onFireMixin.jsx';
 import TipShowMixin from './mixins/tipShowMixin.jsx';
 import RequestsMixin from './mixins/xhrRequestsMixin.jsx';
+import LogPreview from './component/logPreview.jsx';
 
 import TimeAgo from 'timeago-react';
 import StringUtils from './utils/stringUtils.jsx';
@@ -85,7 +86,9 @@ const HistoryList = React.createClass({
                 <tr key={i}>
                   <td>{history.id}</td>
                   <td>{history.push_user}</td>
-                  <td><pre className="language-powershell" dangerouslySetInnerHTML={{__html: history.shell_log || 'No log.'}} /></td>
+                  <td>
+                    <LogPreview log={history.shell_log} />
+                  </td>
                   <td title={history.add_time}><TimeAgo locale='zh_CN' datetime={history.add_time} /></td>
                   <td>{StringUtils.statusToTag(history.status)}</td>
                   <td>

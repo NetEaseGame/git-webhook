@@ -55,27 +55,3 @@ def do_ssh_cmd(ip, port, account, pkey, shell, push_data='', timeout=300):
         success = ssh_log_success(log)
     
     return success, log
-
-
-if __name__ == '__main__':
-    log = '''Fetching origin
-HEAD is now at ce22661 测试webhook
-sending incremental file list
-app/static/upload/
-app/views/
-
-sent 2816 bytes  received 47 bytes  5726.00 bytes/sec
-total size is 13095640  speedup is 4574.10
-
-Sync done!
-aibq: stopped
-aibq: started
-ssh_exchange_identification: Connection closed by remote host
-fatal: Could not read from remote repository.
-
-Please make sure you have the correct access rights
-and the repository exists.
-error: Could not fetch origin
-2016/10/31 11:27:03.338397 [INFO] qbox.us/qrsync/v3/qrsync/qrsync.go:50: Syncing /home/wwwroot/aibq/app/static => aibq
-2016/10/31 11:27:03.338797 [INFO] qbox.us/qrsync/v3/qrsync/qrsync.go:119: Processing /root/.qrsync/MzCuBkLNxLMr-by4yydKmN6_.dbfail'''
-    print ssh_log_success(log)

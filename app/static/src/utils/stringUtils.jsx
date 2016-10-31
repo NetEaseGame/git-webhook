@@ -1,34 +1,35 @@
 import React from 'react';
+import pys from 'pys';
 
 let StringUtils = {
   statusToTag: function(status) {
     status = parseInt(status);
-    let text, className;
+    let text, color;
     if (status == 1) {
       text = '等待';
-      className = 'compact ui mini blue tag label';
+      color = 'blue';
     }
     else if (status == 2) {
       text = '执行';
-      className = 'compact ui mini yellow tag label';
+      color = 'yellow';
     }
     else if (status == 3) {
       text = '失败';
-      className = 'compact ui mini red tag label';
+      color = 'red';
     }
     else if (status == 4) {
       text = '成功';
-      className = 'compact ui mini green tag label';
+      color = 'green';
     }
     else if (status == 5) {
       text = '异常';
-      className = 'compact ui mini red tag label';
+      color = 'red';
     }
     else {
       text = '未知';
-      className = 'compact ui mini grey tag label';
+      color = 'grey';
     }
-    return (<span className={className}>{text}</span>);
+    return (<span className={'compact ui mini tag label ' + color}>{text}</span>);
   }
 }
 
