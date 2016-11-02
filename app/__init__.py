@@ -4,35 +4,33 @@ Created on 2015年6月16日
 
 @author: hustcc
 '''
+import os
 from flask import Flask
-from app import config
+from flask_sqlalchemy import SQLAlchemy
 
 # flask
 app = Flask(__name__)
-app.secret_key = 'your_session_key_git_webhook'
+app.config.from_object('app.config_default')
 
-# flask sqlachemt
-from flask_sqlalchemy import SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+# 加载配置
+if 'GIT_WEBHOOK_CONFIG' in os.environ:
+    app.config.from_envvar('GIT_WEBHOOK_CONFIG')
+else:
+    app.config.from_object('app.config')
+
+# flask-sqlalchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
 SQLAlchemyDB = SQLAlchemy(app)
 from app.database import model
-
 
 # celery
 from celery import Celery, platforms
 platforms.C_FORCE_ROOT = True
-app.config['CELERY_BROKER_URL'] = config.CELERY_BROKER_URL
-app.config['CELERY_RESULT_BACKEND'] = config.CELERY_RESULT_BACKEND
-app.config['CELERY_ACCEPT_CONTENT'] = ['pickle', 'json', 'msgpack', 'yaml']
 celeryInstance = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 celeryInstance.conf.update(app.config)
 
-
 # github login
 from flask_github import GitHub
-app.config['GITHUB_CLIENT_ID'] = config.GITHUB_CLIENT_ID
-app.config['GITHUB_CLIENT_SECRET'] = config.GITHUB_CLIENT_SECRET
 github = GitHub(app)
 
 # import views
