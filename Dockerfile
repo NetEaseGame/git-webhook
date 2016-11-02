@@ -1,5 +1,4 @@
 FROM python:2.7
-RUN pip install gunicorn gevent -i https://pypi.douban.com/simple
 COPY requirements.txt /tmp
 RUN pip install -r /tmp/requirements.txt -i https://pypi.douban.com/simple
 WORKDIR /code

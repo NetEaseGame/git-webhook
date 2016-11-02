@@ -1,0 +1,4 @@
+[flake8]
+exclude =
+    .svn,CVS,.bzr,.hg,.git,__pycache__,.tox,.eggs,*.egg,
+    node_modules,data
