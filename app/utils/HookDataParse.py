@@ -33,8 +33,10 @@ def get_push_name(hook_data):
     uid = hook_data.get('pusher', {}).get('username', None)  # gogs 格式
     if uid:
         return uid
-    
-    uid = hook_data.get('push_data', {}).get('user', {}).get('name', None)  # gitosc的data格式
+
+    uid = hook_data\
+        .get('push_data', {})\
+        .get('user', {}).get('name', None)  # gitosc的data格式
     if uid:
         return uid
     return ''
@@ -48,8 +50,10 @@ def get_push_email(hook_data):
     uid = hook_data.get('user_email', None)  # gitlib 格式
     if uid:
         return uid
-    
-    uid = hook_data.get('push_data', {}).get('user', {}).get('email', None)  # gitosc的data格式
+
+    uid = hook_data\
+        .get('push_data', {})\
+        .get('user', {}).get('email', None)  # gitosc的data格式
     if uid:
         return uid
     return ''
@@ -59,34 +63,34 @@ if __name__ == '__main__':
     import json
     from app.test import WebhookData
     # for github
-    print '====for github==========================='
+    print('====for github===========================')
     hook_data = json.loads(WebhookData.github)
-    print get_repo_name(hook_data)
-    print get_repo_branch(hook_data)
-    print get_push_name(hook_data)
-    print get_push_email(hook_data)
-    print '====end for github===========================\n'
+    print(get_repo_name(hook_data))
+    print(get_repo_branch(hook_data))
+    print(get_push_name(hook_data))
+    print(get_push_email(hook_data))
+    print('====end for github===========================\n')
     # for gogs
-    print '====for gitlab==========================='
+    print('====for gitlab===========================')
     hook_data = json.loads(WebhookData.gitlab)
-    print get_repo_name(hook_data)
-    print get_repo_branch(hook_data)
-    print get_push_name(hook_data)
-    print get_push_email(hook_data)
-    print '====end for gitlab===========================\n'
+    print(get_repo_name(hook_data))
+    print(get_repo_branch(hook_data))
+    print(get_push_name(hook_data))
+    print(get_push_email(hook_data))
+    print('====end for gitlab===========================\n')
     # for gogs
-    print '====for gitosc==========================='
+    print('====for gitosc===========================')
     hook_data = json.loads(WebhookData.gitosc)
-    print get_repo_name(hook_data)
-    print get_repo_branch(hook_data)
-    print get_push_name(hook_data)
-    print get_push_email(hook_data)
-    print '====end for gitosc===========================\n'
+    print(get_repo_name(hook_data))
+    print(get_repo_branch(hook_data))
+    print(get_push_name(hook_data))
+    print(get_push_email(hook_data))
+    print('====end for gitosc===========================\n')
     # for gogs
-    print '====for gogs==========================='
+    print('====for gogs===========================')
     hook_data = json.loads(WebhookData.gogs)
-    print get_repo_name(hook_data)
-    print get_repo_branch(hook_data)
-    print get_push_name(hook_data)
-    print get_push_email(hook_data)
-    print '====end for gogs==========================='
+    print(get_repo_name(hook_data))
+    print(get_repo_branch(hook_data))
+    print(get_push_name(hook_data))
+    print(get_push_email(hook_data))
+    print('====end for gogs===========================')

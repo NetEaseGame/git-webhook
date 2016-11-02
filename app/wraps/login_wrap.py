@@ -8,7 +8,6 @@ from functools import wraps
 
 from flask import request, redirect, url_for
 
-from app import app
 from app.utils import RequestUtil, JsonUtil
 
 
@@ -22,7 +21,10 @@ def login_required(type='api'):
                 if type == 'page':
                     return redirect(url_for('login', next=request.url))
                 else:
-                    return JsonUtil.object_2_json({'success': 0, 'data': 'the interface need to be login'})
+                    return JsonUtil.object_2_json({
+                        'success': 0,
+                        'data': 'the interface need to be login'
+                    })
             return function(*args, **kwargs)
 
         return decorated_function

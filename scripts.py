@@ -5,8 +5,8 @@ Created on 2016年6月15日
 @author: hustcc
 '''
 import sys
-from app.utils import StringUtil
 from app import SQLAlchemyDB as db
+
 
 def do_nothing():
     return 'nothing done.'
@@ -31,6 +31,6 @@ operator = {
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print ('argv length is not equal 2.')
+        print('argv length is not equal 2.')
     else:
-        print (operator.get(sys.argv[1], do_nothing)())
+        print(operator.get(sys.argv[1], do_nothing)())

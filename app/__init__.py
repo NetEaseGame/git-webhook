@@ -6,7 +6,9 @@ Created on 2015年6月16日
 '''
 import os
 from flask import Flask
+from flask_github import GitHub
 from flask_sqlalchemy import SQLAlchemy
+from celery import Celery, platforms
 
 # flask
 app = Flask(__name__)
@@ -21,17 +23,14 @@ else:
 # flask-sqlalchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
 SQLAlchemyDB = SQLAlchemy(app)
-from app.database import model
 
 # celery
-from celery import Celery, platforms
 platforms.C_FORCE_ROOT = True
 celeryInstance = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
 celeryInstance.conf.update(app.config)
 
 # github login
-from flask_github import GitHub
 github = GitHub(app)
 
-# import views
-from app import views
+from app.database import model  # noqa
+from app import views  # noqa

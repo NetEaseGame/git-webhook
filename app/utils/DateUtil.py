@@ -26,6 +26,6 @@ def now_timestamp():
 
 
 if __name__ == '__main__':
-    print now_datetime()
-    print now_timestamp()
-    print now_date_string()
+    print(now_datetime())
+    print(now_timestamp())
+    print(now_date_string())

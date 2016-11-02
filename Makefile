@@ -1,6 +1,11 @@
 help:
-	@echo "mysql|build-db|dev|dev-mysql"
-
+	@echo "clean|mysql|build-db|dev|dev-mysql"
+	
+clean:
+	@find ./app -name '*.pyc' -exec rm -f {} +
+	@find ./app -name '*.pyo' -exec rm -f {} +
+	@find ./app -name '__pycache__' -exec rm -fr {} +
+	
 mysql:
 	@docker-compose exec mysql mysql -uroot -proot git_webhook
 		

@@ -8,7 +8,6 @@ Created on 2015-6-16
 import hashlib
 import binascii
 import uuid
-import base64
 
 
 def is_empty(s):

@@ -4,12 +4,8 @@ Created on 2016年6月15日
 
 @author: hustcc
 '''
-from sqlalchemy import Column, DateTime, Index, Integer, String, Text
-
 from app import SQLAlchemyDB as db
 from app.database.base import BaseMethod
-from app.utils import StringUtil, DateUtil
-from sqlalchemy import func
 import datetime
 
 
@@ -19,10 +15,10 @@ class User(db.Model, BaseMethod):
     name = db.Column(db.String(32))
     location = db.Column(db.String(32))
     avatar = db.Column(db.String(128))
-    
+
     src = db.Column(db.String(4), default="gh")
     last_login = db.Column(db.DateTime, default=datetime.datetime.now)
-    
+
     def dict(self):
         rst = {}
         rst['id'] = self.id
@@ -42,12 +38,12 @@ class Server(db.Model, BaseMethod):
     port = db.Column(db.Integer)
     account = db.Column(db.String(32))
     pkey = db.Column(db.Text)
-    
+
     user_id = db.Column(db.String(32), db.ForeignKey(User.id))
     user = db.relationship(User)
-    
+
     add_time = db.Column(db.DateTime, default=datetime.datetime.now)
-    
+
     deleted = db.Column(db.Boolean, default=False)
 
     def dict(self, with_pkey=False):
@@ -61,7 +57,7 @@ class Server(db.Model, BaseMethod):
         rst['user_id'] = self.user_id
         rst['add_time'] = self.add_time
         return rst
-    
+
 
 class WebHook(db.Model, BaseMethod):
     '''webhook'''
@@ -69,22 +65,24 @@ class WebHook(db.Model, BaseMethod):
     repo = db.Column(db.String(32))  # repo name
     branch = db.Column(db.String(32))  # repo branch
     shell = db.Column(db.Text)  # do what
-    
+
     user_id = db.Column(db.String(32), db.ForeignKey(User.id))
     user = db.relationship(User)
-    
+
     server_id = db.Column(db.Integer, db.ForeignKey(Server.id))
     server = db.relationship(Server)
-    
+
     add_time = db.Column(db.DateTime, default=datetime.datetime.now)
-    
+
     deleted = db.Column(db.Boolean, default=False)
-    
+
     key = db.Column(db.String(32), unique=True)  # 用于webhook，保证私密，直接用 md5 salt
-    
-    status = db.Column(db.String(1))  # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
-    lastUpdate = db.Column(db.DateTime, default=datetime.datetime.now)  # 最新执行时间
-    
+
+    # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
+    status = db.Column(db.String(1))
+    lastUpdate = db.Column(
+        db.DateTime, default=datetime.datetime.now)  # 最新执行时间
+
     def dict(self, with_key=False):
         rst = {}
         rst['id'] = self.id
@@ -99,28 +97,30 @@ class WebHook(db.Model, BaseMethod):
         rst['status'] = self.status
         rst['lastUpdate'] = self.lastUpdate
         return rst
-    
+
     def updateStatus(self, status):
         self.status = status
         self.lastUpdate = datetime.datetime.now()
-        
+
         self.save()
-    
+
 
 class History(db.Model, BaseMethod):
     '''push history'''
     # md5, notice, output, push_name, push_email, success, add_time
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(1))  # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
+    # 1:waiting, 2:ing, 3:error, 4:success, 5:except, other
+    status = db.Column(db.String(1))
     shell_log = db.Column(db.Text)  # hook shell log
-    
+
     data = db.Column(db.Text)  # git push data
     push_user = db.Column(db.String(64))  # git push user(name<email>)
-    add_time = db.Column(db.DateTime, default=datetime.datetime.now)  # git push time
-    
+    add_time = db.Column(
+        db.DateTime, default=datetime.datetime.now)  # git push time
+
     webhook_id = db.Column(db.Integer, db.ForeignKey(WebHook.id))
     webhook = db.relationship(WebHook)
-    
+
     def dict(self):
         rst = {}
         rst['id'] = self.id
@@ -129,10 +129,10 @@ class History(db.Model, BaseMethod):
         rst['data'] = self.data  # json
         rst['push_user'] = self.push_user
         rst['add_time'] = self.add_time
-        
+
         rst['webhook_id'] = self.webhook_id
         return rst
-    
+
     def updateStatus(self, status):
         self.status = status
         self.save()

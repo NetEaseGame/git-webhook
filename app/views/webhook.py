@@ -41,12 +41,13 @@ def api_webhook_new():
 
     if not all((repo, branch, shell, server_id)):
         return ResponseUtil.standard_response(0, 'Form data can not be blank!')
-    
+
     webhook_id = RequestUtil.get_parameter('id', '')
     if webhook_id:
         # update webhook
         # you can only update the webhook which you create.
-        webhook = WebHook.query.filter_by(id=webhook_id, user_id=user_id).first()
+        webhook = WebHook.query.filter_by(
+            id=webhook_id, user_id=user_id).first()
         if not webhook:
             return ResponseUtil.standard_response(0, 'WebHook is not exist!')
         webhook.repo = repo
@@ -55,8 +56,14 @@ def api_webhook_new():
         webhook.server_id = server_id
     else:
         # new webhook
-        webhook = WebHook(repo=repo, branch=branch, shell=shell, server_id=server_id,
-                          user_id=user_id, key=StringUtil.md5_token())
+        webhook = WebHook(
+            repo=repo,
+            branch=branch,
+            shell=shell,
+            server_id=server_id,
+            user_id=user_id,
+            key=StringUtil.md5_token()
+        )
 
     webhook.save()
 

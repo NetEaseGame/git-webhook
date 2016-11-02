@@ -7,7 +7,6 @@ index, login, logout
 '''
 
 from app import app, github
-from app.wraps.login_wrap import login_required
 from app.utils import ResponseUtil, RequestUtil, DateUtil
 from werkzeug.utils import redirect
 from flask.helpers import url_for, flash
@@ -36,27 +35,27 @@ def github_authorized(oauth_token):
     if oauth_token is None:
         flash("Authorization failed.")
         return redirect(url_for('index'))
-    
+
     session['oauth_token'] = oauth_token
-    
+
     me = github.get('user')
     user_id = me['login']
-    
+
     # is user exist
     user = User.query.get(user_id)
-    
+
     if user is None:
         # not exist, add
         user = User(id=user_id,
                     name=me.get('name', user_id),
                     location=me.get('location', ''),
                     avatar=me.get('avatar_url', ''))
-        
+
     user.last_login = DateUtil.now_datetime()
     user.save()
-    
+
     RequestUtil.login_user(user.dict())
-    
+
     return redirect(url_for('index'))
 
 
