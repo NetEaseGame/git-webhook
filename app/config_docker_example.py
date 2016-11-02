@@ -8,7 +8,7 @@ Created on 2016-10-20
 # for sqlite
 # DATABASE_URI = 'sqlite:///git_webhook.db'
 # for mysql
-DATABASE_URI = 'mysql://root:root@mysql/git_webhook'
+DATABASE_URI = 'mysql+pymysql://root:root@mysql/git_webhook'
 
 CELERY_BROKER_URL = 'redis://:@redis:6379/0'
 CELERY_RESULT_BACKEND = 'redis://:@redis:6379/0'
