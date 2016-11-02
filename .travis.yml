@@ -1,11 +1,15 @@
+sudo: required
 language: python
+services:
+  - docker
 python:
-  - "2.6"
   - "2.7"
 before_install:
-  - pip install -r requirements-dev.txt
-install:
   - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
+  - make test
+install:
+  - sleep 10
 script: pytest && flake8
 after_success:
   - codecov

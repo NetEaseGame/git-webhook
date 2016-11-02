@@ -17,3 +17,6 @@ dev:
 
 dev-mysql:
 	@mysql -h 127.0.0.1 -uroot -proot git_webhook
+
+test:
+	@docker-compose -f docker-compose-test.yml up -d
