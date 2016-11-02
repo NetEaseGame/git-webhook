@@ -3,8 +3,9 @@ services:
   mysql:
     image: mysql:5.7
     volumes:
-      - /tmp/mysql:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./gogs/init.sql:/docker-entrypoint-initdb.d/gogs-init.sql
     environment:
       - MYSQL_ROOT_PASSWORD=root
     ports:
@@ -12,9 +13,21 @@ services:
   redis:
     image: redis:3
     volumes:
-      - /tmp/redis:/data
+      - ./data/redis:/data
     ports:
       - "6379:6379"
+  gogs:
+    image: gogs/gogs
+    ports:
+      - "10022:22"
+      - "10080:3000"
+    volumes:
+      - ./data/gogs:/data
+      - ./gogs:/custom
+    environment:
+      - GOGS_CUSTOM=/custom
+    depends_on:
+      - mysql
   ssh:
     image: jeroenpeeters/docker-ssh
     volumes:
