@@ -16,6 +16,10 @@ def rebuild_db():
     db.create_all()
 
 
+def drop_db():
+    db.drop_all()
+
+
 def build_db():
     # database init
     db.drop_all()
@@ -27,6 +31,7 @@ def build_db():
 operator = {
     'build_db': build_db,
     'rebuild_db': rebuild_db,
+    'drop_db': drop_db,
 }
 
 if __name__ == '__main__':
