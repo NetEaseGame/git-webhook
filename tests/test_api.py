@@ -59,14 +59,44 @@ def test_server_list(tester):
     assert success(resp)
     assert len(load_data(resp)) == 2
 
+WEBHOOK_DATA = {
+    'repo': 'test_repo',
+    'branch': 'master',
+    'shell': 'echo hello',
+}
+
+
+def create_webhook(tester, **kwargs):
+    data = WEBHOOK_DATA.copy()
+    data.update(kwargs)
+    resp = tester.post('/api/webhook/new', data=data)
+    assert success(resp)
+    return load_data(resp)
+
 
 def test_webhoot_new(tester):
-    pass
+    server = create_server(tester)
+    webhook = create_webhook(tester, server_id=server['id'])
+    assert webhook['branch'] == 'master'
+    webhook = create_webhook(tester, server_id=server['id'],
+                             webhook_id=webhook['id'], branch='dev')
+    assert webhook['branch'] == 'dev'
 
 
-def test_webhoot_delete(tester):
-    pass
+def test_webhoot_delete(tester, sql):
+    server = create_server(tester)
+    webhook = create_webhook(tester, server_id=server['id'])
+    data = {'webhook_id': webhook['id']}
+    resp = tester.post('/api/webhook/delete', data=data)
+    assert success(resp)
+    text = 'select count(*) from web_hook where !deleted'
+    assert sql.execute(text).scalar() == 0
 
 
-def test_webhook_list():
-    pass
+def test_webhook_list(tester):
+    server = create_server(tester)
+    create_webhook(tester, server_id=server['id'])
+    create_webhook(tester, server_id=server['id'])
+    resp = tester.get('/api/webhook/list')
+    assert success(resp)
+    assert len(load_data(resp)) == 2
