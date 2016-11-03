@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import mock
 import pytest
 from app import app as _app, SQLAlchemyDB
 from app.database import model
@@ -24,6 +25,16 @@ def sql(app):
     return SQLAlchemyDB.session
 
 
+@pytest.fixture
+def tester(app, sql):
+    """模拟已登录用户"""
+    with app.test_client() as c:
+        user = create_user(sql)
+        mock_func = mock.MagicMock(return_value=user.dict())
+        with mock.patch.object(RequestUtil, 'get_login_user', new=mock_func):
+            yield c
+
+
 def create_user(sql):
     user_id = 'tester'
     user = model.User(
@@ -34,10 +45,4 @@ def create_user(sql):
     )
     sql.add(user)
     sql.commit()
-    RequestUtil.login_user(user.dict())
     return user
-
-
-@pytest.fixture
-def user(sql):
-    return create_user(sql)
