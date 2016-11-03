@@ -15,9 +15,9 @@ from app.utils import SshUtil, JsonUtil, HookDataParse  # noqa
 
 # webhook / data all is JSON dict.
 @celeryInstance.task
-def do_webhook_shell(webhook_id, histroy_id, data):
+def do_webhook_shell(webhook_id, history_id, data):
     webhook = WebHook.query.get(webhook_id)
-    history = History.query.get(histroy_id)
+    history = History.query.get(history_id)
     # server information
     ip = webhook.server.ip
     port = webhook.server.port

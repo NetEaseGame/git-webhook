@@ -4,6 +4,12 @@ import pytest
 from app import app as _app, SQLAlchemyDB
 from app.database import model
 from app.utils import RequestUtil
+import app.utils.SshUtil as ssh
+from .import success, load_data
+
+# =====================================
+# base fixtures
+# =====================================
 
 
 @pytest.fixture
@@ -46,3 +52,50 @@ def create_user(sql):
     sql.add(user)
     sql.commit()
     return user
+
+# =====================================
+# server fixtures
+# =====================================
+SERVER_DATA = {
+    'ip': '127.0.0.1',
+    'name': 'dev',
+    'port': '22',
+    'account': 'root',
+    'pkey': 'asdfghjkl',
+}
+
+
+def mock_do_ssh_cmd(*args, **kwargs):
+    return True, "OK"
+
+
+@pytest.fixture
+def create_server(tester):
+    def func(**kwargs):
+        data = SERVER_DATA.copy()
+        data.update(kwargs)
+        with mock.patch.object(ssh, 'do_ssh_cmd', new=mock_do_ssh_cmd):
+            resp = tester.post('/api/server/new', data=data)
+            assert success(resp)
+        return load_data(resp)
+    return func
+
+# =====================================
+# webhook fixtures
+# =====================================
+WEBHOOK_DATA = {
+    'repo': 'test_repo',
+    'branch': 'master',
+    'shell': 'echo hello',
+}
+
+
+@pytest.fixture
+def create_webhook(tester):
+    def func(**kwargs):
+        data = WEBHOOK_DATA.copy()
+        data.update(kwargs)
+        resp = tester.post('/api/webhook/new', data=data)
+        assert success(resp)
+        return load_data(resp)
+    return func
