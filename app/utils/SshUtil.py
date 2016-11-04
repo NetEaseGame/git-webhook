@@ -8,9 +8,10 @@ import paramiko
 import StringIO
 
 
-def ssh_log_success(log):
-    if log.endswith('fail') or log.endswith('error'):
-        return False
+def is_log_success(log):
+    for x in ['fatal', 'fail', 'error']:
+        if log.startswith(x) or log.endswith(x):
+            return False
     return True
 
 
@@ -46,11 +47,12 @@ def do_ssh_cmd(ip, port, account, pkey, shell, push_data='', timeout=300):
     success = True
     if not log and err:
         success = False
+        log = err
 
     s.close()
     pkey_file.close()
 
     if success:
-        success = ssh_log_success(log)
+        success = is_log_success(log)
 
     return success, log
