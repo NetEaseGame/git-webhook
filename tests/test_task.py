@@ -16,8 +16,6 @@ def test_do_webhook_shell(create_server, create_webhook, sql):
     )
     sql.add(history)
     sql.commit()
-    print(model.History.query.get(history.id))
-    # with mock.patch.object(ssh, 'do_ssh_cmd', new=mock_do_ssh_cmd):
     text = 'select * from history where id=:id'
     result = sql.execute(text, {'id': history.id}).fetchone()
     assert result.status == '1'

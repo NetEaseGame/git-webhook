@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import pytest
+from app.database import model
 from . import WEBHOOKDATA, success, load_data
 
 
@@ -53,6 +54,26 @@ def test_webhook_list(tester, create_server, create_webhook):
     resp = tester.get('/api/webhook/list')
     assert success(resp)
     assert len(load_data(resp)) == 2
+
+
+def test_history(tester, create_server, create_webhook, sql):
+    server = create_server()
+    webhook = create_webhook(server_id=server['id'])
+
+    query_string = {'webhook_id': webhook['id']}
+    resp = tester.get('/api/history/list', query_string=query_string)
+    assert len(load_data(resp)['histories']) == 0
+
+    history = model.History(
+        status='1',
+        webhook_id=webhook['id'],
+        data='null'
+    )
+    sql.add(history)
+    sql.commit()
+
+    resp = tester.get('/api/history/list', query_string=query_string)
+    assert len(load_data(resp)['histories']) == 1
 
 
 @pytest.mark.parametrize("name,data", WEBHOOKDATA.items())

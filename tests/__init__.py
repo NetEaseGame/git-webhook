@@ -20,7 +20,6 @@ with open(os.path.join(TEST_DIR, '../ssh/id_rsa')) as f:
 
 def success(response):
     if response.status_code == 200:
-        print(response.data)
         data = json.loads(response.data)
         return data['success']
     return False
