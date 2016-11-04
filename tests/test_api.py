@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from . import success, load_data
+import json
+import pytest
+from . import WEBHOOKDATA, success, load_data
 
 
 def test_server_new(tester, create_server):
@@ -51,3 +53,12 @@ def test_webhook_list(tester, create_server, create_webhook):
     resp = tester.get('/api/webhook/list')
     assert success(resp)
     assert len(load_data(resp)) == 2
+
+
+@pytest.mark.parametrize("name,data", WEBHOOKDATA.items())
+def test_git_webhook(tester, create_server, create_webhook, name, data):
+    server = create_server()
+    webhook = create_webhook(server_id=server['id'])
+    url = '/api/git-webhook/{}'.format(webhook['key'])
+    resp = tester.post(url, data=json.dumps(data))
+    assert b'Work put into Queue' in resp.data

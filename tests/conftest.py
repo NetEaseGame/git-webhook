@@ -84,7 +84,7 @@ def create_server(tester):
 # webhook fixtures
 # =====================================
 WEBHOOK_DATA = {
-    'repo': 'test_repo',
+    'repo': 'git-webhook',
     'branch': 'master',
     'shell': 'echo hello',
 }

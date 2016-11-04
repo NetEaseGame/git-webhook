@@ -14,16 +14,16 @@
             "time": "2015-11-06T14:51:55+08:00"
         },
         "repository": {
-            "name": "test_gitosc_20151106145021322",
-            "url": "git@git.oschina.net:gitlab_test_1/test_gitosc_20151106145021322.git",
-            "description": "test_gitosc_20151106145021322 testting",
-            "homepage": "http://git.oschina.net/gitlab_test_1/test_gitosc_20151106145021322"
+            "name": "git-webhook",
+            "url": "git@git.oschina.net:gitlab_test_1/git-webhook.git",
+            "description": "git-webhook testting",
+            "homepage": "http://git.oschina.net/gitlab_test_1/git-webhook"
         },
         "commits": [{
             "id": "219aa13d45276a5cae7436ecc66053da67ec2a2d",
             "message": "commit_access_test",
             "timestamp": "2015-11-06T14:50:47+08:00",
-            "url": "http://git.oschina.net/gitlab_test_1/test_gitosc_20151106145021322/commit/219aa13d45276a5cae7436ecc66053da67ec2a2d",
+            "url": "http://git.oschina.net/gitlab_test_1/git-webhook/commit/219aa13d45276a5cae7436ecc66053da67ec2a2d",
             "author": {
                 "name": "gitlab_test_2",
                 "email": "gitlabtest_2@gitlab.com",
