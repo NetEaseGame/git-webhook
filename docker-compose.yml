@@ -13,7 +13,7 @@ services:
     image: mysql:5.7
     volumes:
       - ./data/mysql:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - MYSQL_ROOT_PASSWORD=root
   redis:

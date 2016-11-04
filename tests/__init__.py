@@ -14,7 +14,7 @@ for filename in os.listdir(WEBHOOKDATA_DIR):
     with open(os.path.join(WEBHOOKDATA_DIR, filename)) as f:
         data = json.load(f)
     WEBHOOKDATA[name] = data
-with open(os.path.join(TEST_DIR, '../ssh/id_rsa')) as f:
+with open(os.path.join(TEST_DIR, '../docker/ssh/id_rsa')) as f:
     RSA_PRIVATE_KEY = f.read()
 
 
