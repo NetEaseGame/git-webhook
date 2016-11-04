@@ -19,6 +19,8 @@ with open(os.path.join(TEST_DIR, '../docker/ssh/id_rsa')) as f:
 
 
 def success(response):
+    if response.status_code != 200:
+        print(response.data)
     if response.status_code == 200:
         data = json.loads(response.data)
         return data['success']

@@ -9,6 +9,7 @@ from flask import Flask
 from flask_github import GitHub
 from flask_sqlalchemy import SQLAlchemy
 from celery import Celery, platforms
+from app.utils.validator import Validator
 
 # flask
 app = Flask(__name__)
@@ -19,6 +20,9 @@ if 'GIT_WEBHOOK_CONFIG' in os.environ:
     app.config.from_envvar('GIT_WEBHOOK_CONFIG')
 else:
     app.config.from_object('app.config')
+
+# validator
+v = Validator()
 
 # flask-sqlalchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
