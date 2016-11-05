@@ -7,6 +7,7 @@ import LogPreview from './component/logPreview.jsx';
 
 import TimeAgo from 'timeago-react';
 import StringUtils from './utils/stringUtils.jsx';
+import hrn from 'hrn';
 
 const HistoryList = React.createClass({
   __ONFIRE__: 'HistoryList',
@@ -72,10 +73,9 @@ const HistoryList = React.createClass({
           <thead>
             <tr>
               <th width="10%">#</th>
-              <th width="20%">Pusher</th>
+              <th width="18%">Pusher</th>
               <th width="35%">Shell Log</th>
-              <th width="10%">Time</th>
-              <th width="5%">Consuming</th>
+              <th width="17%">Time</th>
               <th width="10%">Status</th>
               <th width="10%">Data</th>
             </tr>
@@ -83,6 +83,7 @@ const HistoryList = React.createClass({
           <tbody>
           {
             this.state.histories.map(function(history, i) {
+              let diff_sec = (new Date(history.update_time) - new Date(history.add_time)) / 1000;
               return (
                 <tr key={i}>
                   <td>{history.id}</td>
@@ -90,9 +91,10 @@ const HistoryList = React.createClass({
                   <td>
                     <LogPreview log={history.shell_log} />
                   </td>
-                  <td title={history.add_time}><TimeAgo locale='zh_CN' datetime={history.add_time} /></td>
-                  <td title={history.update_time}>
-                  {(new Date(history.update_time).getTime() - new Date(history.add_time).getTime())/1000}s
+                  <td title={history.add_time}>
+                    <span title={diff_sec + ' sec'}>{ hrn(diff_sec, 1, [['s', 'm', 'h', 'd'], [1, 60, 60, 24]])}</span>
+                    &nbsp; @ &nbsp; 
+                    <TimeAgo locale='zh_CN' datetime={history.add_time} />
                   </td>
                   <td>{StringUtils.statusToTag(history.status)}</td>
                   <td>
@@ -100,7 +102,7 @@ const HistoryList = React.createClass({
                             title="Copy Push Data to clipboard!" 
                             data-clipboard-text={history.data}
                             onClick={this.consoleData.bind(this, history.data)}>
-                      <i className="ui icon copy"></i> Copy Data
+                      <i className="ui icon copy"></i> Copy
                     </button>
                   </td>
                 </tr>
