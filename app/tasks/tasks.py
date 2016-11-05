@@ -8,6 +8,7 @@ import sys
 reload(sys)  # noqa
 sys.setdefaultencoding('utf8')
 
+import datetime  # noqa
 from app import celeryInstance  # noqa
 from app.database.model import History, WebHook  # noqa
 from app.utils import SshUtil, JsonUtil, HookDataParse  # noqa
@@ -50,6 +51,7 @@ def do_webhook_shell(webhook_id, history_id, data):
     log = unicode(log)  # noqa
 
     history.status = status
+    history.update_time = datetime.datetime.now()
     history.shell_log = log
     history.save()
 

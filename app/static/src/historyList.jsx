@@ -73,8 +73,9 @@ const HistoryList = React.createClass({
             <tr>
               <th width="10%">#</th>
               <th width="20%">Pusher</th>
-              <th width="40%">Shell Log</th>
+              <th width="35%">Shell Log</th>
               <th width="10%">Time</th>
+              <th width="5%">Consuming</th>
               <th width="10%">Status</th>
               <th width="10%">Data</th>
             </tr>
@@ -90,6 +91,9 @@ const HistoryList = React.createClass({
                     <LogPreview log={history.shell_log} />
                   </td>
                   <td title={history.add_time}><TimeAgo locale='zh_CN' datetime={history.add_time} /></td>
+                  <td title={history.update_time}>
+                  {(new Date(history.update_time).getTime() - new Date(history.add_time).getTime())/1000}s
+                  </td>
                   <td>{StringUtils.statusToTag(history.status)}</td>
                   <td>
                     <button className="mini ui icon button copy_btn" 
