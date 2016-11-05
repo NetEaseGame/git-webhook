@@ -29,13 +29,15 @@ services:
     depends_on:
       - mysql
   ssh:
-    image: jeroenpeeters/docker-ssh
+    build:
+      context: .
+      dockerfile: Dockerfile-ssh
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./ssh/authorized_keys:/authorized_keys
     environment:
       - AUTH_MECHANISM=publicKey
-      - CONTAINER=gitwebhook_ssh_1
+      - CONTAINER=docker_ssh_1
       - AUTHORIZED_KEYS=/authorized_keys
     ports:
       - "233:22"
