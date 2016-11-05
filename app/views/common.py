@@ -6,12 +6,17 @@ index, login, logout
 @author: hustcc
 '''
 
-from app import app, github
+from app import app, github, __version__
 from app.utils import ResponseUtil, RequestUtil, DateUtil
 from werkzeug.utils import redirect
 from flask.helpers import url_for, flash
 from flask.globals import session
 from app.database.model import User
+
+
+@app.route('/version', methods=['GET'])
+def version():
+    return __version__
 
 
 @app.route('/', methods=['GET'])

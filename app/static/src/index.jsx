@@ -2,8 +2,18 @@ import React from 'react';
 import { Link } from 'react-router';
 import StringUtils from './utils/stringUtils.jsx';
 require('../res/css/index.css');
+import RequestsMixin from './mixins/xhrRequestsMixin.jsx';
 
 const Index = React.createClass({
+  mixins: [RequestsMixin],
+  getInitialState: function() {
+    return {version: '0.0.0'};
+  },
+  componentDidMount: function() {
+    this.get('/version', {}, function(r) {
+      this.setState({version: r.text});
+    }.bind(this));
+  },
   render: function() {
     return (
       <div className="pusher">
@@ -11,9 +21,11 @@ const Index = React.createClass({
           <div className="ui container">
             <div className="ui large secondary inverted pointing menu">
               <a className="active header item">Home</a>
-              <a target="_blank" href="https://github.com/NetEaseGame/git-webhook" className="header item">Source on GitHub</a>
-              <a target="_blank" href="https://github.com/hustcc" className="header item">Me</a>
+              <Link to="/webhook" className="header item">DashBoard</Link>
               <Link to="/doc" className="header item">Documents</Link>
+              <a target="_blank" href="https://github.com/NetEaseGame/git-webhook" className="header item">Source</a>
+              <a target="_blank" href="https://github.com/hustcc" className="header item">Me</a>
+              <a to="#" className="header item">{'v ' + this.state.version}</a>
             </div>
           </div>
 
