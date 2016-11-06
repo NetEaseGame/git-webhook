@@ -117,7 +117,8 @@ class History(db.Model, BaseMethod):
     push_user = db.Column(db.String(64))  # git push user(name<email>)
     add_time = db.Column(
         db.DateTime, default=datetime.datetime.now)  # git push time
-
+    update_time = db.Column(
+        db.DateTime, default=datetime.datetime.now)  # last update time
     webhook_id = db.Column(db.Integer, db.ForeignKey(WebHook.id))
     webhook = db.relationship(WebHook)
 
@@ -129,10 +130,11 @@ class History(db.Model, BaseMethod):
         rst['data'] = self.data  # json
         rst['push_user'] = self.push_user
         rst['add_time'] = self.add_time
-
+        rst['update_time'] = self.update_time
         rst['webhook_id'] = self.webhook_id
         return rst
 
     def updateStatus(self, status):
+        self.update_time = datetime.datetime.now()
         self.status = status
         self.save()
