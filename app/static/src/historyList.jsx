@@ -83,7 +83,8 @@ const HistoryList = React.createClass({
           <tbody>
           {
             this.state.histories.map(function(history, i) {
-              let diff_sec = (new Date(history.update_time) - new Date(history.add_time)) / 1000;
+              let diff_sec = (new Date(history.update_time || history.add_time) - new Date(history.add_time)) / 1000;
+              if (diff_sec < 1) diff_sec = 1;
               return (
                 <tr key={i}>
                   <td>{history.id}</td>
