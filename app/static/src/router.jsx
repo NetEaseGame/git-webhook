@@ -6,6 +6,7 @@ import MainComponent from './common/main.jsx';
 
 import WebHook from './webHook.jsx';
 import Server from './server.jsx';
+import Collaborator from './collaborator.jsx';
 import HistoryList from './historyList.jsx';
 import Document from './document.jsx';
 
@@ -15,6 +16,8 @@ ReactDOM.render((
     <Route path="/" component={MainComponent}>
       <Route path="/webhook" component={WebHook} />
       <Route path="/server" component={Server} />
+      // collaborator
+      <Route path="/collaborator/:webhook_id" component={Collaborator} />
       // hostroy
       <Route path="/history/:webhook_id" component={HistoryList} />
       <Route path="/history/:webhook_id/:page" component={HistoryList} />

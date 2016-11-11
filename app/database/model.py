@@ -16,7 +16,7 @@ class User(db.Model, BaseMethod):
     location = db.Column(db.String(32))
     avatar = db.Column(db.String(128))
 
-    src = db.Column(db.String(4), default="gh")
+    src = db.Column(db.String(4), default="gh")  # useless
     last_login = db.Column(db.DateTime, default=datetime.datetime.now)
 
     def dict(self):
@@ -138,3 +138,27 @@ class History(db.Model, BaseMethod):
         self.update_time = datetime.datetime.now()
         self.status = status
         self.save()
+
+
+class Collaborator(db.Model, BaseMethod):
+    '''Collaborator'''
+    id = db.Column(db.Integer, primary_key=True)
+    # webhook
+    webhook_id = db.Column(db.Integer, db.ForeignKey(WebHook.id))
+    webhook = db.relationship(WebHook)
+    # user
+    user_id = db.Column(db.String(32), db.ForeignKey(User.id))
+    user = db.relationship(User)
+
+    add_time = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    def dict(self):
+        rst = {}
+        rst['id'] = self.id
+        rst['webhook_id'] = self.webhook_id
+        rst['user_id'] = self.user_id
+        rst['user'] = {}
+        if self.user:
+            rst['user'] = self.user.dict()
+        rst['add_time'] = self.add_time
+        return rst

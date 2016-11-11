@@ -129,8 +129,10 @@ const WebHook = React.createClass({
             this.state.webhooks.map(function(webhook, i) {
               return (
                 <tr key={i}>
-                  <td>{webhook.id}</td>
-                  <td><Link to={'/history/' + webhook.id}> {webhook.repo + '@' + webhook.branch} </Link></td>
+                  <td><Link to={'/collaborator/' + webhook.id}><i className="ui users icon"></i></Link></td>
+                  <td>
+                    <Link to={'/history/' + webhook.id}> {webhook.repo + '@' + webhook.branch} </Link>
+                  </td>
                   <td><pre className="language-powershell" dangerouslySetInnerHTML={{__html: webhook.shell}} /></td>
                   <td>{webhook.server.name}</td>
                   <td title={webhook.lastUpdate}><TimeAgo locale='zh_CN' datetime={webhook.lastUpdate} /></td>
