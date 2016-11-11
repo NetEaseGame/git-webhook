@@ -94,19 +94,20 @@ def api_webhook_retry():
     # login user
     user_id = RequestUtil.get_login_user().get('id', '')
     webhook_id = RequestUtil.get_parameter('webhook_id', '')
-    
+
     data = {
         'src': 'Manually executed'
     }
     webhook = WebHook.query.filter_by(user_id=user_id, id=webhook_id).first()
     if not webhook:
         return ResponseUtil.standard_response(0, 'Permition deny!')
-    
+
 #     if webhook.status not in ['3', '4', '5']:
 #         return ResponseUtil.standard_response(0, 'Webhook is Executing!')
-    
-    history = History(status='1', webhook_id=webhook.id,
-                                  data=JsonUtil.object_2_json(data))
+
+    history = History(status='1',
+                      webhook_id=webhook.id,
+                      data=JsonUtil.object_2_json(data))
     history.save()
     # status is waiting
     webhook.updateStatus('1')
