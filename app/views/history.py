@@ -21,7 +21,7 @@ def api_history_list():
     webhook = WebHook.query.filter_by(user_id=user_id, id=webhook_id).first()
 
     if not webhook:
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
     page = RequestUtil.get_parameter('page', '1')
     try:

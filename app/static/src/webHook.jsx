@@ -129,7 +129,7 @@ const WebHook = React.createClass({
             this.state.webhooks.map(function(webhook, i) {
               return (
                 <tr key={i}>
-                  <td><Link to={'/collaborator/' + webhook.id}><i className="ui users icon"></i></Link></td>
+                  <td title="Collaborator "><Link to={'/collaborator/' + webhook.id}><i className="ui users icon"></i></Link></td>
                   <td>
                     <Link to={'/history/' + webhook.id}> {webhook.repo + '@' + webhook.branch} </Link>
                   </td>

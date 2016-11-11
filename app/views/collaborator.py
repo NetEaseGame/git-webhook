@@ -19,7 +19,7 @@ def api_collaborator_list(webhook_id):
     user_id = RequestUtil.get_login_user().get('id', '')
 
     if not AuthUtil.has_readonly_auth(user_id, webhook_id):
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
     collaborators = Collaborator.query.filter_by(webhook_id=webhook_id).all()
     collaborators = [collaborator.dict() for collaborator in collaborators]
@@ -35,8 +35,11 @@ def api_collaborator_new(webhook_id, user_id):
     # login user
     login_user_id = RequestUtil.get_login_user().get('id', '')
 
+    if login_user_id == user_id:
+        return ResponseUtil.standard_response(0, '`%s` is Creator!' % user_id)
+
     if not AuthUtil.has_admin_auth(login_user_id, webhook_id):
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
     collaborator = Collaborator.query.filter_by(webhook_id=webhook_id,
                                                 user_id=user_id).first()
@@ -66,12 +69,12 @@ def api_collaborator_delete(collaborator_id):
 
     collaborator = Collaborator.query.get(collaborator_id)
     if not collaborator:
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
     webhook_id = collaborator.webhook_id
 
     if not AuthUtil.has_admin_auth(user_id, webhook_id):
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
     collaborator.delete()
 

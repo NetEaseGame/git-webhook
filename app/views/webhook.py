@@ -7,9 +7,10 @@ Created on 2016-10-20
 
 from app.wraps.login_wrap import login_required
 from app import app
-from app.utils import ResponseUtil, RequestUtil, StringUtil, JsonUtil
-from app.database.model import WebHook, Server, History
+from app.utils import ResponseUtil, RequestUtil, StringUtil, JsonUtil, AuthUtil
+from app.database.model import WebHook, Server, History, Collaborator
 from app.tasks import tasks
+from sqlalchemy.sql.expression import false
 
 
 # get webhook list
@@ -19,7 +20,24 @@ def api_webhook_list():
     # login user
     user_id = RequestUtil.get_login_user().get('id', '')
 
-    webhooks = WebHook.query.filter_by(user_id=user_id, deleted=False).all()
+    # create webhooks
+    created_webhooks = WebHook.query.filter_by(user_id=user_id,
+                                               deleted=False).all()
+
+    # collaborator webhooks
+    collaborated_webhooks = \
+        WebHook.query.join(Collaborator,
+                           Collaborator.webhook_id == WebHook.id) \
+                     .filter(Collaborator.user_id == user_id) \
+                     .filter(WebHook.deleted == false()).all()
+
+    webhooks = created_webhooks + collaborated_webhooks
+    # to dict
+    webhooks = {'id%s' % webhook.id: webhook for webhook in webhooks}
+    # value
+    webhooks = webhooks.values()
+    # sort
+    sorted(webhooks, key=lambda webhook: webhook.id)
     webhooks = [webhook.dict(True) for webhook in webhooks]
 
     return ResponseUtil.standard_response(1, webhooks)
@@ -34,7 +52,7 @@ def api_webhook_new():
     server_id = RequestUtil.get_parameter('server_id', '')
     # server must be added by yourself
     if not Server.query.filter_by(id=server_id, user_id=user_id).first():
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
     repo = RequestUtil.get_parameter('repo', '')
     branch = RequestUtil.get_parameter('branch', '')
@@ -45,12 +63,10 @@ def api_webhook_new():
 
     webhook_id = RequestUtil.get_parameter('id', '')
     if webhook_id:
-        # update webhook
-        # you can only update the webhook which you create.
-        webhook = WebHook.query.filter_by(
-            id=webhook_id, user_id=user_id).first()
+        webhook = AuthUtil.has_admin_auth(user_id, webhook_id)
         if not webhook:
-            return ResponseUtil.standard_response(0, 'WebHook is not exist!')
+            return ResponseUtil \
+                .standard_response(0, 'WebHook not exist or Permission deny!')
         webhook.repo = repo
         webhook.branch = branch
         webhook.shell = shell
@@ -78,9 +94,10 @@ def api_webhook_delete():
     user_id = RequestUtil.get_login_user().get('id', '')
     webhook_id = RequestUtil.get_parameter('webhook_id', '')
 
-    webhook = WebHook.query.filter_by(user_id=user_id, id=webhook_id).first()
+    # 验证创建者权限
+    webhook = AuthUtil.has_admin_auth(user_id, webhook_id)
     if not webhook:
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
     webhook.deleted = True
     webhook.save()
@@ -100,7 +117,7 @@ def api_webhook_retry():
     }
     webhook = WebHook.query.filter_by(user_id=user_id, id=webhook_id).first()
     if not webhook:
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
 #     if webhook.status not in ['3', '4', '5']:
 #         return ResponseUtil.standard_response(0, 'Webhook is Executing!')

@@ -78,7 +78,7 @@ def api_server_delete(server_id):
     user_id = RequestUtil.get_login_user().get('id', '')
     server = Server.query.filter_by(user_id=user_id, id=server_id).first()
     if not server:
-        return ResponseUtil.standard_response(0, 'Permition deny!')
+        return ResponseUtil.standard_response(0, 'Permission deny!')
 
     server.deleted = True
     server.save()
