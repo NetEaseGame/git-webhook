@@ -7,7 +7,7 @@ Created on 2016-10-20
 from app.wraps.login_wrap import login_required
 from app import app
 from app.utils import ResponseUtil, RequestUtil, AuthUtil
-from app.database.model import History, WebHook
+from app.database.model import History
 
 
 # get history list
