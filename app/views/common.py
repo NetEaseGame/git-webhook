@@ -51,12 +51,14 @@ def github_authorized(oauth_token):
 
     if user is None:
         # not exist, add
-        user = User(id=user_id,
-                    name=me.get('name', user_id),
-                    location=me.get('location', ''),
-                    avatar=me.get('avatar_url', ''))
+        user = User(id=user_id)
 
+    # update github user information
     user.last_login = DateUtil.now_datetime()
+    user.name = me.get('name', user_id)
+    user.location = me.get('location', '')
+    user.avatar = me.get('avatar_url', '')
+
     user.save()
 
     RequestUtil.login_user(user.dict())
