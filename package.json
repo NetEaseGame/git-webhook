@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "lint:js": "eslint app/static/src",
-    "lint:py": "sh tests/lint_py.sh",
+    "lint:py": "flake8",
     "test": "npm run lint:js && npm run lint:py",
     "js": "webpack --config webpack.config.js",
 

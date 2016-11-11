@@ -2,21 +2,19 @@
 
 > 一个使用 Python Flask + SQLAchemy + Celery + Redis + React 开发的用于迅速搭建并使用  WebHook 进行自动化部署和运维系统，支持：**Github / GitLab / Gogs / GitOsc**。
 
-[![Build Status](https://travis-ci.org/NetEaseGame/git-webhook.svg?branch=master)](https://travis-ci.org/NetEaseGame/git-webhook)
-[![Codecov branch](https://img.shields.io/codecov/c/github/NetEaseGame/git-webhook/master.svg)](https://codecov.io/gh/NetEaseGame/git-webhook)
-![GitHub](http://shields.hust.cc/Supported-GitHub-brightgreen.svg) ![GitLab](http://shields.hust.cc/Supported-GitLab-green.svg) ![GitOsc](http://shields.hust.cc/Supported-GitOsc-blue.svg) ![Gogs](http://shields.hust.cc/Supported-Gogs-yellowgreen.svg)
+[![Build Status](https://travis-ci.org/NetEaseGame/git-webhook.svg?branch=master)](https://travis-ci.org/NetEaseGame/git-webhook) [![Codecov branch](https://img.shields.io/codecov/c/github/NetEaseGame/git-webhook/master.svg)](https://codecov.io/gh/NetEaseGame/git-webhook) ![GitHub](http://shields.hust.cc/Supported-GitHub-brightgreen.svg) ![GitLab](http://shields.hust.cc/Supported-GitLab-green.svg) ![GitOsc](http://shields.hust.cc/Supported-GitOsc-blue.svg) ![Gogs](http://shields.hust.cc/Supported-Gogs-yellowgreen.svg)
 
  - 技术栈简单，**部署**容易；
  - 代码简洁易懂，**二次开发**毫无压力；
  - 支持 **Github / GitLab / Gogs / GitOsc**；
  - 使用 SSH 方式，支持**多服务**配置；
 
-Online DEMO Website: [http://webhook.hust.cc/](http://webhook.hust.cc/)，使用 gunicorn + gevent + nginx 部署。
+[Project ChangeLog](CHANGELOG.md) | [Online DEMO Website](http://webhook.hust.cc/)（使用 gunicorn + gevent + nginx 部署）
 
 
-## 一、如何使用 ？
+## 一、如何使用 & 部署 ？
 
-Docker老司机看这里 -> [使用Docker部署](deploy-docker.md)
+习惯使用 Docker 的老司机直接看[如何使用 Docker 部署 Git-WebHook](deploy-docker.md)。
 
 1. 下载本项目代码：
 
@@ -91,6 +89,7 @@ Docker老司机看这里 -> [使用Docker部署](deploy-docker.md)
  - 数据库环境（自行选择，推荐 mysql 和 sqlite）；
  - Redis，利用 Celery 做后台任务；
 
+当然也可以直接使用[ Docker 直接部署](deploy-docker.md)。
 
 ## 五、贡献
 
