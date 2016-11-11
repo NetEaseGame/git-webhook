@@ -326,3 +326,19 @@ pre {
 .pointer {
   cursor: pointer;
 }
+
+.hover .hover_hidden {
+  display: block;
+}
+
+.hover .hover_show {
+  display: none;
+}
+
+.hover:hover .hover_hidden {
+  display: none;
+}
+
+.hover:hover .hover_show{
+  display: inline-block;
+}

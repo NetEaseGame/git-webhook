@@ -95,6 +95,19 @@ const WebHook = React.createClass({
         else this.showError(r.data);
       }.bind(this));
   },
+  retryBtnClick: function(webhook_id, index) {
+    this.post('/api/webhook/retry', {
+        webhook_id: webhook_id,
+      }, function(r) {
+        r = r.json();
+        if (r.success) {
+          let webhooks = this.state.webhooks;
+          webhooks.splice(index, 1);
+          this.setState({webhooks: webhooks});
+        }
+        else this.showError(r.data);
+      }.bind(this));
+  },
   render: function() {
     return (
       <div className="ui tall stacked segment">
@@ -121,7 +134,12 @@ const WebHook = React.createClass({
                   <td><pre className="language-powershell" dangerouslySetInnerHTML={{__html: webhook.shell}} /></td>
                   <td>{webhook.server.name}</td>
                   <td title={webhook.lastUpdate}><TimeAgo locale='zh_CN' datetime={webhook.lastUpdate} /></td>
-                  <td>{StringUtils.statusToTag(webhook.status)}</td>
+                  <td className="hover">
+                    <span className="hover_hidden">{StringUtils.statusToTag(webhook.status)}</span>
+                    <span className="hover_show ui icon tiny button" onClick={this.retryBtnClick.bind(this, webhook.id, i)}>
+                      <i className="icon refresh"></i>
+                    </span>
+                  </td>
                   <td>
                     <button className="mini ui icon button copy_btn" title="Copy WebHook to clipboard!" data-clipboard-text={location.protocol + '//' + location.host + '/api/git-webhook/' + webhook.key}><i className="ui icon copy"></i></button>
                     <button className="mini ui icon button" onClick={this.editWebHook.bind(this, webhook, i)}><i className="ui icon edit"></i></button>

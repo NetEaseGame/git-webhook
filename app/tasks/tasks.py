@@ -31,8 +31,8 @@ def do_webhook_shell(webhook_id, history_id, data):
     # start to process, add history into database
     status = '2'
     history.push_user = '%s <%s>' % (
-        HookDataParse.get_push_name(data),
-        HookDataParse.get_push_email(data)
+        HookDataParse.get_push_name(data) or 'WebHook',
+        HookDataParse.get_push_email(data) or 'Web GUI'
     )
     history.updateStatus(status)
     webhook.updateStatus(status)

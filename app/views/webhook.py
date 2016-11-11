@@ -7,8 +7,9 @@ Created on 2016-10-20
 
 from app.wraps.login_wrap import login_required
 from app import app
-from app.utils import ResponseUtil, RequestUtil, StringUtil
-from app.database.model import WebHook, Server
+from app.utils import ResponseUtil, RequestUtil, StringUtil, JsonUtil
+from app.database.model import WebHook, Server, History
+from app.tasks import tasks
 
 
 # get webhook list
@@ -85,3 +86,31 @@ def api_webhook_delete():
     webhook.save()
 
     return ResponseUtil.standard_response(1, 'Success')
+
+
+@app.route('/api/webhook/retry', methods=['POST'])
+@login_required()
+def api_webhook_retry():
+    # login user
+    user_id = RequestUtil.get_login_user().get('id', '')
+    webhook_id = RequestUtil.get_parameter('webhook_id', '')
+    
+    data = {
+        'src': 'Manually executed'
+    }
+    webhook = WebHook.query.filter_by(user_id=user_id, id=webhook_id).first()
+    if not webhook:
+        return ResponseUtil.standard_response(0, 'Permition deny!')
+    
+    if webhook.status not in ['3', '4', '5']:
+        return ResponseUtil.standard_response(0, 'Webhook is Executing!')
+    
+    history = History(status='1', webhook_id=webhook.id,
+                                  data=JsonUtil.object_2_json(data))
+    history.save()
+    # status is waiting
+    webhook.updateStatus('1')
+    # do the async task
+    tasks.do_webhook_shell.delay(webhook.id, history.id, data)
+
+    return ResponseUtil.standard_response(1, webhook.dict())
