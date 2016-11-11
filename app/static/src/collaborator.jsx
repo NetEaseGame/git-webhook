@@ -89,7 +89,10 @@ const Collaborator = React.createClass({
               return (
                 <tr key={i}>
                   <td>{collaborator.user_id}</td>
-                  <td>{collaborator.user.name || ''}</td>
+                  <td>
+                    <img className="ui avatar image" src={collaborator.user.avatar || 'static/res/img/logo.png'} />
+                    <span>{collaborator.user.name || ''}</span>
+                  </td>
                   <td>{collaborator.user.location || ''}</td>
                   <td title={collaborator.user.last_login || new Date()}><TimeAgo locale='zh_CN' datetime={collaborator.user.last_login || new Date()} /></td>
                   <td title={collaborator.add_time}><TimeAgo locale='zh_CN' datetime={collaborator.add_time} /></td>
