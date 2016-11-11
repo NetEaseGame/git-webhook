@@ -102,8 +102,8 @@ def api_webhook_retry():
     if not webhook:
         return ResponseUtil.standard_response(0, 'Permition deny!')
     
-    if webhook.status not in ['3', '4', '5']:
-        return ResponseUtil.standard_response(0, 'Webhook is Executing!')
+#     if webhook.status not in ['3', '4', '5']:
+#         return ResponseUtil.standard_response(0, 'Webhook is Executing!')
     
     history = History(status='1', webhook_id=webhook.id,
                                   data=JsonUtil.object_2_json(data))
