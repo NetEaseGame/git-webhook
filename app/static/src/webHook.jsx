@@ -102,7 +102,7 @@ const WebHook = React.createClass({
         r = r.json();
         if (r.success) {
           let webhooks = this.state.webhooks;
-          webhooks.splice(index, 1);
+          webhooks[index] = r.data;
           this.setState({webhooks: webhooks});
         }
         else this.showError(r.data);
