@@ -12,7 +12,7 @@ from celery import Celery, platforms
 from app.utils.validator import Validator
 
 # 版本号
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 # flask
 app = Flask(__name__)

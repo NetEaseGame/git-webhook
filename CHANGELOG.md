@@ -3,6 +3,17 @@
 修改历史如下
 
 
+## v0.0.3 @2016-11-11
+
+与之前的版本相比，增加：
+
+ - 增加 项目观察者角色（project Collaborators），Collaborator 具有以下权限 / 限制。
+	1. 可见权限，包括 webhook 信息，history 信息（不能看到 server 信息）；
+	2. 可手动执行权限（retry按钮）；
+	3. 不能修改，删除 webhook 信息。
+ - 更新到此版本，请注意运行 `python scripts.py rebuild_db` 生成新的数据结构，**不会丢失数据**。
+
+
 ## v0.0.2 @2016-11-11
 
 与之前的版本相比，增加：
