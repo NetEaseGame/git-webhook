@@ -37,4 +37,5 @@ def login_user(user):
 
 # logou user, session pop
 def logout():
+    session.pop('oauth_token', '')
     session.pop('u_id', '')

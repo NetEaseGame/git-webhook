@@ -129,6 +129,6 @@ def api_webhook_retry():
     # status is waiting
     webhook.updateStatus('1')
     # do the async task
-    tasks.do_webhook_shell.delay(webhook.id, history.id, data)
+    tasks.do_webhook_shell.delay(webhook.id, history.id, data, user_id=user_id)
 
     return ResponseUtil.standard_response(1, webhook.dict())

@@ -75,8 +75,8 @@ const Collaborator = React.createClass({
         <table className="ui very basic table">
           <thead>
             <tr>
-              <th width="15%">#</th>
-              <th width="20%">Name</th>
+              <th width="20%">#</th>
+              <th width="25%">Name</th>
               <th width="25%">{'Location'}</th>
               <th width="15%">Last Login</th>
               <th width="15%">Add Time</th>
@@ -88,10 +88,12 @@ const Collaborator = React.createClass({
             this.state.collaborators.map(function(collaborator, i) {
               return (
                 <tr key={i}>
-                  <td>{collaborator.user_id}</td>
                   <td>
                     <img className="ui avatar image" src={collaborator.user.avatar || 'static/res/img/logo.png'} />
-                    <span>{collaborator.user.name || ''}</span>
+                    <span><a target="_blank" href={"https://github.com/" + collaborator.user_id}>{collaborator.user_id || ''}</a></span>
+                  </td>
+                  <td>
+                    {collaborator.user.name || ''}
                   </td>
                   <td>{collaborator.user.location || ''}</td>
                   <td title={collaborator.user.last_login || new Date()}><TimeAgo locale='zh_CN' datetime={collaborator.user.last_login || new Date()} /></td>
