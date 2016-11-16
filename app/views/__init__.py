@@ -6,4 +6,3 @@ from app.views import server
 from app.views import history
 from app.views import collaborator
 from app.views import api
-from app.views import socket

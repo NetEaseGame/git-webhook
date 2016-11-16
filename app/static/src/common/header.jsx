@@ -3,7 +3,6 @@ import StringUtils from '../utils/stringUtils.jsx';
 import { Link } from 'react-router';
 
 const Header = React.createClass({
-  propTypes: {},
   componentDidMount: function() {
     $(this.refs.user_action).dropdown();
   },

@@ -5,7 +5,7 @@ Created on 2016年6月15日
 @author: hustcc
 '''
 import datetime
-from app import SQLAlchemyDB as db, socket
+from app import SQLAlchemyDB as db, socketio
 from app.database.base import BaseMethod
 from app.utils import JsonUtil
 
@@ -98,12 +98,12 @@ class WebHook(db.Model, BaseMethod):
         rst['status'] = self.status
         rst['lastUpdate'] = self.lastUpdate
         return rst
-
+    
     def updateStatus(self, status):
         self.status = status
         self.lastUpdate = datetime.datetime.now()
         self.save()
-        socket.emit('webhook', JsonUtil.object_2_json(self.dict()))
+        socketio.emit('webhook', JsonUtil.object_2_json(self.dict()))
 
 
 class History(db.Model, BaseMethod):
@@ -122,7 +122,7 @@ class History(db.Model, BaseMethod):
         db.DateTime, default=datetime.datetime.now)  # last update time
     webhook_id = db.Column(db.Integer, db.ForeignKey(WebHook.id))
     webhook = db.relationship(WebHook)
-
+    
     def dict(self):
         rst = {}
         rst['id'] = self.id
@@ -134,12 +134,12 @@ class History(db.Model, BaseMethod):
         rst['update_time'] = self.update_time
         rst['webhook_id'] = self.webhook_id
         return rst
-
+    
     def updateStatus(self, status):
         self.update_time = datetime.datetime.now()
         self.status = status
         self.save()
-        socket.emit('history', JsonUtil.object_2_json(self.dict()))
+        socketio.emit('history', JsonUtil.object_2_json(self.dict()))
 
 
 class Collaborator(db.Model, BaseMethod):

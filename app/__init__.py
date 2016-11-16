@@ -13,7 +13,7 @@ from app.utils.validator import Validator
 from flask_socketio import SocketIO
 
 # 版本号
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 # flask
 app = Flask(__name__)
@@ -25,7 +25,7 @@ if 'GIT_WEBHOOK_CONFIG' in os.environ:
 else:
     app.config.from_object('app.config')
 
-socket = SocketIO(app, message_queue=app.config['SOCKET_MESSAGE_QUEUE'])
+socketio = SocketIO(app, async_mode='threading', message_queue=app.config['SOCKET_MESSAGE_QUEUE'])
 
 # validator
 v = Validator()

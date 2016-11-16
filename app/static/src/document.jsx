@@ -40,7 +40,6 @@ const Document = React.createClass({
     this.setState({subject: this.props.params.subject});
   },
   content: function(subject) {
-    console.log(subject);
     if (subject === 'pkey')
       return (
         <div className="ui segment">
