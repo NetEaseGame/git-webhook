@@ -25,7 +25,8 @@ if 'GIT_WEBHOOK_CONFIG' in os.environ:
 else:
     app.config.from_object('app.config')
 
-socketio = SocketIO(app, async_mode='threading', message_queue=app.config['SOCKET_MESSAGE_QUEUE'])
+socketio = SocketIO(app, async_mode='threading',
+                    message_queue=app.config['SOCKET_MESSAGE_QUEUE'])
 
 # validator
 v = Validator()
