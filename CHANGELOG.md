@@ -1,6 +1,18 @@
 # CHANGELOG 修订历史
 
-修改历史如下
+修改历史如下：
+
+
+## v0.0.4 @2016-11-16
+
+与之前的版本相比，增加：
+
+ - 主要添加 **SocketIO** 支持，实时修改页面上的 WebHook 和 History 状态。
+	1. 后台使用 flask-socketio 发送 webhook 和 history 两个 socket 状态；
+	2. 前端使用 socketio + [onfire.js](https://github.com/hustcc/onfire.js) 分发和处理收到数据，并渲染到页面上；
+ - 更新到此版本，请注意下做一下步骤：
+	1. 在 Config.py 中添加 `SOCKET_MESSAGE_QUEUE` 配置，和 Celery 的 Redis 配置保持一致即可；
+	2. 安装 Python 依赖：`flask-socketio`，如果需要使用 eventlet / gevent / gevent-websocket 部署，请自行安装；
 
 
 ## v0.0.3 @2016-11-11
