@@ -17,7 +17,7 @@ dev:
 	@docker-compose -f docker/docker-compose-dev.yml up
 
 celery:
-	@celery -A app.celeryInstance worker --loglevel=info
+	@celery -A app.celeryInstance worker --loglevel=debug
 
 dev-mysql:
 	@mysql -h 127.0.0.1 -uroot -proot git_webhook

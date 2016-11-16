@@ -9,9 +9,16 @@ reload(sys)  # noqa
 sys.setdefaultencoding('utf8')
 
 import datetime  # noqa
-from app import celeryInstance  # noqa
+from time import sleep # noqa
+from app import celeryInstance, socket  # noqa
 from app.database.model import History, WebHook  # noqa
 from app.utils import SshUtil, JsonUtil, HookDataParse  # noqa
+
+
+@celeryInstance.task
+def emit_test_message():
+    sleep(2)
+    socket.emit('pong', {'data': 'celery!'})
 
 
 # webhook / data all is JSON dict.
