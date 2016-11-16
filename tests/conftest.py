@@ -53,6 +53,7 @@ def create_user(sql):
     sql.commit()
     return user
 
+
 # =====================================
 # server fixtures
 # =====================================
@@ -79,6 +80,7 @@ def create_server(tester):
             assert success(resp)
         return load_data(resp)
     return func
+
 
 # =====================================
 # webhook fixtures

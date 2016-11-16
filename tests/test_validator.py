@@ -16,6 +16,7 @@ v = Validator()
 def even():
     return Use(int, lambda value: value % 2)
 
+
 SCHEMA = {
     'name': v.str(),
     'age': v.int(min=18, max=99),
