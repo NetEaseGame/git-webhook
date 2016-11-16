@@ -50,9 +50,7 @@ def do_webhook_shell(webhook_id, history_id, data, user_id=None):
     # text_factory
     log = unicode(log)  # noqa
 
-    history.status = status
-    history.update_time = datetime.datetime.now()
     history.shell_log = log
-    history.save()
+    history.updateStatus(status)
 
     webhook.updateStatus(status)

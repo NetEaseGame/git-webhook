@@ -17,10 +17,13 @@ dev:
 	@docker-compose -f docker/docker-compose-dev.yml up
 
 celery:
-	@celery -A app.celeryInstance worker --loglevel=info
+	@celery -A app.celeryInstance worker --loglevel=debug
 
 dev-mysql:
 	@mysql -h 127.0.0.1 -uroot -proot git_webhook
 
 test:
 	@docker-compose -f docker/docker-compose-test.yml up -d
+
+run:
+	@gunicorn -k eventlet -w 1 -b :18340 --log-level=debug run_webhook:app

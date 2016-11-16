@@ -22,6 +22,17 @@ const WebHook = React.createClass({
     };
   },
   currentEditIndex: -1,
+  whenWebhookUpdate: function(webhook) {
+    // websocket 传输过来的新的状态
+    let webhooks = this.state.webhooks;
+    for (let i = webhooks.length - 1; i >= 0; i--) {
+      if (webhooks[i].id == webhook.id) {
+        webhooks[i] = webhook;
+        this.setState({webhooks: webhooks});
+        break;
+      }
+    }
+  },
   componentDidMount: function() {
     new Clipboard('.copy_btn'); // set copy button
 
@@ -38,6 +49,8 @@ const WebHook = React.createClass({
       if (r.success) this.setState({servers: r.data});
       else this.showError('加载数据失败！');
     }.bind(this));
+
+    this.on('webhook-websocket', this.whenWebhookUpdate);
   },
   clickNewBtn: function(save) {
     if (save) {

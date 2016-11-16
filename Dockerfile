@@ -4,4 +4,4 @@ RUN pip install -r /tmp/requirements.txt -i https://pypi.douban.com/simple
 WORKDIR /code
 CMD mkdir -p /data && \
     celery -A app.celeryInstance worker --loglevel=info --logfile=/data/celery.log --pidfile=/data/celery.pid --detach && \
-    gunicorn -b 0.0.0.0:80 -w 5 -k gevent --log-file=/data/gunicorn.log run_webhook:app
+    gunicorn -b 0.0.0.0:80 -k eventlet -w 1 --log-file=/data/gunicorn.log run_webhook:app

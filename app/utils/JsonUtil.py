@@ -25,7 +25,7 @@ def object_2_json(obj):
     py字典、数据转成json字符转
     '''
     if obj is None:
-        return {}
+        obj = {}
     return json.dumps(obj, cls=CJsonEncoder)
 
 

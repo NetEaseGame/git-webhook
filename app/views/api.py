@@ -37,9 +37,9 @@ def api_for_webhook(key):
                     HookDataParse.get_repo_branch(data) == branch):
                 # start to process, add history into database
                 # waiting to done
-                history = History(status='1', webhook_id=webhook.id,
+                history = History(webhook_id=webhook.id,
                                   data=JsonUtil.object_2_json(data))
-                history.save()
+                history.updateStatus('1')
                 # status is waiting
                 webhook.updateStatus('1')
                 # do the async task

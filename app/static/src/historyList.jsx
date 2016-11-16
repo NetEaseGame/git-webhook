@@ -42,11 +42,30 @@ const HistoryList = React.createClass({
       else this.showError('加载数据失败！');
     }.bind(this));
   },
+  whenHistoryUpdate: function(history) {
+    let histories = this.state.histories;
+    for (let i = histories.length - 1; i >= 0; i--) {
+      if (histories[i].id == history.id) {
+        histories[i] = history;
+        this.setState({histories: histories});
+        return;
+      }
+    }
+    console.log('insert');
+    // 在 histories 中找不到，则直接添加
+    // 添加 在数组最前面
+    histories.unshift(history);
+    // 去掉最后一个元素
+    histories.pop();
+    this.setState({histories: histories});
+  },
   componentDidMount: function() {
     new Clipboard('.copy_btn'); // set copy button
 
     this.currentPage = this.props.params.page;
     this.loadHistories(this.currentPage);
+
+    this.on('history-websocket', this.whenHistoryUpdate);
   },
   clickPrev: function() {
     this.currentPage --;

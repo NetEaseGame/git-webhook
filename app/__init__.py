@@ -10,9 +10,10 @@ from flask_github import GitHub
 from flask_sqlalchemy import SQLAlchemy
 from celery import Celery, platforms
 from app.utils.validator import Validator
+from flask_socketio import SocketIO
 
 # 版本号
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 # flask
 app = Flask(__name__)
@@ -23,6 +24,9 @@ if 'GIT_WEBHOOK_CONFIG' in os.environ:
     app.config.from_envvar('GIT_WEBHOOK_CONFIG')
 else:
     app.config.from_object('app.config')
+
+socketio = SocketIO(app, async_mode='threading',
+                    message_queue=app.config['SOCKET_MESSAGE_QUEUE'])
 
 # validator
 v = Validator()

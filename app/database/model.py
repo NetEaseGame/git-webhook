@@ -4,9 +4,10 @@ Created on 2016年6月15日
 
 @author: hustcc
 '''
-from app import SQLAlchemyDB as db
-from app.database.base import BaseMethod
 import datetime
+from app import SQLAlchemyDB as db, socketio
+from app.database.base import BaseMethod
+from app.utils import JsonUtil
 
 
 class User(db.Model, BaseMethod):
@@ -101,8 +102,8 @@ class WebHook(db.Model, BaseMethod):
     def updateStatus(self, status):
         self.status = status
         self.lastUpdate = datetime.datetime.now()
-
         self.save()
+        socketio.emit('webhook', JsonUtil.object_2_json(self.dict()))
 
 
 class History(db.Model, BaseMethod):
@@ -138,6 +139,7 @@ class History(db.Model, BaseMethod):
         self.update_time = datetime.datetime.now()
         self.status = status
         self.save()
+        socketio.emit('history', JsonUtil.object_2_json(self.dict()))
 
 
 class Collaborator(db.Model, BaseMethod):
