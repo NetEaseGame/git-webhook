@@ -115,17 +115,19 @@ def api_webhook_retry():
     data = {
         'src': 'Manually executed'
     }
-    webhook = WebHook.query.filter_by(user_id=user_id, id=webhook_id).first()
+    webhook = WebHook.query.get(webhook_id)
     if not webhook:
+        return ResponseUtil.standard_response(0, 'WebHooknot exist!')
+
+    if not AuthUtil.has_readonly_auth(user_id, webhook_id):
         return ResponseUtil.standard_response(0, 'Permission deny!')
 
 #     if webhook.status not in ['3', '4', '5']:
 #         return ResponseUtil.standard_response(0, 'Webhook is Executing!')
 
-    history = History(status='1',
-                      webhook_id=webhook.id,
+    history = History(webhook_id=webhook.id,
                       data=JsonUtil.object_2_json(data))
-    history.save()
+    history.updateStatus('1')
     # status is waiting
     webhook.updateStatus('1')
     # do the async task
