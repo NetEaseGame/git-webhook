@@ -24,3 +24,6 @@ dev-mysql:
 
 test:
 	@docker-compose -f docker/docker-compose-test.yml up -d
+
+run:
+	@gunicorn -k eventlet -w 1 -b :18340 --log-level=debug run_webhook:app

@@ -17,6 +17,14 @@
             console.log('pong')
             console.log(data)
         });
+        socket.on('webhook', function(data) {
+            console.log('webhook')
+            console.log(data)
+        });
+        socket.on('history', function(data) {
+            console.log('history')
+            console.log(data)
+        });
     </script>
 </head>
 
