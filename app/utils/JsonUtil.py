@@ -2,7 +2,7 @@
 '''
 Created on 2016年2月19日
 一些json的处理方法
-@author: hzwangzhiwei
+@author: hustcc
 '''
 
 from datetime import date

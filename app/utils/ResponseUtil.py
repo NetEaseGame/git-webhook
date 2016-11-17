@@ -2,7 +2,7 @@
 '''
 Created on 2016-2-19
 
-@author: hzwangzhiwei
+@author: hustcc
 '''
 from app.utils import JsonUtil
 import flask
