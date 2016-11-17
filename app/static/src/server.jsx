@@ -46,7 +46,7 @@ const Server = React.createClass({
           // update server
           if (updateOrAdd) servers[this.currentEditIndex] = r.data;
           // add server
-          else servers.push(r.data);
+          else servers.unshift(r.data);
           this.setState({servers: servers, editServer: {}, showAddForm: false, btnText: '添加新的 Server'});
         }
         else this.showError(r.data);

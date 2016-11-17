@@ -37,7 +37,7 @@ def api_webhook_list():
     # value
     webhooks = webhooks.values()
     # sort
-    sorted(webhooks, key=lambda webhook: webhook.id)
+    webhooks.sort(lambda x, y: cmp(x.id, y.id), reverse=True)
     webhooks = [webhook.dict(True) for webhook in webhooks]
 
     return ResponseUtil.standard_response(1, webhooks)

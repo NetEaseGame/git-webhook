@@ -17,7 +17,8 @@ def api_server_list():
     # login user
     user_id = RequestUtil.get_login_user().get('id', '')
 
-    servers = Server.query.filter_by(user_id=user_id, deleted=False).all()
+    servers = Server.query.filter_by(user_id=user_id, deleted=False) \
+                          .order_by(Server.id.desc()).all()
     servers = [server.dict(with_pkey=True) for server in servers]
 
     return ResponseUtil.standard_response(1, servers)

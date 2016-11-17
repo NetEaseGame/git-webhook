@@ -69,8 +69,8 @@ const WebHook = React.createClass({
           let webhooks = this.state.webhooks;
           // update webhook
           if (updateOrAdd) webhooks[this.currentEditIndex] = r.data;
-          // add webhook
-          else webhooks.push(r.data);
+          // add webhook，数组顶端
+          else webhooks.unshift(r.data);
           this.setState({webhooks: webhooks, editWebHook: {},showAddForm: false, btnText: '添加新的 Git WebHook'});
         }
         else this.showError(r.data);
