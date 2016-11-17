@@ -43,6 +43,10 @@ const HistoryList = React.createClass({
     }.bind(this));
   },
   whenHistoryUpdate: function(history) {
+    if (history.webhook_id != this.props.params.webhook_id) {
+      // 不匹配，不处理
+      return;
+    }
     let histories = this.state.histories;
     for (let i = histories.length - 1; i >= 0; i--) {
       if (histories[i].id == history.id) {
@@ -51,7 +55,6 @@ const HistoryList = React.createClass({
         return;
       }
     }
-    console.log('insert');
     // 在 histories 中找不到，则直接添加
     // 添加 在数组最前面
     histories.unshift(history);

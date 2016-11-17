@@ -8,7 +8,6 @@ import datetime
 from app import SQLAlchemyDB as db, socketio
 from app.database.base import BaseMethod
 from app.utils import JsonUtil
-from sqlalchemy.sql.expression import false
 
 
 class User(db.Model, BaseMethod):
@@ -104,27 +103,9 @@ class WebHook(db.Model, BaseMethod):
         self.status = status
         self.lastUpdate = datetime.datetime.now()
         self.save()
-        data = JsonUtil.object_2_json(self.dict())
-        socketio.emit('webhook', data, room=self.id)
-
-
-def my_webhooks(user_id):
-    """获取所有我有权访问的Webhooks"""
-    # create webhooks
-    created_webhooks = WebHook.query.filter_by(
-        user_id=user_id, deleted=False).all()
-
-    # collaborator webhooks
-    collaborated_webhooks = \
-        WebHook.query.join(Collaborator,
-                           Collaborator.webhook_id == WebHook.id) \
-                     .filter(Collaborator.user_id == user_id) \
-                     .filter(WebHook.deleted == false()).all()
-
-    webhooks = created_webhooks + collaborated_webhooks
-    # 去重并排序
-    webhooks = sorted(set(webhooks), key=lambda x: x.id, reverse=True)
-    return list(webhooks)
+        socketio.emit('webhook',
+                      JsonUtil.object_2_json(self.dict()),
+                      room=self.id)
 
 
 class History(db.Model, BaseMethod):
@@ -160,8 +141,9 @@ class History(db.Model, BaseMethod):
         self.update_time = datetime.datetime.now()
         self.status = status
         self.save()
-        data = JsonUtil.object_2_json(self.dict())
-        socketio.emit('history', data, room=self.webhook.id)
+        socketio.emit('history',
+                      JsonUtil.object_2_json(self.dict()),
+                      room=self.webhook.id)
 
 
 class Collaborator(db.Model, BaseMethod):

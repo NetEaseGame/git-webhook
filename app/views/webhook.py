@@ -8,7 +8,7 @@ Created on 2016-10-20
 from app.wraps.login_wrap import login_required
 from app import app
 from app.utils import ResponseUtil, RequestUtil, StringUtil, JsonUtil, AuthUtil
-from app.database.model import WebHook, Server, History, my_webhooks
+from app.database.model import WebHook, Server, History
 from app.tasks import tasks
 
 
@@ -18,7 +18,10 @@ from app.tasks import tasks
 def api_webhook_list():
     # login user
     user_id = RequestUtil.get_login_user().get('id', '')
-    webhooks = my_webhooks(user_id)
+    webhooks = AuthUtil.has_auth_webhooks(user_id)
+    # 去重并排序
+    webhooks = list(sorted(set(webhooks), key=lambda x: x.id, reverse=True))
+    # 转json
     webhooks = [webhook.dict(True) for webhook in webhooks]
     return ResponseUtil.standard_response(1, webhooks)
 
