@@ -8,9 +8,8 @@ Created on 2016-10-20
 from app.wraps.login_wrap import login_required
 from app import app
 from app.utils import ResponseUtil, RequestUtil, StringUtil, JsonUtil, AuthUtil
-from app.database.model import WebHook, Server, History, Collaborator
+from app.database.model import WebHook, Server, History, my_webhooks
 from app.tasks import tasks
-from sqlalchemy.sql.expression import false
 
 
 # get webhook list
@@ -19,27 +18,8 @@ from sqlalchemy.sql.expression import false
 def api_webhook_list():
     # login user
     user_id = RequestUtil.get_login_user().get('id', '')
-
-    # create webhooks
-    created_webhooks = WebHook.query.filter_by(user_id=user_id,
-                                               deleted=False).all()
-
-    # collaborator webhooks
-    collaborated_webhooks = \
-        WebHook.query.join(Collaborator,
-                           Collaborator.webhook_id == WebHook.id) \
-                     .filter(Collaborator.user_id == user_id) \
-                     .filter(WebHook.deleted == false()).all()
-
-    webhooks = created_webhooks + collaborated_webhooks
-    # to dict
-    webhooks = {'id%s' % webhook.id: webhook for webhook in webhooks}
-    # value
-    webhooks = webhooks.values()
-    # sort
-    webhooks.sort(lambda x, y: cmp(x.id, y.id), reverse=True)
+    webhooks = my_webhooks(user_id)
     webhooks = [webhook.dict(True) for webhook in webhooks]
-
     return ResponseUtil.standard_response(1, webhooks)
 
 

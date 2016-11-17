@@ -10,7 +10,9 @@ from flask_github import GitHub
 from flask_sqlalchemy import SQLAlchemy
 from celery import Celery, platforms
 from app.utils.validator import Validator
-from flask_socketio import SocketIO
+from app.utils import RequestUtil
+from flask_socketio import SocketIO, emit, join_room
+
 
 # 版本号
 __version__ = '0.0.4'
@@ -45,3 +47,17 @@ github = GitHub(app)
 
 from app.database import model  # noqa
 from app import views  # noqa
+
+
+@socketio.on('connect')
+def test_connect():
+    # 连接时自动监听所有有权限的webhook
+    user = RequestUtil.get_login_user()
+    # 未登录，拒绝连接
+    if not user:
+        return False
+    user_id = user.get('id', '')
+    webhooks = model.my_webhooks(user_id)
+    for webhook in webhooks:
+        join_room(webhook.id)
+    emit('message', 'Connected')

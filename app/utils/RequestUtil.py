@@ -27,7 +27,7 @@ def get_parameter(key, default=None):
 
 # login user from session
 def get_login_user():
-    return session.get('u_id', '')
+    return session.get('u_id', None)
 
 
 # set user login
@@ -37,5 +37,5 @@ def login_user(user):
 
 # logou user, session pop
 def logout():
-    session.pop('oauth_token', '')
-    session.pop('u_id', '')
+    session.pop('oauth_token', None)
+    session.pop('u_id', None)
