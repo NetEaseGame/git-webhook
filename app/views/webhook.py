@@ -19,8 +19,6 @@ def api_webhook_list():
     # login user
     user_id = RequestUtil.get_login_user().get('id', '')
     webhooks = AuthUtil.has_auth_webhooks(user_id)
-    # 去重并排序
-    webhooks = list(sorted(set(webhooks), key=lambda x: x.id, reverse=True))
     # 转json
     webhooks = [webhook.dict(True) for webhook in webhooks]
     return ResponseUtil.standard_response(1, webhooks)

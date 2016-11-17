@@ -40,5 +40,6 @@ def has_auth_webhooks(user_id):
                      .filter(WebHook.deleted == false()).all()
 
     webhooks = created_webhooks + collaborated_webhooks
-
+    # 去重并排序
+    webhooks = list(sorted(set(webhooks), key=lambda x: x.id, reverse=True))
     return webhooks

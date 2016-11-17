@@ -16,9 +16,7 @@ const MainComponent = React.createClass({
   },
   componentDidMount: function() {
     this.socketio = io.connect(location.protocol + '//' + location.host);
-    this.socketio.on('connect', function(d) {
-      console.log(d);
-    });
+    this.socketio.on('connect', function() {});
 
     ['webhook', 'history'].map(function(e) {
       this.socketio.on(e, this.socketioCallback.bind(this, e));
