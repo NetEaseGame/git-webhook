@@ -9,7 +9,7 @@
  - 支持 **Github / GitLab / Gogs / GitOsc**；
  - 使用 SSH 方式，支持**多服务**配置；
 
-[Project ChangeLog](CHANGELOG.md) | [Online DEMO Website](http://webhook.hust.cc/)（使用 gunicorn + gevent + nginx 部署）
+[Project ChangeLog](CHANGELOG.md) | [Online DEMO Website](http://webhook.hust.cc/)（使用 gunicorn + eventlet + nginx 部署）
 
 
 ## 一、如何使用 & 部署 ？
@@ -82,14 +82,18 @@
 
 ## 四、部署
 
-代码使用 Flask 框架开发，线上部署使用 gunicorn + gevent + nginx 已经是比较成熟的方案了，本应用当然也可以使用这种方式部署。
+代码使用 Flask 框架开发，线上部署使用 gunicorn + eventlet + nginx 已经是比较成熟的方案了，本应用当然也可以使用这种方式部署。
 
 主要的服务器依赖环境：
 
  - 数据库环境（自行选择，推荐 mysql 和 sqlite）；
  - Redis，利用 Celery 做后台任务；
 
-当然也可以直接使用[ Docker 直接部署](deploy-docker.md)。
+如果使用 gunicorn 部署， worker 数量必须为 1，建议 worker 类型为 eventlet
+(`gunicorn -k eventlet -w 1`)，并且 nginx 负载均衡的时候，需要使用 ip_hash 算法。
+具体请参考: http://flask-socketio.readthedocs.io/en/latest/#gunicorn-web-server
+
+当然也可以直接[使用 Docker 部署](deploy-docker.md)。
 
 ## 五、贡献
 
