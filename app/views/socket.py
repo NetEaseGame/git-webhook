@@ -12,7 +12,7 @@ import flask_socketio
 @socketio.on('connect')
 def on_socketio_connect():
     # 连接时自动监听所有有权限的 webhook
-    user_id = RequestUtil.get_login_user().get('id', None)
+    user_id = RequestUtil.get_login_user().get('id', '')
     # 未登录，拒绝连接
     if not user_id:
         return False

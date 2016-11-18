@@ -14,14 +14,9 @@ from flask.globals import session
 from app.database.model import User
 
 
-@app.route('/version', methods=['GET'])
-def version():
-    return __version__
-
-
 @app.route('/', methods=['GET'])
 def index():
-    return ResponseUtil.render_template('index.html')
+    return ResponseUtil.render_template('index.html', __version__=__version__)
 
 
 @app.route('/login', methods=['GET'])

@@ -27,7 +27,7 @@ def get_parameter(key, default=None):
 
 # login user from session
 def get_login_user():
-    return session.get('u_id', None)
+    return session.get('u_id', {})
 
 
 # set user login
