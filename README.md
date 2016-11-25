@@ -91,7 +91,7 @@
 
 如果使用 gunicorn 部署， worker 数量必须为 1，建议 worker 类型为 eventlet
 (`gunicorn -k eventlet -w 1`)，并且 nginx 负载均衡的时候，需要使用 ip_hash 算法。
-具体请参考: http://flask-socketio.readthedocs.io/en/latest/#gunicorn-web-server
+具体请参考: [gunicorn-web-server](http://flask-socketio.readthedocs.io/en/latest/#gunicorn-web-server)
 
 当然也可以直接[使用 Docker 部署](deploy-docker.md)。
 
