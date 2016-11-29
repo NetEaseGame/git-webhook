@@ -38,10 +38,29 @@ v = Validator()
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
 SQLAlchemyDB = SQLAlchemy(app)
 
+
 # celery
+def make_celery(app):
+    celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+
+    class ContextTask(TaskBase):
+        abstract = True
+
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+
+    celery.Task = ContextTask
+    return celery
+
+
 platforms.C_FORCE_ROOT = True
-celeryInstance = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celeryInstance.conf.update(app.config)
+app.config['CELERY_IGNORE_RESULT'] = True
+app.config['CELERY_ACCEPT_CONTENT'] = ['pickle', 'json', 'msgpack', 'yaml']
+celeryInstance = make_celery(app)
+
 
 # github login
 github = GitHub(app)
