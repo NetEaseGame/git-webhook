@@ -35,7 +35,7 @@ cd git-webhook
 docker-compose up
 ```
 
-第一次部署可能需要几分钟或十几分钟，完成后执行 `make build-db` 初始化数据库。  
+第一次部署可能需要几分钟或十几分钟，完成后执行 `make createdb` 初始化数据库。  
 再访问 http://127.0.0.1:18340/ 即可。使用 GitHub 账号登陆。
 
 
