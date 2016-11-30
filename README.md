@@ -9,7 +9,7 @@
  - 支持 **Github / GitLab / Gogs / GitOsc**；
  - 使用 SSH 方式，支持**多服务**配置；
 
-[Project ChangeLog](CHANGELOG.md) | [Online DEMO Website](http://webhook.hust.cc/)（使用 gunicorn + eventlet + nginx 部署）
+[Project ChangeLog](CHANGELOG.md) | [Online DEMO Website](http://webhook.hust.cc/)（使用 nginx 部署绑定域名）
 
 
 ## 一、如何使用 & 部署 ？
@@ -39,7 +39,7 @@
 4. 初始化数据库结构
 	
 	```sh
-	python scripts.py build_db
+	python manage.py createdb
 	```
 
 5. 运行应用
@@ -82,22 +82,22 @@
 
 ## 四、部署
 
-代码使用 Flask 框架开发，线上部署使用 gunicorn + eventlet + nginx 已经是比较成熟的方案了，本应用当然也可以使用这种方式部署。
+代码使用 Flask 框架开发，`python manage.py runserver` 运行可以用于线上生产环境，可以额外使用 nginx 做负载均衡和域名绑定。
 
 主要的服务器依赖环境：
 
  - 数据库环境（自行选择，推荐 mysql 和 sqlite）；
  - Redis，利用 Celery 做后台任务；
 
-如果使用 gunicorn 部署， worker 数量必须为 1，建议 worker 类型为 eventlet
-(`gunicorn -k eventlet -w 1`)，并且 nginx 负载均衡的时候，需要使用 ip_hash 算法。
+**备注**：如果使用 gunicorn 部署， worker 数量必须为 1，建议 worker 类型为 eventlet (`gunicorn -k eventlet -w 1`)，并且 nginx 负载均衡的时候，需要使用 ip_hash 算法。
 具体请参考: [gunicorn-web-server](http://flask-socketio.readthedocs.io/en/latest/#gunicorn-web-server)
 
 当然也可以直接[使用 Docker 部署](deploy-docker.md)。
 
+
 ## 五、贡献
 
-项目使用 SSH 私钥的方式，直接登陆 Linux 服务器，执行部署或者运维的 Shell 命令，安全可靠，当然因为涉及到**私钥**，所以为了安全起见，建议在内网搭建使用（这些是我们的使用情景）。
+项目使用 SSH 私钥 / 账户密码的方式，直接登陆 Linux 服务器，执行部署或者运维的 Shell 命令，安全可靠，当然因为涉及到**私钥**，所以为了安全起见，建议在内网搭建使用（这些是我们的使用情景）。
 
 **后端开发**使用：Python Flask + SQLAchemy + Celery + Redis，常规的技术栈；
 
