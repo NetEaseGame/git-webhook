@@ -24,16 +24,19 @@ app.config.from_object('app.config_default')
 # 加载默认 home 目录配置 git_webhook_config.py
 config_file = os.path.join(os.path.expanduser('~'),
                            '.git-webhook/git_webhook_config.py')
-if os.path.exists(config_file):
+if 'GIT_WEBHOOK_CONFIG' in os.environ:
+    app.config.from_envvar('GIT_WEBHOOK_CONFIG')
+elif os.path.exists(config_file):
     app.config.from_pyfile(config_file)
-# 最后从代码目录加载配置
-elif os.path.exists('app/config.py'):
-    app.config.from_object('app.config')
 else:
-    app.config.from_object('app.config_example')
+    # 最后从代码目录加载配置
+    try:
+        # 兼容老的写法
+        app.config.from_object('app.config')
+    except:
+        app.config.from_object('app.config_example')
 
-# socketio = SocketIO(app, async_mode='threading',
-#                     message_queue=app.config['SOCKET_MESSAGE_QUEUE'])
+
 socketio = SocketIO(app,
                     message_queue=app.config['SOCKET_MESSAGE_QUEUE'])
 
