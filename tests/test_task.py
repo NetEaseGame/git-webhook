@@ -16,9 +16,10 @@ def test_do_webhook_shell(create_server, create_webhook, sql):
     )
     sql.add(history)
     sql.commit()
+    history_id = history.id
     text = 'select * from history where id=:id'
-    result = sql.execute(text, {'id': history.id}).fetchone()
+    result = sql.execute(text, {'id': history_id}).fetchone()
     assert result.status == '1'
-    do_webhook_shell.apply(args=(webhook['id'], history.id, data)).get()
-    result = sql.execute(text, {'id': history.id}).fetchone()
+    do_webhook_shell.apply(args=(webhook['id'], history_id, data)).get()
+    result = sql.execute(text, {'id': history_id}).fetchone()
     assert result.status == '5'
