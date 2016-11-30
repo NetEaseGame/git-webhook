@@ -104,11 +104,12 @@ class Config(Command):
 #             dir = argv[0]
         # copy app/git_webhook_config.py into dir
         if os.path.isdir(dir):
-            if os.path.exists(os.path.join(dir, 'git_webhook_config.py')):
-                print('Fail: the configuration file exist in `%s`.' % dir)
+            path = os.path.join(dir, 'git_webhook_config.py')
+            if os.path.exists(path):
+                print('Fail: the configuration file exist in `%s`.' % path)
             else:
-                shutil.copy('app/git_webhook_config.py', dir)
-                print('OK: init configuration file into `%s`.' % dir)
+                shutil.copy('app/config_example.py', path)
+                print('OK: init configuration file into `%s`.' % path)
         else:
             print('Fail: %s should be directory.' % dir)
 

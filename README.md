@@ -30,7 +30,7 @@
 
 3. 配置 `config.py`
 
-	拷贝一份 git_webhook_config.py 到同目录 config.py， 然后对应修改配置内容。主要需要配置三点：
+	拷贝一份 config_example.py 到同目录 config.py， 然后对应修改配置内容。主要需要配置三点：
 	
 	 - `DATABASE_URI`: 数据库地址，理论上可以使用**任何关系数据库**；推荐使用 sqlite 和 mysql （经过测试）；
 	 - `CELERY REDIS`: Redis URI 配置，主要用于 Celery 后台任务；
