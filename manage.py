@@ -62,6 +62,10 @@ class Server(_Server):
                 use_debugger = True
         if use_reloader is None:
             use_reloader = app.debug
+        import eventlet
+        # monkey_patch
+        eventlet.monkey_patch()
+
         socketio.run(app,
                      host=host,
                      port=port,

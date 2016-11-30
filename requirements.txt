@@ -12,3 +12,4 @@ timeago==1.0.6
 schema==0.6.5
 validators==0.11.0
 flask-socketio==2.7.2
+Flask-Script==2.0.5
