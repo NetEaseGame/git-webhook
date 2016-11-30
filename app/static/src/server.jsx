@@ -97,7 +97,7 @@ const Server = React.createClass({
               <th width="20%">IP</th>
               <th width="8%">Port</th>
               <th width="17%">Account</th>
-              <th width="10%">PKey</th>
+              <th width="10%">PKey / PassWord</th>
               <th width="15%">Time</th>
               <th width="10%">Operate</th>
             </tr>
@@ -148,7 +148,7 @@ const Server = React.createClass({
               </div>
             </div>
             <div className="field">
-              <label>SSH Private Key <Link to="/doc/pkey"><i className="ui icon help"></i></Link></label>
+              <label>SSH Private Key / Account PassWord<Link to="/doc/pkey"><i className="ui icon help"></i></Link></label>
               <textarea ref="pkey" defaultValue={this.state.editServer.pkey} rows="6"></textarea>
             </div>
           </form>
