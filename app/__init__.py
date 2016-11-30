@@ -21,9 +21,12 @@ __version__ = '0.0.4'
 app = Flask(__name__)
 app.config.from_object('app.config_default')
 
-# 加载配置
-if 'GIT_WEBHOOK_CONFIG' in os.environ:
-    app.config.from_envvar('GIT_WEBHOOK_CONFIG')
+# 加载默认 home 目录配置 git_webhook_config.py
+config_file = os.path.join(os.path.expanduser('~'),
+                           '.git-webhook/git_webhook_config.py')
+if os.path.exists(config_file):
+    app.config.from_pyfile(config_file)
+# 最后从代码目录加载配置
 else:
     app.config.from_object('app.config')
 
@@ -37,6 +40,7 @@ v = Validator()
 
 # flask-sqlalchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DATABASE_URI']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 SQLAlchemyDB = SQLAlchemy(app)
 
 
@@ -58,8 +62,6 @@ def make_celery(app):
 
 
 platforms.C_FORCE_ROOT = True
-app.config['CELERY_IGNORE_RESULT'] = True
-app.config['CELERY_ACCEPT_CONTENT'] = ['pickle', 'json', 'msgpack', 'yaml']
 celeryInstance = make_celery(app)
 
 

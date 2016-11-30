@@ -9,6 +9,8 @@ import subprocess
 import sys
 from flask_script import Manager, Command, Server as _Server, Option
 from app import SQLAlchemyDB as db, socketio, app, __version__
+import os
+import shutil
 
 
 manager = Manager(app)
@@ -22,12 +24,10 @@ class Server(_Server):
             Option('-h', '--host',
                    dest='host',
                    default='0.0.0.0'),
-
             Option('-p', '--port',
                    dest='port',
                    type=int,
                    default=18340),
-
             Option('-d', '--debug',
                    action='store_true',
                    dest='use_debugger',
@@ -54,7 +54,6 @@ class Server(_Server):
         return options
 
     def __call__(self, app, host, port, use_debugger, use_reloader):
-        print host, port, use_debugger, use_reloader
         # override the default runserver command to start a Socket.IO server
         if use_debugger is None:
             use_debugger = app.debug
@@ -91,13 +90,39 @@ class CeleryWorker(Command):
 manager.add_command("celery", CeleryWorker())
 
 
+class Config(Command):
+    """Generates new configuration file into user Home dir."""
+    name = 'config'
+    capture_all_args = True
+
+    def run(self, argv):
+        dir = os.path.join(os.path.expanduser('~'), '.git-webhook')
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        # default dir is user HOME
+#         if argv and len(argv) > 0:
+#             dir = argv[0]
+        # copy app/git_webhook_config.py into dir
+        if os.path.isdir(dir):
+            if os.path.exists(os.path.join(dir, 'git_webhook_config.py')):
+                print('Fail: the configuration file exist in `%s`.' % dir)
+            else:
+                shutil.copy('app/git_webhook_config.py', dir)
+                print('OK: init configuration file into `%s`.' % dir)
+        else:
+            print('Fail: %s should be directory.' % dir)
+
+
+manager.add_command("config", Config())
+
+
 @manager.command
 def createdb(drop_first=False):
     """Creates the database."""
     if drop_first:
         db.drop_all()
     db.create_all()
-    print('OK')
+    print('OK: database is initialed.')
 
 
 @manager.command
@@ -111,8 +136,13 @@ def lint():
 
 @manager.command
 def version():
-    "get the version"
+    "Shows the version"
     print __version__
+
+
+# script entry
+def run():
+    manager.run()
 
 
 if __name__ == '__main__':
