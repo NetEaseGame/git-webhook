@@ -7,6 +7,8 @@ Created on 2016-11-30
 from distutils.core import setup
 from setuptools import find_packages
 from app import __version__
+# packages = find_packages('app')
+# packages = ['app', 'app.static', 'app.templates'] + ['app.%s' % p for p in packages]
 
 
 LONGDOC = """
@@ -69,8 +71,10 @@ setup(name='git-webhook',
         'Topic :: Utilities'
       ],
       keywords='git, webhook, ci, GitHub, GitLab, Gogs, GitOsc',
-      packages=find_packages('app'),
-      package_dir={'': 'app'},
+      include_package_data=True,
+      packages=['app'],
+      py_modules=['manage'],
+      zip_safe=False,
       entry_points={
         'console_scripts': ['gitwebhook=manage:run']
       })
