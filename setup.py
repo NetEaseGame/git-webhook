@@ -7,8 +7,7 @@ Created on 2016-11-30
 from distutils.core import setup
 from setuptools import find_packages
 from app import __version__
-# packages = find_packages('app')
-# packages = ['app', 'app.static', 'app.templates'] + ['app.%s' % p for p in packages]
+packages = find_packages('app')
 
 
 LONGDOC = """
