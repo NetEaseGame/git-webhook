@@ -14,7 +14,7 @@ from flask_socketio import SocketIO
 
 
 # 版本号
-__version__ = '0.0.4'
+__version__ = '0.0.6'
 
 
 # flask

@@ -1,2 +1,1 @@
-include *.md *.ini *.txt *.json *.yml
 recursive-include app *.py *.js *.css *.png *.jpg *.html

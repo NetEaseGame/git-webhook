@@ -6,7 +6,10 @@ Created on 2016-11-30
 '''
 from distutils.core import setup
 from setuptools import find_packages
-from app import __version__
+import os
+import re
+import io
+
 packages = find_packages('app')
 
 
@@ -19,20 +22,36 @@ Aims to deploy a git webhook platform easily,
 
 How to deploy & run ?
 
-pip install git-webhook
+> pip install git-webhook
 
-1. gitwebhook config : will init config into HOME dir
+1. gitwebhook config : will init config into HOME dir, then modify it
 
 2. gitwebhook runserver : run web server, with default port 18340
 
-2. gitwebhook celery
+3. gitwebhook celery : run celery task
 
-then visit ip:18340
+> then visit ip:18340
 """
 
 
+def read(*names, **kwargs):
+    return io.open(
+        os.path.join(os.path.dirname(__file__), *names),
+        encoding=kwargs.get("encoding", "utf8")
+    ).read()
+
+
+def find_version(*file_paths):
+    version_file = read(*file_paths)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
+
+
 setup(name='git-webhook',
-      version=__version__,
+      version=find_version('app/__init__.py'),
       description=(u'使用 Python Flask + SQLAchemy + Celery + Redis + React '
                    u'开发的用于迅速搭建并使用 WebHook '
                    u'进行自动化部署和运维，'
@@ -66,7 +85,7 @@ setup(name='git-webhook',
         'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Topic :: Software Development'
+        'Topic :: Software Development',
         'Topic :: Utilities'
       ],
       keywords='git, webhook, ci, GitHub, GitLab, Gogs, GitOsc',

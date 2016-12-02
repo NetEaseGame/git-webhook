@@ -10,7 +10,7 @@ import sys
 from flask_script import Manager, Command, Server as _Server, Option
 from app import SQLAlchemyDB as db, socketio, app, __version__
 import os
-import shutil
+# import shutil
 
 
 manager = Manager(app)
@@ -90,6 +90,28 @@ class CeleryWorker(Command):
 manager.add_command("celery", CeleryWorker())
 
 
+CONFIG_TEMP = """# -*- coding: utf-8 -*-
+'''
+Created on 2016-10-20
+
+@author: hustcc
+'''
+
+# for sqlite
+DATABASE_URI = 'sqlite:///git_webhook.db'
+# for mysql
+# DATABASE_URI = 'mysql+pymysql://dev:dev@127.0.0.1/git_webhook'
+
+CELERY_BROKER_URL = 'redis://:redis_pwd@127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://:redis_pwd@127.0.0.1:6379/0'
+
+SOCKET_MESSAGE_QUEUE = 'redis://:redis_pwd@127.0.0.1:6379/0'
+
+GITHUB_CLIENT_ID = 'b6e751cc48d664240467'
+GITHUB_CLIENT_SECRET = '6a9e0cbeee1bf89a1e1a25958f35b9dc6b36c996'
+"""
+
+
 class Config(Command):
     """Generates new configuration file into user Home dir."""
     name = 'config'
@@ -99,16 +121,14 @@ class Config(Command):
         dir = os.path.join(os.path.expanduser('~'), '.git-webhook')
         if not os.path.exists(dir):
             os.makedirs(dir)
-        # default dir is user HOME
-#         if argv and len(argv) > 0:
-#             dir = argv[0]
-        # copy app/git_webhook_config.py into dir
         if os.path.isdir(dir):
             path = os.path.join(dir, 'git_webhook_config.py')
             if os.path.exists(path):
                 print('Fail: the configuration file exist in `%s`.' % path)
             else:
-                shutil.copy('app/config_example.py', path)
+                # shutil.copy('app/config_example.py', path)
+                with open(path, 'w') as f:
+                    f.write(CONFIG_TEMP)
                 print('OK: init configuration file into `%s`.' % path)
         else:
             print('Fail: %s should be directory.' % dir)
