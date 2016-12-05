@@ -7,6 +7,7 @@ python:
 before_install:
   - pip install -r requirements.txt
   - pip install -r requirements-dev.txt
+  - "sudo service mysql-5.6 stop || sudo service mysql stop"
   - make test
 install:
   - sleep 10
